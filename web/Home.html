@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+
+<body>
+
+
+<form action="../event_filter.php" method="post">
+    driver_id:<br/>
+    <input type="text" name="driver_id"><br/>
+    trip_id:<br/>
+    <input type="text" name="trip_id"><br/>
+    选择事件:<br/>
+    <input type="checkbox" name="types[]" value="start_stop">start_stop<br/>
+    <input type="checkbox" name="types[]" value="hard_brake">hard_brake<br/>
+    <input type="checkbox" name="types[]" value="trun">trun<br/>
+    <input type="checkbox" name="types[]" value="jerk">jerk<br/>
+    <input type="checkbox" name="types[]" value="high_speed">high_speed<br/>
+    <input type="checkbox" name="types[]" value="ini_start">ini_start<br/>
+    <input type="checkbox" name="types[]" value="final_stop">final_stop<br/><br/>
+
+    <input type="submit" value="分析">
+</form>
+</body>
+</html>
