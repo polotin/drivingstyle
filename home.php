@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/analyse.js"></script>
 </head>
 
 <body>
@@ -33,6 +38,7 @@ include 'process.php';
     video_play_fol: <input type="text" name="following"><br/>
     <input type="submit" name="fenxi" value="filter">
 </form>
+
 
 <?php
 //处理
@@ -72,16 +78,20 @@ if (isset($_POST["video_play_pre"])) {
 if (isset($_POST["video_play_fol"])) {
     $video_play_fol = $_POST["video_play_fol"];
 }
-if(isset($_POST["fenxi"])){
-    if($_POST["fenxi"] == "filter"){
-        echo("<script>console.log('".$threshold."');</script>");
-        process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
+
+$json_file_dir = '';
+if (isset($_POST["fenxi"])) {
+    if ($_POST["fenxi"] == "filter") {
+        echo("<script>console.log('" . $threshold . "');</script>");
+        $json_file_dir = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
     }
 }
 
+echo "<div class=\"box\"></div>
+    <div class=\"M-box\"></div>";
+echo "<script type=text/javascript>play_result('" . "./" . $json_file_dir . "')</script>";
+
 ?>
-
-
 </body>
 
 </html>
