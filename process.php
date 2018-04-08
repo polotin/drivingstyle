@@ -32,6 +32,8 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
     } else if ($driver_id != "") {      //driver的所有trip
 //        $hostdir = dirname($csv_file_dir);
         $files_folder = scandir($csv_file_dir);
+
+        //test
         if(is_dir($csv_file_dir))
         {
             echo("<script>console.log('111111');</script>");
@@ -39,6 +41,10 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
             echo("<script>console.log('222222');</script>");
         }
 
+        foreach ($files_folder as $file) {
+                echo("<script>console.log('".$file."');</script>");
+        }
+        //test
         foreach ($files_folder as $name) {
             echo("<script>console.log('".$name."');</script>");
             if (startWith("CCHN_" . $driver_id, $name)) {
