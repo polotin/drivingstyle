@@ -35,6 +35,8 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         if(is_dir($csv_file_dir))
         {
             echo("<script>console.log('111111');</script>");
+        }else{
+            echo("<script>console.log('222222');</script>");
         }
 
         foreach ($files_folder as $name) {
