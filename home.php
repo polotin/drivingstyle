@@ -82,7 +82,6 @@ if (isset($_POST["video_play_fol"])) {
 $json_file_dir = '';
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "filter") {
-        echo("<script>console.log('" . $threshold . "');</script>");
         $json_file_dir = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
     }
 }
@@ -90,7 +89,6 @@ if (isset($_POST["fenxi"])) {
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
 echo "<script type=text/javascript>play_result('" . "./" . $json_file_dir . "')</script>";
-
 ?>
 </body>
 

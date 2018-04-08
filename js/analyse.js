@@ -15,10 +15,6 @@ function play_result(file_name) {
             "<th>Time</th>\n" +
             "<th>Driver_Id</th>\n" +
             "<th>Trip_Id</th>\n" +
-            "<th>Speed</th>\n" +
-            "<th>Accel</th>\n" +
-            "<th>Event_Id</th>\n" +
-            "<th>Trip_Event_Id</th>\n" +
             "<th>Type</th>\n" +
             "<th>Video</th>\n" +
             "</tr>";
@@ -35,10 +31,6 @@ function play_result(file_name) {
                 "<td>" + data[i]['time'] + "</td>\n" +
                 "<td>" + data[i]['driver_id'] + "</td>\n" +
                 "<td>" + data[i]['trip_id'] + "</td>\n" +
-                "<td>" + data[i]['speed'] + "</td>\n" +
-                "<td>" + data[i]['accel'] + "</td>\n" +
-                "<td>" + data[i]['event_id'] + "</td>\n" +
-                "<td>" + data[i]['trip_event_id'] + "</td>\n" +
                 "<td>" + data[i]['type'] + "</td>\n" +
                 "<td><a href='" + video_link + "'" + "target=\"_blank\">Video" + "" + "</a></td>\n" +
                 "</tr>";
@@ -62,10 +54,6 @@ function play_result(file_name) {
                     "<th>Time</th>\n" +
                     "<th>Driver_Id</th>\n" +
                     "<th>Trip_Id</th>\n" +
-                    "<th>Speed</th>\n" +
-                    "<th>Accel</th>\n" +
-                    "<th>Event_Id</th>\n" +
-                    "<th>Trip_Event_Id</th>\n" +
                     "<th>Type</th>\n" +
                     "<th>Video</th>\n" +
                     "</tr>";
@@ -81,10 +69,6 @@ function play_result(file_name) {
                         "<td>" + data[pageIndex * 10 + i]['time'] + "</td>\n" +
                         "<td>" + data[pageIndex * 10 + i]['driver_id'] + "</td>\n" +
                         "<td>" + data[pageIndex * 10 + i]['trip_id'] + "</td>\n" +
-                        "<td>" + data[pageIndex * 10 + i]['speed'] + "</td>\n" +
-                        "<td>" + data[pageIndex * 10 + i]['accel'] + "</td>\n" +
-                        "<td>" + data[pageIndex * 10 + i]['event_id'] + "</td>\n" +
-                        "<td>" + data[pageIndex * 10 + i]['trip_event_id'] + "</td>\n" +
                         "<td>" + data[pageIndex * 10 + i]['type'] + "</td>\n" +
                         "<td><a href='" + video_link + "'" + "target=\"_blank\">Video" + "" + "</a></td>\n" +
                         "</tr>";

@@ -114,7 +114,8 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
 //    $csv = $header . $content;
 //    fwrite($output, $csv);
 //    fclose($output) or die("can not close");
-    return $new_file;
+    echo("<script>console.log('".$file_path."');</script>");
+    return $file_path;
 }
 
 function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
@@ -179,6 +180,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $tmp_event->time = $row[0];
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
+                    $tmp_event->type = "sud_brake";
                     $tmp_events[] = $tmp_event;
 
                     $new_rows_hb[] = $new_row;
@@ -217,6 +219,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $tmp_event->time = $row[0];
                             $tmp_event->driver_id = $driver_id;
                             $tmp_event->trip_id = $trip_id;
+                            $tmp_event->type = "start";
                             $tmp_events[] = $tmp_event;
                         } else {
                             $new_row[3] = $new_row[3] . ",start";
@@ -243,6 +246,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                         $tmp_event->time = $row[0];
                         $tmp_event->driver_id = $driver_id;
                         $tmp_event->trip_id = $trip_id;
+                        $tmp_event->type = "stop";
                         $tmp_events[] = $tmp_event;
                     } else {
                         $new_row[3] = $new_row[3] . ",stop";

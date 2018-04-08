@@ -9,7 +9,8 @@
     $driver_id = $_GET['driver_id'];
     $trip_id = $_GET['trip_id'];
     $start = $_GET['start'];
-    $type = $_GET['type'];
+    $pre = $_GET['pre'];
+    $fol = $_GET['fol'];
 
     $video_path = 'video/'.$driver_id.'_'.$trip_id.'.mp4';
 
@@ -34,16 +35,19 @@
     function playVideo() {
         var startTime = 0;
         var endTime = 0;
-        if("<?php echo $type?>" == "sud_brake" ){
-            startTime = <?php echo $start?> - 5;
-            endTime = <?php echo $start?> + 5;
-        }else if("<?php echo $type?>" == "start"){
-            startTime = <?php echo $start?> - 5;
-            endTime = <?php echo $start?> + 5;
-        }else if("<?php echo $type?>" == "stop"){
-            startTime = <?php echo $start?> - 5;
-            endTime = <?php echo $start?> + 5;
-        }
+        startTime = <?php echo $start?> - <?php echo $pre?>;
+        endTime = <?php echo $start?> + <?php echo $fol?>;
+        //
+        //if("<?php //echo $type?>//" == "sud_brake" ){
+        //    startTime = <?php //echo $start?>// - 5;
+        //    endTime = <?php //echo $start?>// + 5;
+        //}else if("<?php //echo $type?>//" == "start"){
+        //    startTime = <?php //echo $start?>// - 5;
+        //    endTime = <?php //echo $start?>// + 5;
+        //}else if("<?php //echo $type?>//" == "stop"){
+        //    startTime = <?php //echo $start?>// - 5;
+        //    endTime = <?php //echo $start?>// + 5;
+        //}
 
 
         _endTime = endTime;

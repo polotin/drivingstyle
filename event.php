@@ -15,5 +15,5 @@ class event
 //    public $accel = "";
 //    public $event_id = "";
 //    public $trip_event_id="";
-//    public $type="";
+    public $type="";
 }
