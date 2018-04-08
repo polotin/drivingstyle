@@ -27,6 +27,7 @@ include 'process.php';
     <input type="checkbox" name="types[]" value="ini_start">ini_start
     <input type="checkbox" name="types[]" value="final_stop">final_stop
     <br/><br/>
+
     config: <br/>
     threshold(hard_brake): <input type="text" name="threshold"><br/>
     csv_file_folder: <input type="text" name="csv_file_dir"><br/>
@@ -49,8 +50,8 @@ $threshold = 0;
 $csv_file_dir = "";
 $video_file_dir = "";
 $output_dir = "";
-$video_play_pre = 0;
-$video_play_fol = 0;
+$video_play_pre = 5;
+$video_play_fol = 5;
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
 }
@@ -72,11 +73,11 @@ if (isset($_POST["video_file_dir"])) {
 if (isset($_POST["output_dir"])) {
     $output_dir = $_POST["output_dir"];
 }
-if (isset($_POST["video_play_pre"])) {
-    $video_play_pre = $_POST["video_play_pre"];
+if (isset($_POST["previous"])) {
+    $video_play_pre = $_POST["previous"];
 }
-if (isset($_POST["video_play_fol"])) {
-    $video_play_fol = $_POST["video_play_fol"];
+if (isset($_POST["following"])) {
+    $video_play_fol = $_POST["following"];
 }
 
 $json_file_dir = '';
@@ -88,8 +89,16 @@ if (isset($_POST["fenxi"])) {
 
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
-echo "<script type=text/javascript>play_result('" . "./" . $json_file_dir . "')</script>";
+echo "<script type=text/javascript>play_result('" . "./" .$json_file_dir."','". str_replace("\\","/",$video_file_dir)."','".$video_play_pre."','".$video_play_fol . "')</script>";
 ?>
+
+<div class="myvideo">
+    <video id="video1">
+        <source id="videosrc" type="video/mp4">
+    </video>
+
+</div>
+
 </body>
 
 </html>

@@ -16,7 +16,6 @@ $tmp_events = array();  //所有事件 存为JSON
 
 function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol)
 {
-    echo "__FILE__: ========> ".__FILE__;
     $file_name = "";
     $file_names = array();
     $files_folder = array();
@@ -34,7 +33,6 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         $files_folder = scandir($csv_file_dir);
 
         foreach ($files_folder as $name) {
-            echo("<script>console.log('".$name."');</script>");
             if (startWith("CCHN_" . $driver_id, $name)) {
                 $file_names[] = $name;
             }
@@ -44,7 +42,6 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         if (!empty($file_names)) {
             foreach ($file_names as $file_name) {
                 $file_dir = $csv_file_dir . "/" . $file_name;
-                echo("<script>console.log('".$types[0]."');</script>");
                 process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
             }
 
@@ -55,6 +52,7 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
 
     //输出JSON
     global $tmp_events;
+    array_pop($tmp_events);
     $json_str = json_encode($tmp_events);
     date_default_timezone_set("Asia/Shanghai");
     $cur_time = date("Y-m-d-H-i-s");
@@ -76,6 +74,7 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
 
     if(in_array("start_stop",$types)){
         $content = '';
+        array_pop($new_rows_ss);
         foreach ($new_rows_ss as $line) {
             $content .= implode(',', $line) . PHP_EOL;
         }
@@ -86,7 +85,6 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         fwrite($output, $csv);
         fclose($output) or die("can not close");
     }
-    echo("<script>console.log('".sizeof($new_rows_hb)."');</script>");
     if(in_array("hard_brake",$types)){
         $content = '';
         foreach ($new_rows_hb as $line) {
@@ -111,17 +109,13 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         fwrite($output, $csv);
         fclose($output) or die("can not close");
     }
-//    $csv = $header . $content;
-//    fwrite($output, $csv);
-//    fclose($output) or die("can not close");
-    echo("<script>console.log('".$file_path."');</script>");
     return $file_path;
 }
 
 function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
 {
     if ($trip_id == "") {
-        $trip_id = substr($file_dir, sizeof($file_dir) -9, 5);
+        $trip_id = substr($file_dir, sizeof($file_dir) -10, 5);
     }
     global $new_rows_ss;
     global $new_rows_hb;
@@ -225,8 +219,6 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $new_row[3] = $new_row[3] . ",start";
                         }
                     }
-
-
                 }
                 //停车事件
                if (((float)$row[82] == 0) & ($last_speed != 0)) {
@@ -276,7 +268,6 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
 
         if ($event_type == 1) {
             $i = 2;
-            echo("<script>console.log('".$new_row[0]."');</script>");
             $new_rows_ss[] = $new_row;
             $tmp_begin = $row_num + 1;
             for ($tmp_begin, $i; ($tmp_begin < $row_num + 50) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
