@@ -30,9 +30,9 @@ foreach ($info_list as $row) {
     $result = new event();
     $result->time = $row[0];
     $result->driver_id = $row[8];
-    $result->trip_id = $row[9];
+    $result->trip_id = $row[3];
     $result->speed = $row[1];
-    $result->accel = $row[2];
+    $result->accel = $row[82];
     $result->event_id = $row[4];
     $result->trip_event_id = $row[7];
     $result->type = $row[3];

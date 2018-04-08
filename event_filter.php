@@ -6,11 +6,30 @@
  * Time: 15:38
  */
 header("Content-type: text/html; charset=utf-8");
-$driver_id = $_POST["driver_id"];
-$trip_id = $_POST["trip_id"];
+
+$file_name = "";
+$file_names = array();
+$driver_id = "";
+$trip_id = "";
+$csv_file_dir = "";
+$video_file_dir = "";
+$output_dir = "";
+if(isset($_POST["driver_id"])){
+    $driver_id = $_POST["driver_id"];
+}else{
+    return false;
+}
+if(isset($_POST["trip_id"])){
+    $trip_id = $_POST["trip_id"];
+    $file_name = "CCHN_".$driver_id . "_229730_46_130419_1430_" . $trip_id . ".csv";
+}else{
+
+}
+
+
 $types = $_POST["types"];
 
-$file_name = $driver_id . "_" . $trip_id . ".csv";
+$file_name = "CCHN_".$driver_id . "_229730_46_130419_1430_" . $trip_id . ".csv";
 $file = fopen($file_name, "r");
 
 $info_list = array();  //存放所有行车信息
@@ -27,7 +46,6 @@ while ($data = fgetcsv($file)) { //每次读取CSV里面的一行内容
 $row_num = 0;   //当前遍历行数
 $new_row = array();
 $new_rows = array();
-$event_type = -1; //事件类型: 0.急刹车 1.启动 2.停车...
 
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $trip_event_id = 1; //每次行程事件编号
@@ -40,16 +58,16 @@ foreach ($info_list as $row) {
     if ($row_num > count($info_list, 0)) {
         break;
     }
-    $event_type = -1;
+    $event_type = -1;//事件类型: 0.急刹车 1.启动 2.停车...
 
     //判断是否为急刹车事件
     if (in_array("hard_brake", $types)) {
-        if ($row[9] != "" & $row[9] != " ") {
-            if (((float)$row[9] < -0.108505) & ((float)$row[0] - $brake_time > 100)) {
+        if ($row[3] != "" & $row[3] != " ") {
+            if (((float)$row[3] < -0.108505) & ((float)$row[0] - $brake_time > 100)) {
                 $brake_time = $row[0];
                 $new_row[] = $row[0]; //时间
-                $new_row[] = $row[2]; //速度
-                $new_row[] = $row[9]; //加速度
+                $new_row[] = $row[82]; //速度
+                $new_row[] = $row[3]; //加速度
                 $new_row[] = "sud_brake"; //事件类型
                 $event_type = 0;
                 $new_row[] = $event_id; // event_id
@@ -67,14 +85,14 @@ foreach ($info_list as $row) {
     //判断是否为启停事件
     if (in_array("start_stop", $types)) {
         //判断是否为启停事件
-        if (($row[2] != "") & ($row[2] != " ")) {
+        if (($row[82] != "") & ($row[82] != " ")) {
             //启动事件
-            if (((float)$row[2] != 0) & ($last_speed == 0)) {
+            if (((float)$row[82] != 0) & ($last_speed == 0)) {
                 $s_s_num += 1;
                 if (empty($new_row)) {
                     $new_row[] = $row[0]; //时间
-                    $new_row[] = $row[2]; //速度
-                    $new_row[] = $row[9]; //加速度
+                    $new_row[] = $row[82]; //速度
+                    $new_row[] = $row[3]; //加速度
                     $new_row[] = "start"; //事件类型
                     $event_type = 1;
                     $new_row[] = $event_id; // event_id
@@ -89,11 +107,11 @@ foreach ($info_list as $row) {
 
             }
             //停车事件
-            if (((float)$row[2] == 0) & ($last_speed != 0)) {
+            if (((float)$row[82] == 0) & ($last_speed != 0)) {
                 if (empty($new_row)) {
                     $new_row[] = $row[0]; //时间
-                    $new_row[] = $row[2]; //速度
-                    $new_row[] = $row[9]; //加速度
+                    $new_row[] = $row[82]; //速度
+                    $new_row[] = $row[3]; //加速度
                     $new_row[] = "stop"; //事件类型
                     $event_type = 2;
                     $new_row[] = $event_id; // event_id
@@ -106,7 +124,7 @@ foreach ($info_list as $row) {
                     $new_row[3] = $new_row[3] . ",stop";
                 }
             }
-            $last_speed = (float)$row[2];
+            $last_speed = (float)$row[82];
         }
     }
 

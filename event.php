@@ -11,9 +11,9 @@ class event
     public $time = "";
     public $driver_id = "";
     public $trip_id = "";
-    public $speed = "";
-    public $accel = "";
-    public $event_id = "";
-    public $trip_event_id="";
-    public $type="";
+//    public $speed = "";
+//    public $accel = "";
+//    public $event_id = "";
+//    public $trip_event_id="";
+//    public $type="";
 }
