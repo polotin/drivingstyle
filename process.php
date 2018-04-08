@@ -16,6 +16,7 @@ $tmp_events = array();  //所有事件 存为JSON
 
 function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol)
 {
+    echo "__FILE__: ========> ".__FILE__;
     $file_name = "";
     $file_names = array();
     $files_folder = array();
