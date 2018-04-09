@@ -47,7 +47,7 @@ date_default_timezone_set("Asia/Shanghai");
 $cur_time = date("Y-m-d-H-i-s");
 $file_name = $cur_time . '.json';
 $file_path = "data/" . $file_name;
-$new_file = fopen($file_path, "w") or die("Unable to open file!");
+$new_file = fopen($file_path, "w") or die("Unable to open file2!");
 fwrite($new_file, $json_str);
 fclose($new_file);
 echo "<div class=\"box\"></div>

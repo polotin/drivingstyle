@@ -59,7 +59,7 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
     $cur_time = date("Y-m-d-H-i-s");
     $json_file_name = $driver_id."_".$cur_time . '.json';
     $file_path = "data/" . $json_file_name;
-    $new_file = fopen($file_path, "w") or die("Unable to open file!");
+    $new_file = fopen($file_path, "w") or die("Unable to open file3!");
     fwrite($new_file, $json_str);
     fclose($new_file);
 
