@@ -33,7 +33,7 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         $files_folder = scandir($csv_file_dir);
 
         foreach ($files_folder as $name) {
-            echo "<script type=text/javascript>console.log(".$name.")</script>";
+            echo "<script type=text/javascript>console.log('".$name."')</script>";
             if (startWith("CCHN_" . $driver_id, $name)) {
                 $file_names[] = $name;
             }
