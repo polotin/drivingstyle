@@ -1,9 +1,10 @@
-function play_result(file_name, video_play_pre, video_play_fol) {
+function play_result(json_str, video_play_pre, video_play_fol) {
         console.log(video_play_pre);
         console.log(video_play_fol);
     var showBox = $('.box');
 
-    $.getJSON(file_name, function (data) {
+    // $.getJSON(file_name, function (data) {
+    var data = json_str.parseJSON();
         if (data == null) {
             alert("failed");
             return false;
@@ -86,8 +87,9 @@ function play_result(file_name, video_play_pre, video_play_fol) {
                 html1 += "</table>";
                 showBox.html(html1);
             }
-        })
-    });
+        }
+    // }
+    );
 }
 
 function playMyVideo(driver_id, trip_id, start_time, stop_time){
