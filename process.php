@@ -14,7 +14,7 @@ $new_rows_turn = array();
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
 
-function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol)
+function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
 {
     $file_name = "";
     $file_names = array();
@@ -23,7 +23,14 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
     $info_list = array();  //存放所有行车信息
     //driver的单次trip
     if (trim($trip_id) != "") {
-        $file_name = "CCHN_" . $driver_id . "_229730_46_130419_1430_" . $trip_id . ".csv";
+        $files_folder = scandir($csv_file_dir);
+        $file_name = "";
+        foreach ($files_folder as $name) {
+            if (startWith("CCHN_" . $driver_id, $name) && endWith($trip_id.".csv", $name)) {
+                $file_name = $name;
+            }
+        }
+
         $file_dir = $csv_file_dir . "/" . $file_name;
         global $json_file_names;
         $json_file_names[] = process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
@@ -330,4 +337,9 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
 function startWith($needle, $name)
 {
     return strpos($name, $needle) === 0;
+}
+
+function endWith($needle, $name)
+{
+    return (strrchr($name, $needle) == $needle);
 }

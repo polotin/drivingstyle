@@ -83,7 +83,7 @@ if (isset($_POST["following"])) {
 $json_str = '';
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "filter") {
-        $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
+        $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
     }
 }
 
