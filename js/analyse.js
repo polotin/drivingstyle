@@ -5,7 +5,8 @@ function play_result(json_str, video_play_pre, video_play_fol) {
 
     // $.getJSON(file_name, function (data) {
     var data;
-    JSON.parse(json_str, data);
+    console.log(json_str);
+    data = JSON.parse(json_str);
         if (data == null) {
             alert("failed");
             return false;
