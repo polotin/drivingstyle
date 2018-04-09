@@ -81,16 +81,24 @@ if (isset($_POST["following"])) {
 }
 
 $json_str = '';
+$file_names = array();
+$files_folder = array();
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "filter") {
         $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
+    }
+}
+$files_folder = scandir($csv_file_dir);
+foreach ($files_folder as $name) {
+    if (startWith("CCHN_" . $driver_id, $name)) {
+        $file_names[] = $name;
     }
 }
 
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
 //echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . str_replace("\\", "/", $video_file_dir) . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
-echo "<script type=text/javascript>play_result('"  . $json_str . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
+echo "<script type=text/javascript>play_result('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
 ?>
 
 <div class="myvideo">
