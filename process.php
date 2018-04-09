@@ -33,7 +33,7 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
         $files_folder = scandir($csv_file_dir);
 
         foreach ($files_folder as $name) {
-            echo "<script type=text/javascript>console.log('".$name."')</script>";
+            echo "<script type=text/javascript>console.log('" . $name . "')</script>";
             if (startWith("CCHN_" . $driver_id, $name)) {
                 $file_names[] = $name;
             }
@@ -55,16 +55,16 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
     global $tmp_events;
     array_pop($tmp_events);
     $json_str = json_encode($tmp_events);
-    date_default_timezone_set("Asia/Shanghai");
-    $cur_time = date("Y-m-d-H-i-s");
-    $json_file_name = $driver_id."_".$cur_time . '.json';
-    $file_path = "data/" . $json_file_name;
-    $new_file = fopen($file_path, "w") or die("Unable to open file3!");
-    fwrite($new_file, $json_str);
-    fclose($new_file);
+//    $json_file_name = $driver_id."_".$cur_time . '.json';
+//    $file_path = "data/" . $json_file_name;
+//    $new_file = fopen($file_path, "w") or die("Unable to open file3!");
+//
+//    fwrite($new_file, $json_str);
+//    fclose($new_file);
 
     //输出为CSV文件
-
+    date_default_timezone_set("Asia/Shanghai");
+    $cur_time = date("Y-m-d-H-i-s");
     $csv_header = ['time', 'speed', 'accel', 'event_type', 'event_id', 'seq', 's_s_num', 'trip_event_id', 'driver_id', 'trip_id'];
     //$content = $head.$new_rows;
     $header = implode(',', $csv_header) . PHP_EOL;
@@ -73,50 +73,53 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video
     global $new_rows_hb;
     global $new_rows_turn;
 
-    if(in_array("start_stop",$types)){
+    if (in_array("start_stop", $types)) {
         $content = '';
         array_pop($new_rows_ss);
         foreach ($new_rows_ss as $line) {
             $content .= implode(',', $line) . PHP_EOL;
         }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_"."start_stop" . $cur_time . ".csv";
-        $csv_file_dir = $output_dir."\\".$csv_file_name;
-        $output = fopen($csv_file_dir, 'w') or die("can not open");
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "start_stop" . $cur_time . ".csv";
+//        $csv_file_dir = $output_dir."/".$csv_file_name;
+        $csv_file_dir = "public/csv/" . $csv_file_name;
+        $output = fopen($csv_file_dir, 'w') or die("can not open csv file");
         $csv = $header . $content;
         fwrite($output, $csv);
         fclose($output) or die("can not close");
     }
-    if(in_array("hard_brake",$types)){
+    if (in_array("hard_brake", $types)) {
         $content = '';
         foreach ($new_rows_hb as $line) {
             $content .= implode(',', $line) . PHP_EOL;
         }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_"."hard_brake" . $cur_time . ".csv";
-        $csv_file_dir = $output_dir."\\".$csv_file_name;
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "hard_brake" . $cur_time . ".csv";
+//        $csv_file_dir = $output_dir."\\".$csv_file_name;
+        $csv_file_dir = "public/csv/" . $csv_file_name;
         $output1 = fopen($csv_file_dir, 'w') or die("can not open");
         $csv = $header . $content;
         fwrite($output1, $csv);
         fclose($output1) or die("can not close");
     }
-    if(in_array("turn",$types)){
+    if (in_array("turn", $types)) {
         $content = '';
         foreach ($new_rows_turn as $line) {
             $content .= implode(',', $line) . PHP_EOL;
         }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_"."turn" . $cur_time . ".csv";
-        $csv_file_dir = $output_dir."\\".$csv_file_name;
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "turn" . $cur_time . ".csv";
+//        $csv_file_dir = $output_dir."\\".$csv_file_name;
+        $csv_file_dir = "public/csv/" . $csv_file_name;
         $output = fopen($csv_file_dir, 'w') or die("can not open");
         $csv = $header . $content;
         fwrite($output, $csv);
         fclose($output) or die("can not close");
     }
-    return $file_path;
+    return $json_str;
 }
 
 function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
 {
     if ($trip_id == "") {
-        $trip_id = substr($file_dir, sizeof($file_dir) -10, 5);
+        $trip_id = substr($file_dir, sizeof($file_dir) - 10, 5);
     }
     global $new_rows_ss;
     global $new_rows_hb;
@@ -193,10 +196,10 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                 //启动事件
 
                 if (((float)$row[82] != 0) & ($last_speed == 0)) {
-                    if($is_ini_start){
+                    if ($is_ini_start) {
                         $is_ini_start = false;
 
-                    }else{
+                    } else {
                         $s_s_num += 1;
                         if (empty($new_row)) {
                             $new_row[] = $row[0]; //时间
@@ -222,7 +225,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     }
                 }
                 //停车事件
-               if (((float)$row[82] == 0) & ($last_speed != 0)) {
+                if (((float)$row[82] == 0) & ($last_speed != 0)) {
                     if (empty($new_row)) {
                         $new_row[] = $row[0]; //时间
                         $new_row[] = $row[82]; //速度
@@ -283,7 +286,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                 $new_row_start[] = $trip_event_id;
                 $new_row_start[] = $driver_id;
                 $new_row_start[] = $trip_id;
-                $new_rows_ss[]= $new_row_start;
+                $new_rows_ss[] = $new_row_start;
                 unset($new_row_start);
             }
             $event_id += 1;

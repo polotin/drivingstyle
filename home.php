@@ -80,16 +80,17 @@ if (isset($_POST["following"])) {
     $video_play_fol = $_POST["following"];
 }
 
-$json_file_dir = '';
+$json_str = '';
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "filter") {
-        $json_file_dir = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
+        $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir, $video_file_dir, $output_dir, $video_play_pre, $video_play_fol);
     }
 }
 
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
-echo "<script type=text/javascript>play_result('" . "./" .$json_file_dir."','". str_replace("\\","/",$video_file_dir)."','".$video_play_pre."','".$video_play_fol . "')</script>";
+//echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . str_replace("\\", "/", $video_file_dir) . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
+echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
 ?>
 
 <div class="myvideo">

@@ -1,4 +1,4 @@
-function play_result(file_name, video_file_dir, video_play_pre, video_play_fol) {
+function play_result(file_name, video_play_pre, video_play_fol) {
         console.log(video_play_pre);
         console.log(video_play_fol);
     var showBox = $('.box');
@@ -38,7 +38,7 @@ function play_result(file_name, video_file_dir, video_play_pre, video_play_fol) 
                 "<td>" + data[i]['trip_id'] + "</td>\n" +
                 "<td>" + data[i]['type'] + "</td>\n" +
                 // "<td><a href='" + video_link + "'" + "target=\"_blank\">Video" + "" + "</a></td>\n" +
-                "<td><button onclick=playMyVideo('"+video_file_dir+"','"+ data[i]['driver_id']+"','"+data[i]['trip_id']+"','"+start_time+"','"+stop_time+"')>Video</button></td>\n" +
+                "<td><button onclick=playMyVideo('"+data[i]['trip_id']+"','"+start_time+"','"+stop_time+"')>Video</button></td>\n" +
                 "</tr>";
         }
         html += "</table>";
@@ -80,7 +80,7 @@ function play_result(file_name, video_file_dir, video_play_pre, video_play_fol) 
                         "<td>" + data[pageIndex * 10 + i]['trip_id'] + "</td>\n" +
                         "<td>" + data[pageIndex * 10 + i]['type'] + "</td>\n" +
                         // "<td><a href='" + video_link + "'" + "target=\"_blank\">Video" + "" + "</a></td>\n" +
-                        "<td><button onclick=playMyVideo(\""+video_file_dir+"\",'"+ data[i]['driver_id']+"','"+data[i]['trip_id']+"','"+start_time+"','"+stop_time+"')>Video</button></td>\n" +
+                        "<td><button onclick=playMyVideo(\""+ data[i]['driver_id']+"','"+data[i]['trip_id']+"','"+start_time+"','"+stop_time+"')>Video</button></td>\n" +
                         "</tr>";
                 }
                 html1 += "</table>";
@@ -90,16 +90,16 @@ function play_result(file_name, video_file_dir, video_play_pre, video_play_fol) 
     });
 }
 
-function playMyVideo(video_file_dir,driver_id, trip_id, start_time, stop_time){
+function playMyVideo(driver_id, trip_id, start_time, stop_time){
     console.log(start_time);
     console.log(stop_time);
-    var video_dir="";
-    if(video_file_dir != ""){
-        video_dir = video_file_dir+"/CCHN_"+driver_id+"_229729_46_130426_1154_"+trip_id+".mp4";
-    }else
-    {
-        video_dir = "video/CCHN_"+driver_id+"_229729_46_130426_1154_"+trip_id+".mp4";
-    }
+    var video_dir="video/CCHN_"+driver_id+"_229729_46_130426_1154_"+trip_id+".mp4";
+    // if(video_file_dir != ""){
+    //     video_dir = video_file_dir+"/CCHN_"+driver_id+"_229729_46_130426_1154_"+trip_id+".mp4";
+    // }else
+    // {
+    //     video_dir = "video/CCHN_"+driver_id+"_229729_46_130426_1154_"+trip_id+".mp4";
+    // }
     // var html ="    <video id=\"video1\">\n" +
     //     "        <source src="+video_dir+" type=\"video/mp4\">\n" +
     //     "    </video>";
