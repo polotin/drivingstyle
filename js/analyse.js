@@ -4,7 +4,8 @@ function play_result(json_str, video_play_pre, video_play_fol) {
     var showBox = $('.box');
 
     // $.getJSON(file_name, function (data) {
-    var data = json_str.parseJSON();
+    var data;
+    JSON.parse(json_str, data);
         if (data == null) {
             alert("failed");
             return false;
