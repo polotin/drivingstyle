@@ -90,7 +90,7 @@ if (isset($_POST["fenxi"])) {
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
 //echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . str_replace("\\", "/", $video_file_dir) . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
-echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
+echo "<script type=text/javascript>play_result('"  . $json_str . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
 ?>
 
 <div class="myvideo">
