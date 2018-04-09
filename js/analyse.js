@@ -129,7 +129,7 @@ function playMyVideo(file_names,driver_id, trip_id, start_time, stop_time){
         var ts = time.substring(0, time.indexOf("."));
         if (ts >= parseInt(_endtime) ) {
             console.log(_endtime);
-            myVid.pause();
+            // myVid.pause();
         }
     }
 
