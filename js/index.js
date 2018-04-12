@@ -42,5 +42,6 @@ function playMyVideo(file_names, driver_id, trip_id, start_time, stop_time){
     }
 
     var video_link = "video_play.php?file_name="+video_file_name + "&start_time="+start_time+"&stop_time="+stop_time;
-    window.location.href = video_link;
+    // window.location.href = video_link;
+    window.open(video_link);
 }
