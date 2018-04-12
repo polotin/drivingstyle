@@ -30,3 +30,17 @@ function fill_table(json_str, file_names, video_play_pre, video_play_fol) {
     table_area.style.visibility = "visible";
     table_body.innerHTML=html;
 }
+
+function playMyVideo(file_names, driver_id, trip_id, start_time, stop_time){
+    var video_file_name = "";
+    var arr = new Array();
+    arr = file_names.split(',');
+    for (index in arr) {
+        if (arr[index].startsWith("CCHN_" + driver_id) && arr[index].endsWith(trip_id + ".csv")) {
+            video_file_name += arr[index].replace(".csv", ".mp4");
+        }
+    }
+
+    var video_link = "video_play.php?file_name="+video_file_name + "&start_time="+start_time+"&stop_time="+stop_time;
+    window.location.href = video_link;
+}

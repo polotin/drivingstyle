@@ -6,21 +6,15 @@
 </head>
 <body>
 <?php
-    $driver_id = $_GET['driver_id'];
-    $trip_id = $_GET['trip_id'];
-    $start = $_GET['start'];
-    $pre = $_GET['pre'];
-    $fol = $_GET['fol'];
-
-    $video_path = 'video/'.$driver_id.'_'.$trip_id.'.mp4';
+    $file_name = $_GET['file_name'];
+    $start_time = $_GET['start_time'];
+    $stop_time = $_GET['stop_time'];
 
 
 ?>
 <div>
-    <button onclick="playVideo()">播放</button>
-
     <video id="video1">
-        <source src=<?php echo $video_path?> type="video/mp4">
+        <source src=<?php echo "../video/".$file_name?> type="video/mp4">
     </video>
 </div>
 
@@ -29,14 +23,16 @@
 <script type="text/javascript">
     var myVid = document.getElementById("video1");
     myVid.addEventListener("timeupdate", timeupdate);
-
+    myVid.onloadend = setTimeout(function () {
+        playVideo();
+    }, 150);
     var _endTime;
 
     function playVideo() {
         var startTime = 0;
         var endTime = 0;
-        startTime = <?php echo $start?> - <?php echo $pre?>;
-        endTime = <?php echo $start?> + <?php echo $fol?>;
+        startTime = <?php echo $start_time?>;
+        endTime = <?php echo $stop_time?>;
         //
         //if("<?php //echo $type?>//" == "sud_brake" ){
         //    startTime = <?php //echo $start?>// - 5;
