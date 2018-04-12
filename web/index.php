@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
-    <script src="../js/index.js"></script>
+    <script src="../js/login.js"></script>
 </head>
 
 <body>
@@ -30,4 +30,5 @@ if (isset($_POST["user_name"]) & isset($_POST["pwd"])) {
 
 ?>
 </body>
+
 </html>

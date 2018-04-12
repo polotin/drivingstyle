@@ -1,126 +1,41 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Polotin
- * Date: 2018/3/29
- * Time: 18:44
+ * User: Administrator
+ * Date: 2018/4/10
+ * Time: 13:24
  */
-include 'event.php';
-include 'event_handler.php';
-$json_file_names = array();
-$new_rows_ss = array();
-$new_rows_hb = array();
-$new_rows_turn = array();
-$event_id = 1;  //事件编号，所有TRIP内的事件都唯一
-$tmp_events = array();  //所有事件 存为JSON
 
-function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
+function find_trip($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
 {
+    $files_folder = scandir($csv_file_dir);
     $file_name = "";
-    $file_names = array();
-    $files_folder = array();
-
-    $info_list = array();  //存放所有行车信息
-    //driver的单次trip
-    if (trim($trip_id) != "") {
-        $files_folder = scandir($csv_file_dir);
-        $file_name = "";
-        foreach ($files_folder as $name) {
-            if (startWith("CCHN_" . $driver_id, $name) && endWith($trip_id.".csv", $name)) {
-                $file_name = $name;
-            }
+    foreach ($files_folder as $name) {
+        if (startWith("CCHN_" . $driver_id, $name) && endWith($trip_id . ".csv", $name)) {
+            $file_name = $name;
         }
-
-        $file_dir = $csv_file_dir . "/" . $file_name;
-        global $json_file_names;
-        $json_file_names[] = process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
-
-    } else if ($driver_id != "") {      //driver的所有trip
-//        $hostdir = dirname($csv_file_dir);
-        $files_folder = scandir($csv_file_dir);
-
-        foreach ($files_folder as $name) {
-            echo "<script type=text/javascript>console.log('" . $name . "')</script>";
-            if (startWith("CCHN_" . $driver_id, $name)) {
-                $file_names[] = $name;
-            }
-        }
-
-
-        if (!empty($file_names)) {
-            foreach ($file_names as $file_name) {
-                $file_dir = $csv_file_dir . "/" . $file_name;
-                process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
-            }
-
-        } else return null;
-    } else {
-        return null;
     }
 
-    //输出JSON
-    global $tmp_events;
-    array_pop($tmp_events);
-    $json_str = json_encode($tmp_events);
-//    $json_file_name = $driver_id."_".$cur_time . '.json';
-//    $file_path = "data/" . $json_file_name;
-//    $new_file = fopen($file_path, "w") or die("Unable to open file3!");
-//
-//    fwrite($new_file, $json_str);
-//    fclose($new_file);
+    $file_dir = $csv_file_dir . "/" . $file_name;
+    process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
+}
 
-    //输出为CSV文件
-    date_default_timezone_set("Asia/Shanghai");
-    $cur_time = date("Y-m-d-H-i-s");
-    $csv_header = ['time', 'speed', 'accel', 'event_type', 'event_id', 'seq', 's_s_num', 'trip_event_id', 'driver_id', 'trip_id'];
-    //$content = $head.$new_rows;
-    $header = implode(',', $csv_header) . PHP_EOL;
+function find_trips($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
+{
+    $files_folder = scandir($csv_file_dir);
+    foreach ($files_folder as $name) {
+        echo "<script type=text/javascript>console.log('" . $name . "')</script>";
+        if (startWith("CCHN_" . $driver_id, $name)) {
+            $file_names[] = $name;
+        }
+    }
+    if (!empty($file_names)) {
+        foreach ($file_names as $file_name) {
+            $file_dir = $csv_file_dir . "/" . $file_name;
+            process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
+        }
 
-    global $new_rows_ss;
-    global $new_rows_hb;
-    global $new_rows_turn;
-
-    if (in_array("start_stop", $types)) {
-        $content = '';
-        array_pop($new_rows_ss);
-        foreach ($new_rows_ss as $line) {
-            $content .= implode(',', $line) . PHP_EOL;
-        }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "start_stop" . $cur_time . ".csv";
-//        $csv_file_dir = $output_dir."/".$csv_file_name;
-        $csv_file_dir = "public/csv/" . $csv_file_name;
-        $output = fopen($csv_file_dir, 'w') or die("can not open csv file");
-        $csv = $header . $content;
-        fwrite($output, $csv);
-        fclose($output) or die("can not close");
-    }
-    if (in_array("hard_brake", $types)) {
-        $content = '';
-        foreach ($new_rows_hb as $line) {
-            $content .= implode(',', $line) . PHP_EOL;
-        }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "hard_brake" . $cur_time . ".csv";
-//        $csv_file_dir = $output_dir."\\".$csv_file_name;
-        $csv_file_dir = "public/csv/" . $csv_file_name;
-        $output1 = fopen($csv_file_dir, 'w') or die("can not open");
-        $csv = $header . $content;
-        fwrite($output1, $csv);
-        fclose($output1) or die("can not close");
-    }
-    if (in_array("turn", $types)) {
-        $content = '';
-        foreach ($new_rows_turn as $line) {
-            $content .= implode(',', $line) . PHP_EOL;
-        }
-        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "turn" . $cur_time . ".csv";
-//        $csv_file_dir = $output_dir."\\".$csv_file_name;
-        $csv_file_dir = "public/csv/" . $csv_file_name;
-        $output = fopen($csv_file_dir, 'w') or die("can not open");
-        $csv = $header . $content;
-        fwrite($output, $csv);
-        fclose($output) or die("can not close");
-    }
-    return $json_str;
+    } else return null;
 }
 
 function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
@@ -137,18 +52,46 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
     $last_speed = 0;  //存放上一个时间点的速度
     $s_s_num = 0;       //停启编号
     $sud_brake_count = 0;   //急刹车次数
+    $trip_event_id = 1; //每次行程事件编号
     //便遍历每一行数据
     $row_num = 0;   //当前遍历行数
-
     $new_rows = array();
-    $trip_event_id = 1; //每次行程事件编号
-
     $file = fopen($file_dir, "r");
     $info_list = array();  //存放该文件中所有行车信息
     while ($data = fgetcsv($file)) { //每次读取CSV里面的一行内容
         $info_list[] = $data;
     }
 
+
+    //获取列名的位置
+    $Time_Stamp = "System.Time_Stamp";
+    $Accel = "IMU.Accel_X";
+    $Speed = "FOT_Control.Speed";
+
+    $index_time = 0;
+    $index_accel = 0;
+    $index_speed = 0;
+
+    $col_index = 0;
+    foreach ($info_list[0] as $col) {
+        switch (trim($col)) {
+            case $Time_Stamp:
+                $index_time = $col_index;
+                $col_index += 1;
+                break;
+            case $Accel:
+                $index_accel = $col_index;
+                $col_index += 1;
+                break;
+            case $Speed:
+                $index_speed = $col_index;
+                $col_index += 1;
+                break;
+            default:
+                $col_index += 1;
+                break;
+        }
+    }
     global $tmp_events;
     $is_ini_start = true;
 
@@ -166,12 +109,12 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         $tmp_event = new event();
         //判断是否为急刹车事件
         if (in_array("hard_brake", $types)) {
-            if ($row[3] != "" & $row[3] != " ") {
-                if (is_hard_brake((float)$row[3], $threshold, (float)$row[0], $brake_time)) {
-                    $brake_time = $row[0];
-                    $new_row[] = $row[0]; //时间
-                    $new_row[] = $row[82]; //速度
-                    $new_row[] = $row[3]; //加速度
+            if ($row[$index_speed] != "" & $row[$index_speed] != " ") {
+                if (is_hard_brake((float)$row[$index_speed], $threshold, (float)$row[$index_time], $brake_time)) {
+                    $brake_time = $row[$index_time];
+                    $new_row[] = $row[$index_time]; //时间
+                    $new_row[] = $row[$index_speed]; //速度
+                    $new_row[] = $row[$index_accel]; //加速度
                     $new_row[] = "sud_brake"; //事件类型
                     $event_type = 0;
                     $new_row[] = $event_id; // event_id
@@ -182,7 +125,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $new_row[] = $trip_id;
                     $sud_brake_count += 1;
 
-                    $tmp_event->time = $row[0];
+                    $tmp_event->time = $row[$index_time];
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
                     $tmp_event->type = "sud_brake";
@@ -199,19 +142,19 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         //判断是否为启停事件
         if (in_array("start_stop", $types)) {
             //判断是否为启停事件
-            if (($row[82] != "") & ($row[82] != " ")) {
+            if (($row[$index_speed] != "") & ($row[$index_speed] != " ")) {
                 //启动事件
 
-                if (((float)$row[82] != 0) & ($last_speed == 0)) {
+                if (((float)$row[$index_speed] != 0) & ($last_speed == 0)) {
                     if ($is_ini_start) {
                         $is_ini_start = false;
 
                     } else {
                         $s_s_num += 1;
                         if (empty($new_row)) {
-                            $new_row[] = $row[0]; //时间
-                            $new_row[] = $row[82]; //速度
-                            $new_row[] = $row[3]; //加速度
+                            $new_row[] = $row[$index_time]; //时间
+                            $new_row[] = $row[$index_speed]; //速度
+                            $new_row[] = $row[$index_accel]; //加速度
                             $new_row[] = "start"; //事件类型
                             $event_type = 1;
                             $new_row[] = $event_id; // event_id
@@ -221,7 +164,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $new_row[] = $driver_id;
                             $new_row[] = $trip_id;
 
-                            $tmp_event->time = $row[0];
+                            $tmp_event->time = $row[$index_time];
                             $tmp_event->driver_id = $driver_id;
                             $tmp_event->trip_id = $trip_id;
                             $tmp_event->type = "start";
@@ -232,11 +175,11 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     }
                 }
                 //停车事件
-                if (((float)$row[82] == 0) & ($last_speed != 0)) {
+                if (((float)$row[$index_speed] == 0) & ($last_speed != 0)) {
                     if (empty($new_row)) {
-                        $new_row[] = $row[0]; //时间
-                        $new_row[] = $row[82]; //速度
-                        $new_row[] = $row[3]; //加速度
+                        $new_row[] = $row[$index_time]; //时间
+                        $new_row[] = $row[$index_speed]; //速度
+                        $new_row[] = $row[$index_accel]; //加速度
                         $new_row[] = "stop"; //事件类型
                         $event_type = 2;
                         $new_row[] = $event_id; // event_id
@@ -246,7 +189,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                         $new_row[] = $driver_id;
                         $new_row[] = $trip_id;
 
-                        $tmp_event->time = $row[0];
+                        $tmp_event->time = $row[$index_time];
                         $tmp_event->driver_id = $driver_id;
                         $tmp_event->trip_id = $trip_id;
                         $tmp_event->type = "stop";
@@ -255,7 +198,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                         $new_row[3] = $new_row[3] . ",stop";
                     }
                 }
-                $last_speed = (float)$row[82];
+                $last_speed = (float)$row[$index_speed];
             }
         }
 
@@ -283,9 +226,9 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
             $tmp_begin = $row_num + 1;
             for ($tmp_begin, $i; ($tmp_begin < $row_num + 50) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
                 $new_row_start = array();
-                $new_row_start[] = $info_list[$tmp_begin][0];//时间
-                $new_row_start[] = $info_list[$tmp_begin][82];//速度
-                $new_row_start[] = $info_list[$tmp_begin][3];//加速度
+                $new_row_start[] = $info_list[$tmp_begin][$index_time];//时间
+                $new_row_start[] = $info_list[$tmp_begin][$index_speed];//速度
+                $new_row_start[] = $info_list[$tmp_begin][$index_accel];//加速度
                 $new_row_start[] = "start"; //事件类型
                 $new_row_start[] = $event_id; //event_id
                 $new_row_start[] = $i;//seq 每次事件内部数据点编号
@@ -306,9 +249,9 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
             }
             for ($tmp_begin, $i; $tmp_begin < $row_num - 1; $tmp_begin++, $i++) {
                 $new_row_stop = array();
-                $new_row_stop[] = $info_list[$tmp_begin + 1][0];//时间
-                $new_row_stop[] = $info_list[$tmp_begin + 1][82];//速度
-                $new_row_stop[] = $info_list[$tmp_begin + 1][3];//加速度
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_time];//时间
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_speed];//速度
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_accel];//加速度
                 $new_row_stop[] = "stop"; //事件类型
                 $new_row_stop[] = $event_id; //event_id
                 $new_row_stop[] = $i; //seq 每次事件内部数据点编号
