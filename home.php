@@ -8,11 +8,14 @@
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <script src="js/pagination.js"></script>
     <script src="js/analyse.js"></script>
+    <script src="js/video.min.js"></script>
+    <script src="js/zh-CN.js"></script>
+    <link href="css/video-js.css" rel="stylesheet">
 </head>
 
 <body>
 <?php
-include 'process.php';
+include 'process_improve.php';
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="my_form">
     driver_id:
@@ -39,6 +42,8 @@ include 'process.php';
     video_play_fol: <input type="text" name="following"><br/>
     <input type="submit" name="fenxi" value="filter">
 </form>
+
+
 
 
 <?php
@@ -97,7 +102,6 @@ foreach ($files_folder as $name) {
 
 echo "<div class=\"box\"></div>
     <div class=\"M-box\"></div>";
-//echo "<script type=text/javascript>play_result('" . "./" . $json_str . "','" . str_replace("\\", "/", $video_file_dir) . "','" . $video_play_pre . "','" . $video_play_fol . "')</script>";
 echo "<script type=text/javascript>play_result('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
 ?>
 
