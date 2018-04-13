@@ -39,6 +39,7 @@
     function show_bar() {
         var pro_bar = document.getElementById("page");
         pro_bar.style.display="block";
+        return true;
     }
 </script>
 
@@ -191,7 +192,7 @@ validate_login();
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="my-form">
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return show_bar();" method="post" id="my-form">
                                     <div>
                                         <div class="form-group">
                                             <label>Trip Folder</label>
@@ -338,7 +339,6 @@ $file_names = array();
 $files_folder = array();
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "Submit") {
-        echo "<script type=text/javascript>show_bar();</script>";
         $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
     }
 }
