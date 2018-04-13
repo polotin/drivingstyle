@@ -36,6 +36,10 @@
         var pro_bar = document.getElementById("page");
         pro_bar.style.display="none";
     }
+    function show_bar() {
+        var pro_bar = document.getElementById("page");
+        pro_bar.style.display="block";
+    }
 </script>
 
 <body>
@@ -334,6 +338,7 @@ $file_names = array();
 $files_folder = array();
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "Submit") {
+        echo "<script type=text/javascript>show_bar();</script>";
         $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
     }
 }
