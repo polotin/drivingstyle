@@ -34,6 +34,8 @@
 <body>
 <?php
 include 'process_improve.php';
+include 'validate_login.php';
+validate_login();
 ?>
 <div id="wrapper">
     <!-- Navigation -->
@@ -288,6 +290,9 @@ $threshold = 0;
 $csv_file_dir = "";
 $video_play_pre = 5;
 $video_play_fol = 5;
+
+
+
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
 }

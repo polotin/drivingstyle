@@ -69,6 +69,9 @@
         $id = $_POST["id"];
         $pwd = $_POST["password"];
         if ($id == "admin" & $pwd == "admin511") {
+            session_start();
+            $_SESSION['id'] = $id;
+            $_SESSION['password'] = $pwd;
             header('Location:index.php');
         } else {
             echo "<script type=text/javascript>login_failed()</script>";
