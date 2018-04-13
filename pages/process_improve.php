@@ -18,6 +18,7 @@ $tmp_events = array();  //所有事件 存为JSON
 
 function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
 {
+
     $file_name = "";
     $file_names = array();
     $files_folder = array();

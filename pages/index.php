@@ -29,7 +29,14 @@
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/progress-bar.css" rel="stylesheet" type="text/css">
 </head>
+<script type=text/javascript>
+    function hide_bar() {
+        var pro_bar = document.getElementById("page");
+        pro_bar.style.display="none";
+    }
+</script>
 
 <body>
 <?php
@@ -38,6 +45,7 @@ include 'validate_login.php';
 validate_login();
 ?>
 <div id="wrapper">
+    <p id="page" onclick="hide_bar()"></p>
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -180,30 +188,35 @@ validate_login();
                         <div class="row">
                             <div class="col-lg-6">
                                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" id="my-form">
-                                    <div class="form-group">
-                                        <label>Driver Id</label>
-                                        <input class="form-control" type="text" name="driver_id" placeholder="driver_id">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Trip Id</label>
-                                        <input class="form-control" type="text" name="trip_id" placeholder="trip_id(optional)">
+                                    <div>
+                                        <div class="form-group">
+                                            <label>Trip Folder</label>
+                                            <input class="form-control" type="text" placeholder="csv_folder" name="csv_file_dir">
+                                        </div>
+                                        <div class="form-group" style="display: inline-block; width: 50%" >
+                                            <label>Driver Id</label>
+                                            <input class="form-control" type="text" name="driver_id" placeholder="driver_id">
+                                        </div>
+                                        <div class="form-group"style="display: inline-block; width: 49%">
+                                            <label >Trip Id</label>
+                                            <input class="form-control" type="text" name="trip_id" placeholder="trip_id(optional)">
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Event Types</label><br>
-                                        <input type="checkbox" name="types[]" value="start_stop">start_stop
-                                        <input type="checkbox" name="types[]" value="hard_brake">hard_brake
-                                        <input type="checkbox" name="types[]" value="trun">trun
-                                        <input type="checkbox" name="types[]" value="high_speed">high_speed
-                                        <input type="checkbox" name="types[]" value="ini_start">ini_start
-                                        <input type="checkbox" name="types[]" value="final_stop">final_stop
+                                        <input type="checkbox" name="types[]" value="start_stop">start_stop &nbsp
+                                        <input type="checkbox" name="types[]" value="ini_start">ini_start &nbsp
+                                        <input type="checkbox" name="types[]" value="final_stop">final_stop &nbsp
+                                        <input type="checkbox" name="types[]" value="hard_brake">hard_brake &nbsp
+                                        <input type="checkbox" name="types[]" value="turn">turn &nbsp
+                                        <input type="checkbox" name="types[]" value="swerve">swerve &nbsp
+                                        <input type="checkbox" name="types[]" value="lane_change">lane_change &nbsp
+                                        <input type="checkbox" name="types[]" value="car_following">car_following &nbsp
+
                                     </div>
                                     <div class="form-group">
                                         <label>Threshold</label>
                                         <input class="form-control" type="text" placeholder="threshold" name="threshold">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Csv Folder</label>
-                                        <input class="form-control" type="text" placeholder="csv_folder" name="csv_file_dir">
                                     </div>
                                     <div class="form-group">
                                         <label>Backward</label>
@@ -252,10 +265,11 @@ validate_login();
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                             <thead>
                             <tr>
-                                <th>Time</th>
                                 <th>Driver Id</th>
                                 <th>Trip Id</th>
+                                <th>Event Id</th>
                                 <th>Type</th>
+                                <th>Time</th>
                                 <th>Video</th>
                             </tr>
                             </thead>
@@ -279,6 +293,8 @@ validate_login();
     </div>
     <!-- /#page-wrapper -->
 
+
+
 </div>
 
 <?php
@@ -290,8 +306,6 @@ $threshold = 0;
 $csv_file_dir = "";
 $video_play_pre = 5;
 $video_play_fol = 5;
-
-
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
@@ -332,7 +346,6 @@ foreach ($files_folder as $name) {
         $file_names[] = $name;
     }
 }
-
 echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
 ?>
 
@@ -356,7 +369,10 @@ echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode('
 
 
 <script>
+
+
     $(document).ready(function() {
+        hide_bar();
         $('#dataTables').DataTable({
             responsive: true
         });

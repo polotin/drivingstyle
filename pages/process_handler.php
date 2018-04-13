@@ -129,6 +129,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
                     $tmp_event->type = "sud_brake";
+                    $tmp_event->event_id = $event_id;
                     $tmp_events[] = $tmp_event;
 
                     $new_rows_hb[] = $new_row;
@@ -167,6 +168,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $tmp_event->time = $row[$index_time];
                             $tmp_event->driver_id = $driver_id;
                             $tmp_event->trip_id = $trip_id;
+                            $tmp_event->event_id = $event_id;
                             $tmp_event->type = "start";
                             $tmp_events[] = $tmp_event;
                         } else {
@@ -193,6 +195,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                         $tmp_event->driver_id = $driver_id;
                         $tmp_event->trip_id = $trip_id;
                         $tmp_event->type = "stop";
+                        $tmp_event->event_id = $event_id;
                         $tmp_events[] = $tmp_event;
                     } else {
                         $new_row[3] = $new_row[3] . ",stop";
