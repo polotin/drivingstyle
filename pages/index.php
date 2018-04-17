@@ -45,9 +45,9 @@
 
 <body>
 <?php
-include 'process_improve.php';
 include 'validate_login.php';
 validate_login();
+include 'process_improve.php';
 ?>
 <div id="wrapper">
     <p id="page" onclick="hide_bar()"></p>
@@ -208,32 +208,33 @@ validate_login();
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label>Event Types</label><br>
-                                        <input type="checkbox" name="types[]" value="start_stop">start_stop &nbsp
-                                        <input type="checkbox" name="types[]" value="ini_start">ini_start &nbsp
-                                        <input type="checkbox" name="types[]" value="final_stop">final_stop &nbsp
-                                        <input type="checkbox" name="types[]" value="hard_brake">hard_brake &nbsp
+                                        <label>Event Types</label> &nbsp
+                                        <a class="fa fa-gears" style="font-size:10px; cursor: pointer;" href="config.php" target="_blank"> Config</a><br>
+                                        <input type="checkbox" name="types[]" value="start_stop">stop-and-go &nbsp
+                                        <input type="checkbox" name="types[]" value="ini_start">ini-start &nbsp
+                                        <input type="checkbox" name="types[]" value="final_stop">final-stop &nbsp
+                                        <input type="checkbox" name="types[]" value="hard_brake">hard-brake &nbsp
                                         <input type="checkbox" name="types[]" value="turn">turn &nbsp
                                         <input type="checkbox" name="types[]" value="swerve">swerve &nbsp
-                                        <input type="checkbox" name="types[]" value="lane_change">lane_change &nbsp
-                                        <input type="checkbox" name="types[]" value="car_following">car_following &nbsp
+                                        <input type="checkbox" name="types[]" value="lane_change">lane-change &nbsp
+                                        <input type="checkbox" name="types[]" value="car_following">car-following &nbsp
 
                                     </div>
-                                    <div class="form-group">
-                                        <label>Threshold</label>
-                                        <input class="form-control" type="text" placeholder="threshold" name="threshold">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Backward</label>
-                                        <input class="form-control"type="text" placeholder="video_play_backward" name="previous">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Forward</label>
-                                        <input class="form-control" type="text" placeholder="video_play_forward" name="following">
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Threshold</label>-->
+<!--                                        <input class="form-control" type="text" placeholder="threshold" name="threshold">-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Backward</label>-->
+<!--                                        <input class="form-control"type="text" placeholder="video_play_backward" name="previous">-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Forward</label>-->
+<!--                                        <input class="form-control" type="text" placeholder="video_play_forward" name="following">-->
+<!--                                    </div>-->
 
 
-                                    <input type="submit" class="btn btn-default" name="fenxi" value="Submit"></input>
+                                    <input type="submit" class="btn btn-default" name="fenxi" value="Submit">
                                     <button type="reset" class="btn btn-default">Reset</button>
                                 </form>
                             </div>
@@ -351,7 +352,13 @@ foreach ($files_folder as $name) {
         $file_names[] = $name;
     }
 }
-echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
+
+$config_file = fopen("../config.json", "r") or die("Unable to open file!");
+$json_str_config = fread($config_file, filesize("../config.json"));
+fclose($config_file);
+
+//echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
+echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $json_str_config . "')</script>";
 ?>
 
 

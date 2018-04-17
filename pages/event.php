@@ -8,7 +8,6 @@
 
 class event
 {
-
     public $driver_id = "";
     public $trip_id = "";
     public $event_id = "";

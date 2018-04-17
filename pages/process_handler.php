@@ -6,6 +6,8 @@
  * Time: 13:24
  */
 
+include "carFollowing.php";
+
 function find_trip($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
 {
     $files_folder = scandir($csv_file_dir);
@@ -67,10 +69,17 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
     $Time_Stamp = "System.Time_Stamp";
     $Accel = "IMU.Accel_X";
     $Speed = "FOT_Control.Speed";
-
+    $SMS_Object_ID_T0 = "SMS.Object_ID_T0";
+    $SMS_X_Velocity_T0 = "SMS.X_Velocity_T0";
+    $SMS_X_Range_T0 = "SMS.X_Range_T0";
+    $SMS_Y_Range_T0 = "SMS.Y_Range_T0";
     $index_time = 0;
     $index_accel = 0;
     $index_speed = 0;
+    $index_object =0;
+    $index_x_vel =0;
+    $index_x_range =0;
+    $index_y_range =0;
 
     $col_index = 0;
     foreach ($info_list[0] as $col) {
@@ -87,6 +96,23 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                 $index_speed = $col_index;
                 $col_index += 1;
                 break;
+            case $SMS_Object_ID_T0:
+                $index_object = $col_index;
+                $col_index += 1;
+                break;
+            case $SMS_X_Velocity_T0:
+                $index_x_vel = $col_index;
+                $col_index += 1;
+                break;
+            case $SMS_X_Range_T0:
+                $index_x_range = $col_index;
+                $col_index += 1;
+                break;
+            case $SMS_Y_Range_T0:
+                $index_y_range = $col_index;
+                $col_index += 1;
+                break;
+
             default:
                 $col_index += 1;
                 break;
@@ -107,6 +133,11 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         $event_type = -1;//事件类型: 0.急刹车 1.启动 2.停车...
 
         $tmp_event = new event();
+        if(in_array("car_following", $types)){
+            carFollowing($row[$index_time],$row[$index_speed],$row[$index_object],$row[$index_x_vel],$row[$index_x_range],$row[$index_y_range]);
+
+        }
+
         //判断是否为急刹车事件
         if (in_array("hard_brake", $types)) {
             if ($row[$index_speed] != "" & $row[$index_speed] != " ") {
@@ -115,7 +146,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $new_row[] = $row[$index_time]; //时间
                     $new_row[] = $row[$index_speed]; //速度
                     $new_row[] = $row[$index_accel]; //加速度
-                    $new_row[] = "sud_brake"; //事件类型
+                    $new_row[] = "hard_brake"; //事件类型
                     $event_type = 0;
                     $new_row[] = $event_id; // event_id
                     $new_row[] = ""; //seq 每次事件内部数据点编号
@@ -128,7 +159,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $tmp_event->time = $row[$index_time];
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
-                    $tmp_event->type = "sud_brake";
+                    $tmp_event->type = "hard_brake";
                     $tmp_event->event_id = $event_id;
                     $tmp_events[] = $tmp_event;
 
@@ -156,7 +187,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $new_row[] = $row[$index_time]; //时间
                             $new_row[] = $row[$index_speed]; //速度
                             $new_row[] = $row[$index_accel]; //加速度
-                            $new_row[] = "start"; //事件类型
+                            $new_row[] = "go"; //事件类型
                             $event_type = 1;
                             $new_row[] = $event_id; // event_id
                             $new_row[] = 1; //seq 每次事件内部数据点编号
@@ -169,10 +200,10 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $tmp_event->driver_id = $driver_id;
                             $tmp_event->trip_id = $trip_id;
                             $tmp_event->event_id = $event_id;
-                            $tmp_event->type = "start";
+                            $tmp_event->type = "go";
                             $tmp_events[] = $tmp_event;
                         } else {
-                            $new_row[3] = $new_row[3] . ",start";
+                            $new_row[3] = $new_row[3] . ",go";
                         }
                     }
                 }
@@ -221,7 +252,6 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         if (in_array("final_stop", $types)) {
 
         }
-
 
         if ($event_type == 1) {
             $i = 2;
@@ -274,6 +304,10 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         array_splice($new_row, 0, count($new_row));
 //        unset($new_row);
     }
+
+
+    global $followingEvent;
+    echo "<script type=text/javascript>console.log('" . json_encode($followingEvent) . "')</script>";
 
     fclose($file);
 
