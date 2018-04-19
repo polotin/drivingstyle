@@ -5,12 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b810340a-53d4-414b-817e-2bfaad46b0e1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/event.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/process_handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/process_handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/process_improve.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/process_improve.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/csv/0007__hard_brake2018-04-09-14-34-16.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/csv/0007__start_stop2018-04-09-14-34-16.csv" beforeDir="false" />
     </list>
@@ -77,7 +71,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="process_handler.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="process_handler.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/process_handler.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="650">
@@ -85,6 +79,15 @@
               <folding>
                 <element signature="e#6#94#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="php_info.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/php_info.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -198,6 +201,7 @@
         <option value="$PROJECT_DIR$/js/index.js" />
         <option value="$PROJECT_DIR$/pages/index.php" />
         <option value="$PROJECT_DIR$/pages/process_handler.php" />
+        <option value="$PROJECT_DIR$/pages/php_info.php" />
       </list>
     </option>
   </component>
@@ -304,12 +308,12 @@
       <workItem from="1523550846920" duration="2268000" />
       <workItem from="1523553415392" duration="25735000" />
       <workItem from="1523878913156" duration="14556000" />
-      <workItem from="1523971509881" duration="14600000" />
+      <workItem from="1523971509881" duration="14623000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119583000" />
+    <option name="totallyTimeSpent" value="119606000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -360,13 +364,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dist/css/sb-admin-2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="625">
@@ -661,6 +658,13 @@
           <folding>
             <element signature="e#6#94#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/php_info.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
