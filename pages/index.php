@@ -34,11 +34,12 @@
 <script type=text/javascript>
     function hide_bar() {
         var pro_bar = document.getElementById("page");
-        pro_bar.style.display="none";
+        pro_bar.style.display = "none";
     }
+
     function show_bar() {
         var pro_bar = document.getElementById("page");
-        pro_bar.style.display="block";
+        pro_bar.style.display = "block";
         return true;
     }
 </script>
@@ -127,7 +128,8 @@ include 'process_improve.php';
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span
+                                    class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="#">Second Level Item</a>
@@ -192,24 +194,29 @@ include 'process_improve.php';
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return show_bar();" method="post" id="my-form">
+                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return show_bar();"
+                                      method="post" id="my-form">
                                     <div>
                                         <div class="form-group">
                                             <label>Trip Folder</label>
-                                            <input class="form-control" type="text" placeholder="csv_folder" name="csv_file_dir">
+                                            <input class="form-control" type="text" placeholder="csv_folder"
+                                                   name="csv_file_dir">
                                         </div>
-                                        <div class="form-group" style="display: inline-block; width: 50%" >
+                                        <div class="form-group" style="display: inline-block; width: 50%">
                                             <label>Driver Id</label>
-                                            <input class="form-control" type="text" name="driver_id" placeholder="driver_id">
+                                            <input class="form-control" type="text" name="driver_id"
+                                                   placeholder="driver_id">
                                         </div>
-                                        <div class="form-group"style="display: inline-block; width: 49%">
-                                            <label >Trip Id</label>
-                                            <input class="form-control" type="text" name="trip_id" placeholder="trip_id(optional)">
+                                        <div class="form-group" style="display: inline-block; width: 49%">
+                                            <label>Trip Id</label>
+                                            <input class="form-control" type="text" name="trip_id"
+                                                   placeholder="trip_id(optional)">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Event Types</label> &nbsp
-                                        <a class="fa fa-gears" style="font-size:10px; cursor: pointer;" href="config.php" target="_blank"> Config</a><br>
+                                        <a class="fa fa-gears" style="font-size:10px; cursor: pointer;"
+                                           href="config.php" target="_blank"> Config</a><br>
                                         <input type="checkbox" name="types[]" value="start_stop">stop-and-go &nbsp
                                         <input type="checkbox" name="types[]" value="ini_start">ini-start &nbsp
                                         <input type="checkbox" name="types[]" value="final_stop">final-stop &nbsp
@@ -220,18 +227,18 @@ include 'process_improve.php';
                                         <input type="checkbox" name="types[]" value="car_following">car-following &nbsp
 
                                     </div>
-<!--                                    <div class="form-group">-->
-<!--                                        <label>Threshold</label>-->
-<!--                                        <input class="form-control" type="text" placeholder="threshold" name="threshold">-->
-<!--                                    </div>-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label>Backward</label>-->
-<!--                                        <input class="form-control"type="text" placeholder="video_play_backward" name="previous">-->
-<!--                                    </div>-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label>Forward</label>-->
-<!--                                        <input class="form-control" type="text" placeholder="video_play_forward" name="following">-->
-<!--                                    </div>-->
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <label>Threshold</label>-->
+                                    <!--                                        <input class="form-control" type="text" placeholder="threshold" name="threshold">-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <label>Backward</label>-->
+                                    <!--                                        <input class="form-control"type="text" placeholder="video_play_backward" name="previous">-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <label>Forward</label>-->
+                                    <!--                                        <input class="form-control" type="text" placeholder="video_play_forward" name="following">-->
+                                    <!--                                    </div>-->
 
 
                                     <input type="submit" class="btn btn-default" name="fenxi" value="Submit">
@@ -285,9 +292,10 @@ include 'process_improve.php';
                         </table>
                         <!-- /.table-responsive -->
                         <div class="well">
-<!--                            <h4>DataTables Usage Information</h4>-->
-<!--                            <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>-->
-                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>
+                            <!--                            <h4>DataTables Usage Information</h4>-->
+                            <!--                            <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>-->
+                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View
+                                Data Charts</a>
                         </div>
                     </div>
                     <!-- /.panel-body -->
@@ -298,7 +306,6 @@ include 'process_improve.php';
         </div>
     </div>
     <!-- /#page-wrapper -->
-
 
 
 </div>
@@ -322,18 +329,10 @@ if (isset($_POST["trip_id"])) {
 if (isset($_POST["types"])) {
     $types = $_POST["types"];
 }
-if (isset($_POST["threshold"])) {
-    $threshold = $_POST["threshold"];
-}
 if (isset($_POST["csv_file_dir"])) {
     $csv_file_dir = $_POST["csv_file_dir"];
 }
-if (isset($_POST["previous"])) {
-    $video_play_pre = $_POST["previous"];
-}
-if (isset($_POST["following"])) {
-    $video_play_fol = $_POST["following"];
-}
+
 
 $json_str = '';
 $file_names = array();
@@ -343,7 +342,7 @@ if (isset($_POST["fenxi"])) {
         $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
     }
 }
-if($csv_file_dir!=""){
+if ($csv_file_dir != "") {
     $files_folder = scandir($csv_file_dir);
 }
 
@@ -358,32 +357,14 @@ $json_str_config = fread($config_file, filesize("../config.json"));
 fclose($config_file);
 
 //echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
-echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $json_str_config . "')</script>";
+echo "<script type=text/javascript>fill_table('" . $json_str . "','" . implode(',', $file_names) . "','" . $json_str_config . "')</script>";
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         hide_bar();
         $('#dataTables').DataTable({
             responsive: true

@@ -1,5 +1,4 @@
 function fill_table(json_str, file_names, json_str_config) {
-
     data = JSON.parse(json_str);
     if (data == null) {
         alert("failed");
@@ -32,6 +31,9 @@ function fill_table(json_str, file_names, json_str_config) {
             case 'swerve':
                 start_time -= parseFloat(config_data['backward_hard_swerve']);
                 stop_time += parseFloat(config_data['forward_hard_swerve']);
+                break;
+            case 'car-following':
+                stop_time = start_time + data[i]['duration'] * 0.1;
                 break;
             default:
                 start_time -= 5;
