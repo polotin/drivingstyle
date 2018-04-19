@@ -352,8 +352,8 @@ foreach ($files_folder as $name) {
     }
 }
 
-$config_file = fopen("../config.json", "r") or die("Unable to open file!");
-$json_str_config = fread($config_file, filesize("../config.json"));
+$config_file = fopen("../Config.json", "r") or die("Unable to open file!");
+$json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
 
 //echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";

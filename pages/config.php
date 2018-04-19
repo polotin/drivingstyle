@@ -121,13 +121,13 @@ function modConfig()
     }
     $mod_json_str = json_encode($mod_config);
 
-    $config_file = fopen("../config.json", "w") or die("Unable to open file!");
+    $config_file = fopen("../Config.json", "w") or die("Unable to open file!");
     fwrite($config_file, $mod_json_str);
     fclose($config_file);
 }
 
-$config_file = fopen("../config.json", "r") or die("Unable to open file!");
-$json_str = fread($config_file, filesize("../config.json"));
+$config_file = fopen("../Config.json", "r") or die("Unable to open file!");
+$json_str = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
 $config = new config();
 $config = json_decode($json_str);
