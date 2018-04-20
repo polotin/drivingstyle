@@ -1,4 +1,4 @@
-function fill_table(json_str, file_names, json_str_config) {
+function fill_table(json_str, json_str_config) {
     data = JSON.parse(json_str);
     if (data == null) {
         alert("failed");
@@ -47,7 +47,8 @@ function fill_table(json_str, file_names, json_str_config) {
             "<td>" + data[i]['event_id'] + "</td>" +
             "<td class=\"center\">" + data[i]['type'] + "</td>" +
             "<td>" + data[i]['time'] + "</td>" +
-            "<td class=\"center\"><button onclick=playMyVideo('" + file_names + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
+            // "<td class=\"center\"><button onclick=playMyVideo('" + file_names + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
+            "<td class=\"center\"><button onclick=playMyVideo('" + data[i]['csv_file_name'] + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
             "</tr>";
     }
     var table_area = document.getElementById("page-wrapper1");
@@ -56,18 +57,18 @@ function fill_table(json_str, file_names, json_str_config) {
     table_body.innerHTML = html;
 
     var progress_bar = document.getElementById("page");
-
 }
 
-function playMyVideo(file_names, driver_id, trip_id, start_time, stop_time) {
-    var video_file_name = "";
-    var arr = new Array();
-    arr = file_names.split(',');
-    for (index in arr) {
-        if (arr[index].startsWith("CCHN_" + driver_id) && arr[index].endsWith(trip_id + ".csv")) {
-            video_file_name += arr[index].replace(".csv", ".mp4");
-        }
-    }
+function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
+    var video_file_name = csv_file_name.substring(0, csv_file_name.length-4)+"_Front.mp4";
+
+    // var arr = new Array();
+    // arr = file_names.split(',');
+    // for (index in arr) {
+    //     if (arr[index].startsWith("CCHN_" + driver_id) && arr[index].endsWith(trip_id + ".csv")) {
+    //         video_file_name += arr[index].replace(".csv", ".mp4");
+    //     }
+    // }
 
     var video_link = "video_play.php?file_name=" + video_file_name + "&start_time=" + start_time + "&stop_time=" + stop_time;
     // window.location.href = video_link;

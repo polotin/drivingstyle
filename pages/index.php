@@ -227,19 +227,6 @@ include 'process_improve.php';
                                         <input type="checkbox" name="types[]" value="car_following">car-following &nbsp
 
                                     </div>
-                                    <!--                                    <div class="form-group">-->
-                                    <!--                                        <label>Threshold</label>-->
-                                    <!--                                        <input class="form-control" type="text" placeholder="threshold" name="threshold">-->
-                                    <!--                                    </div>-->
-                                    <!--                                    <div class="form-group">-->
-                                    <!--                                        <label>Backward</label>-->
-                                    <!--                                        <input class="form-control"type="text" placeholder="video_play_backward" name="previous">-->
-                                    <!--                                    </div>-->
-                                    <!--                                    <div class="form-group">-->
-                                    <!--                                        <label>Forward</label>-->
-                                    <!--                                        <input class="form-control" type="text" placeholder="video_play_forward" name="following">-->
-                                    <!--                                    </div>-->
-
 
                                     <input type="submit" class="btn btn-default" name="fenxi" value="Submit">
                                     <button type="reset" class="btn btn-default">Reset</button>
@@ -332,38 +319,21 @@ if (isset($_POST["types"])) {
 if (isset($_POST["csv_file_dir"])) {
     $csv_file_dir = $_POST["csv_file_dir"];
 }
-
-
 $json_str = '';
-$file_names = array();
-$files_folder = array();
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "Submit") {
-        $json_str = process($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
+        $json_str = process($driver_id, $trip_id, $types, $csv_file_dir);
     }
+}else{
+    echo "<script type=text/javascript>hide_bar();</script>";
 }
-if ($csv_file_dir != "") {
-    $files_folder = scandir($csv_file_dir);
-}
-
-foreach ($files_folder as $name) {
-    if (startWith("CCHN_" . $driver_id, $name)) {
-        $file_names[] = $name;
-    }
-}
-
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
-
-//echo "<script type=text/javascript>fill_table('"  . $json_str . "','" .implode(',',$file_names)."','". $video_play_pre . "','" . $video_play_fol . "')</script>";
-echo "<script type=text/javascript>fill_table('" . $json_str . "','" . implode(',', $file_names) . "','" . $json_str_config . "')</script>";
+echo "<script type=text/javascript>fill_table('" . $json_str . "','" . $json_str_config . "')</script>";
 ?>
 
-
 <script>
-
-
     $(document).ready(function () {
         hide_bar();
         $('#dataTables').DataTable({

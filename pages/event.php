@@ -13,6 +13,6 @@ class event
     public $event_id = "";
     public $type="";
     public $time = "";
-
     public $duration=0;
+    public $csv_file_name="";
 }

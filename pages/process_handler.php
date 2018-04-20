@@ -8,7 +8,7 @@
 
 include "carFollowing.php";
 
-function find_trip($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
+function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
 {
     $files_folder = scandir($csv_file_dir);
     $file_name = "";
@@ -19,10 +19,10 @@ function find_trip($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
     }
 
     $file_dir = $csv_file_dir . "/" . $file_name;
-    process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
+    process_file($file_dir, $types, $driver_id, $trip_id,$file_name);
 }
 
-function find_trips($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
+function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
 {
     $files_folder = scandir($csv_file_dir);
     foreach ($files_folder as $name) {
@@ -34,12 +34,12 @@ function find_trips($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
     if (!empty($file_names)) {
         foreach ($file_names as $file_name) {
             $file_dir = $csv_file_dir . "/" . $file_name;
-            process_file($file_dir, $types, $threshold, $driver_id, $trip_id);
+            process_file($file_dir, $types, $driver_id, $trip_id,$file_name);
         }
     } else return null;
 }
 
-function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
+function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
 {
     if ($trip_id == "") {
         $trip_id = substr($file_dir, sizeof($file_dir) - 10, 5);
@@ -136,7 +136,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         //判断是否为急刹车事件
         if (in_array("hard_brake", $types)) {
             if ($row[$index_speed] != "" & $row[$index_speed] != " ") {
-                if (is_hard_brake((float)$row[$index_speed], $threshold, (float)$row[$index_time], $brake_time)) {
+                if (is_hard_brake((float)$row[$index_speed], (float)$row[$index_time], $brake_time)) {
                     $brake_time = $row[$index_time];
                     $new_row[] = $row[$index_time]; //时间
                     $new_row[] = $row[$index_speed]; //速度
@@ -156,6 +156,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $tmp_event->trip_id = $trip_id;
                     $tmp_event->type = "hard_brake";
                     $tmp_event->event_id = $event_id;
+                    $tmp_event->csv_file_name = $file_name;
                     $tmp_events[] = $tmp_event;
 
                     $new_rows_hb[] = $new_row;
@@ -185,6 +186,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                     $tmp_event->trip_id = $trip_id;
                     $tmp_event->event_id = $event_id;
                     $tmp_event->type = "ini_start";
+                    $tmp_event->csv_file_name = $file_name;
                     $tmp_events[] = $tmp_event;
                     $event_id += 1;
                     $is_ini_start = false;
@@ -221,6 +223,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                             $tmp_event->trip_id = $trip_id;
                             $tmp_event->event_id = $event_id;
                             $tmp_event->type = "go";
+                            $tmp_event->csv_file_name = $file_name;
                             $tmp_events[] = $tmp_event;
                         } else {
                             $new_row[3] = $new_row[3] . ",go";
@@ -247,6 +250,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
                         $tmp_event->trip_id = $trip_id;
                         $tmp_event->type = "stop";
                         $tmp_event->event_id = $event_id;
+                        $tmp_event->csv_file_name = $file_name;
                         $tmp_events[] = $tmp_event;
                     } else {
                         $new_row[3] = $new_row[3] . ",stop";
@@ -326,7 +330,6 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
 
         $row_num += 1;
         array_splice($new_row, 0, count($new_row));
-//        unset($new_row);
     }
 
 
@@ -348,6 +351,7 @@ function process_file($file_dir, $types, $threshold, $driver_id, $trip_id)
         $tmp_event_follow->type = "car-following";
         $tmp_event_follow->time = $follow[1];
         $tmp_event_follow->duration = $follow[2];
+        $tmp_event_follow->csv_file_name = $file_name;
         $tmp_events[] = $tmp_event_follow;
         $event_id += 1;
     }

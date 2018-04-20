@@ -17,7 +17,7 @@ $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
 $followingEvent = array();//承装完成判定的跟车事件的编号，起始时间，持续时间
 
-function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
+function process($driver_id, $trip_id, $types, $csv_file_dir)
 {
 
     $file_name = "";
@@ -27,10 +27,10 @@ function process($driver_id, $trip_id, $types, $threshold, $csv_file_dir)
 
     //driver的单次trip
     if (trim($trip_id) != "") {
-        find_trip($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
+        find_trip($driver_id, $trip_id, $types, $csv_file_dir);
     }
     else if ($driver_id != "") {      //driver的所有trip
-        find_trips($driver_id, $trip_id, $types, $threshold, $csv_file_dir);
+        find_trips($driver_id, $trip_id, $types, $csv_file_dir);
     } else {
         return null;
     }

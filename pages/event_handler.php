@@ -6,14 +6,14 @@
  * Time: 20:38
  */
 
-function is_hard_brake($accel, $threshold, $cur_time, $brake_time)
+function is_hard_brake($accel, $cur_time, $brake_time)
 {
     $time_gap = $cur_time - $brake_time;
-    if (($accel < $threshold) && ($cur_time == 0)){
+    if (($accel < -0.51) && ($cur_time == 0)){
         return true;
-    }else if (($accel < $threshold) && ($time_gap > 100)){
+    }else if (($accel <  -0.51) && ($time_gap > 100)){
         return true;
-    }else if (($accel < $threshold) && ($time_gap > 100)){
+    }else if (($accel <  -0.51) && ($time_gap > 100)){
         return true;
     }else return false;
 }
