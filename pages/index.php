@@ -222,7 +222,7 @@ include 'process_improve.php';
                                         <input type="checkbox" name="types[]" value="final_stop">final-stop &nbsp
                                         <input type="checkbox" name="types[]" value="hard_brake">hard-brake &nbsp
                                         <input type="checkbox" name="types[]" value="turn">turn &nbsp
-                                        <input type="checkbox" name="types[]" value="swerve">swerve &nbsp
+                                        <input type="checkbox" name="types[]" value="hard_swerve">swerve &nbsp
                                         <input type="checkbox" name="types[]" value="lane_change">lane-change &nbsp
                                         <input type="checkbox" name="types[]" value="car_following">car-following &nbsp
 

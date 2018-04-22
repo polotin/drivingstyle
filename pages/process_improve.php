@@ -12,6 +12,7 @@ include 'process_handler.php';
 $json_file_names = array();
 $new_rows_ss = array();
 $new_rows_hb = array();
+$new_rows_hs = array();
 $new_rows_turn = array();
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
@@ -73,6 +74,12 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         $csv = $header . $content;
         fwrite($output1, $csv);
         fclose($output1) or die("can not close");
+    }
+    if(in_array("hard_swerve",$types)){
+
+    }
+    if(in_array("car_following",$types)){
+
     }
     if (in_array("turn", $types)) {
         $content = '';

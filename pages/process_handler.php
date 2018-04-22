@@ -19,7 +19,7 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
     }
 
     $file_dir = $csv_file_dir . "/" . $file_name;
-    process_file($file_dir, $types, $driver_id, $trip_id,$file_name);
+    process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
 }
 
 function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
@@ -34,22 +34,24 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
     if (!empty($file_names)) {
         foreach ($file_names as $file_name) {
             $file_dir = $csv_file_dir . "/" . $file_name;
-            process_file($file_dir, $types, $driver_id, $trip_id,$file_name);
+            process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
         }
     } else return null;
 }
 
-function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
+function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 {
     if ($trip_id == "") {
         $trip_id = substr($file_dir, sizeof($file_dir) - 10, 5);
     }
     global $new_rows_ss;
     global $new_rows_hb;
+    global $new_rows_hs;
     global $new_rows_turn;
     global $event_id;
 
     $brake_time = 0;  //急刹车事件发生时间，之后的10秒发生的急刹车算同一次。用于判断。
+    $swerve_time = 0; //急转弯事件发生时间，之后的10秒发生的急刹车算同一次。用于判断。
     $last_speed = 0;  //存放上一个时间点的速度
     $s_s_num = 0;       //停启编号
     $sud_brake_count = 0;   //急刹车次数
@@ -67,6 +69,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
     //获取列名的位置
     $Time_Stamp = "System.Time_Stamp";
     $Accel = "IMU.Accel_X";
+    $Accel_X = "IMU.Accel_Y";
     $Speed = "FOT_Control.Speed";
     $SMS_Object_ID_T0 = "SMS.Object_ID_T0";
     $SMS_X_Velocity_T0 = "SMS.X_Velocity_T0";
@@ -74,6 +77,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
     $SMS_Y_Range_T0 = "SMS.Y_Range_T0";
     $index_time = 0;
     $index_accel = 0;
+    $index_accel_y = 0;
     $index_speed = 0;
     $index_object = 0;
     $index_x_vel = 0;
@@ -83,6 +87,9 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
     $col_index = 0;
     foreach ($info_list[0] as $col) {
         switch (trim($col)) {
+            case $Accel_X:
+                $index_accel_y = $col_index;
+                $col_index += 1;
             case $Time_Stamp:
                 $index_time = $col_index;
                 $col_index += 1;
@@ -193,7 +200,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
                     $ini_start_flag = true;
                 }
             }
-        }else{
+        } else {
             $is_ini_start = false;
         }
         if (in_array("start_stop", $types)) {
@@ -201,9 +208,9 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
             if (($row[$index_speed] != "") & ($row[$index_speed] != " ")) {
                 //启动事件
                 if (!$is_ini_start & ((float)$row[$index_speed] != 0) & ($last_speed == 0)) {
-                    if($ini_start_flag){
-                        $ini_start_flag =false;
-                    }else{
+                    if ($ini_start_flag) {
+                        $ini_start_flag = false;
+                    } else {
                         $s_s_num += 1;
                         if (empty($new_row)) {
                             $new_row[] = $row[$index_time]; //时间
@@ -260,20 +267,42 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
             }
         }
 
+        if (in_array("hard_swerve", $types)) {
+            if ($row[$index_speed] != "" & $row[$index_speed] != " " & $row[$index_accel_y] != "" & $row[$index_accel_y] != " ") {
+                $emer_degree = is_hard_swerve($row[$index_accel_y], $row[$index_speed], $row[$index_time], $swerve_time);
+                if ($emer_degree != "") {
+                    $new_row[] = $row[$index_time]; //时间
+                    $new_row[] = $row[$index_speed]; //速度
+                    $new_row[] = $row[$index_accel]; //加速度
+                    $new_row[] = $emer_degree; //事件类型
+                    $event_type = 3;
+                    $new_row[] = $event_id; // event_id
+                    $new_row[] = ""; //seq 每次事件内部数据点编号
+                    $new_row[] = ""; //每对停车事件编号
+                    $new_row[] = $trip_event_id;
+                    $new_row[] = $driver_id;
+                    $new_row[] = $trip_id;
+
+                    $tmp_event->time = $row[$index_time];
+                    $tmp_event->driver_id = $driver_id;
+                    $tmp_event->trip_id = $trip_id;
+                    $tmp_event->type = "hard_swerve";
+                    $tmp_event->event_id = $event_id;
+                    $tmp_event->csv_file_name = $file_name;
+                    $tmp_events[] = $tmp_event;
+
+                    $new_rows_hs[] = $new_row;
+                    $event_id += 1;
+                    $trip_event_id += 1;
+                }
+            }
+        }
         //判断是否为转弯事件
         if (in_array("turn", $types)) {
 
         }
         //判断是否为高速行驶
         if (in_array("high_speed", $types)) {
-
-        }
-        //判断是否为初次启动
-        if (in_array("ini_start", $types)) {
-
-        }
-        //判断是否为最后停车
-        if (in_array("final_stop", $types)) {
 
         }
 
@@ -326,6 +355,8 @@ function process_file($file_dir, $types, $driver_id, $trip_id ,$file_name)
             $new_rows_ss[] = $new_row;
             $event_id += 1;
             $trip_event_id += 1;
+        }else if($event_type==3){
+
         }
 
         $row_num += 1;
