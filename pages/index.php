@@ -240,6 +240,7 @@ include 'process_improve.php';
                 </div>
                 <!-- /.panel -->
             </div>
+
             <!-- /.col-lg-12 -->
 
         </div>

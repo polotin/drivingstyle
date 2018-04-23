@@ -14,6 +14,7 @@ $new_rows_ss = array();
 $new_rows_hb = array();
 $new_rows_hs = array();
 $new_rows_turn = array();
+$new_rows_car_following = array();
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
 $followingEvent = array();//承装完成判定的跟车事件的编号，起始时间，持续时间
@@ -48,7 +49,9 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
 
     global $new_rows_ss;
     global $new_rows_hb;
+    global $new_rows_hs;
     global $new_rows_turn;
+    global $new_rows_car_following;
 
     if (in_array("start_stop", $types)) {
         $content = '';
@@ -76,10 +79,28 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         fclose($output1) or die("can not close");
     }
     if(in_array("hard_swerve",$types)){
-
+        $content = '';
+        foreach ($new_rows_hs as $line) {
+            $content .= implode(',', $line) . PHP_EOL;
+        }
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "hard_swerve" . $cur_time . ".csv";
+        $csv_file_dir = "../public/csv/" . $csv_file_name;
+        $output1 = fopen($csv_file_dir, 'w') or die("can not open");
+        $csv = $header . $content;
+        fwrite($output1, $csv);
+        fclose($output1) or die("can not close");
     }
     if(in_array("car_following",$types)){
-
+        $content = '';
+        foreach ($new_rows_car_following as $line) {
+            $content .= implode(',', $line) . PHP_EOL;
+        }
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "car_following" . $cur_time . ".csv";
+        $csv_file_dir = "../public/csv/" . $csv_file_name;
+        $output1 = fopen($csv_file_dir, 'w') or die("can not open");
+        $csv = $header . $content;
+        fwrite($output1, $csv);
+        fclose($output1) or die("can not close");
     }
     if (in_array("turn", $types)) {
         $content = '';
