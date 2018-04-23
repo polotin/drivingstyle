@@ -69,7 +69,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     //获取列名的位置
     $Time_Stamp = "System.Time_Stamp";
     $Accel = "IMU.Accel_X";
-    $Accel_X = "IMU.Accel_Y";
+    $Accel_Y = "IMU.Accel_Y";
     $Speed = "FOT_Control.Speed";
     $SMS_Object_ID_T0 = "SMS.Object_ID_T0";
     $SMS_X_Velocity_T0 = "SMS.X_Velocity_T0";
@@ -87,9 +87,10 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     $col_index = 0;
     foreach ($info_list[0] as $col) {
         switch (trim($col)) {
-            case $Accel_X:
+            case $Accel_Y:
                 $index_accel_y = $col_index;
                 $col_index += 1;
+                break;
             case $Time_Stamp:
                 $index_time = $col_index;
                 $col_index += 1;
@@ -118,12 +119,12 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $index_y_range = $col_index;
                 $col_index += 1;
                 break;
-
             default:
                 $col_index += 1;
                 break;
         }
     }
+
     $is_ini_start = true;
     $ini_start_flag = false;
     global $tmp_events;
@@ -195,7 +196,6 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $tmp_event->type = "ini_start";
                     $tmp_event->csv_file_name = $file_name;
                     $tmp_events[] = $tmp_event;
-                    $event_id += 1;
                     $is_ini_start = false;
                     $ini_start_flag = true;
                 }
@@ -266,11 +266,11 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $last_speed = (float)$row[$index_speed];
             }
         }
-
         if (in_array("hard_swerve", $types)) {
             if ($row[$index_speed] != "" & $row[$index_speed] != " " & $row[$index_accel_y] != "" & $row[$index_accel_y] != " ") {
                 $emer_degree = is_hard_swerve($row[$index_accel_y], $row[$index_speed], $row[$index_time], $swerve_time);
                 if ($emer_degree != "") {
+                    $swerve_time = $row[$index_time];
                     $new_row[] = $row[$index_time]; //时间
                     $new_row[] = $row[$index_speed]; //速度
                     $new_row[] = $row[$index_accel]; //加速度
@@ -286,7 +286,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $tmp_event->time = $row[$index_time];
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
-                    $tmp_event->type = "hard_swerve";
+                    $tmp_event->type = $emer_degree;
                     $tmp_event->event_id = $event_id;
                     $tmp_event->csv_file_name = $file_name;
                     $tmp_events[] = $tmp_event;
@@ -365,7 +365,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 
 
     global $followingEvent;
-    if ($tmp_events[count($tmp_events) - 1]->type == "stop") {
+    if (count($tmp_events)!=0 && $tmp_events[count($tmp_events) - 1]->type == "stop") {
         if (in_array("final_stop", $types)) {
             $tmp_events[count($tmp_events) - 1]->type = "final_stop";
         } else {
