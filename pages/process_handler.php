@@ -7,9 +7,9 @@
  */
 
 include "carFollowing.php";
-include "config.php";
+include "configure.php";
 
-$config = new config();
+$config = new configure();
 
 function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
 {
