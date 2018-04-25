@@ -325,12 +325,6 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             }
         }
 
-        //判断是否为转弯事件
-        if (in_array("lane_change", $types)) {
-            $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4).'_Front.mp4';
-            lane_change_detection($video_file_path, $file_dir);
-        }
-
         if (in_array("car_following", $types)) {
             carFollowing($row[$index_time], $row[$index_speed], $row[$index_object], $row[$index_x_vel], $row[$index_x_range], $row[$index_y_range]);
         }
@@ -494,9 +488,12 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 
     array_splice($followingEvent, 0, count($followingEvent));
 
+    if (in_array("lane_change", $types)) {
+        $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4).'_Front.mp4';
+        lane_change_detection($video_file_path, $file_dir);
+    }
     global $laneChangeEvent;
     echo count($laneChangeEvent);
-
     array_splice($laneChangeEvent, 0, count($laneChangeEvent));
     fclose($file);
 }
