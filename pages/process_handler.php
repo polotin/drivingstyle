@@ -787,8 +787,8 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         lane_change_detection($video_file_path, $file_dir);
     }
     global $laneChangeEvent;
-    echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . $laneChangeEvent[0][0] . "')</script>";
-    array_splice($laneChangeEvent, 0, count($laneChangeEvent));
+    echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . $laneChangeEvent . "')</script>";
+//    array_splice($laneChangeEvent, 0, count($laneChangeEvent));
     fclose($file);
 }
 

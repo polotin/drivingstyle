@@ -19,7 +19,7 @@ $new_rows_lane_change_detection = array();
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
 $followingEvent = array();//承装完成判定的跟车事件的编号，起始时间，持续时间
-$laneChangeEvent = array();//承装完成判定的跟车
+$laneChangeEvent = "";//承装完成判定的跟车
 
 function process($driver_id, $trip_id, $types, $csv_file_dir)
 {
