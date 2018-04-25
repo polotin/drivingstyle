@@ -13,6 +13,6 @@ function lane_change_detection($video_path, $csv_path){
     $result = exec('python lane_changing_detection.py {$video_path} {$csv_path}', $out, $res);
     if($out!= null && $out!='None'){
         global $laneChangeEvent;
-        $laneChangeEvent[] = $out;
+        $laneChangeEvent = $out;
     }
 }
