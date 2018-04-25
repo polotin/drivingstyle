@@ -33,19 +33,6 @@
         var endTime = 0;
         startTime = <?php echo $start_time?>;
         endTime = <?php echo $stop_time?>;
-        //
-        //if("<?php //echo $type?>//" == "sud_brake" ){
-        //    startTime = <?php //echo $start?>// - 5;
-        //    endTime = <?php //echo $start?>// + 5;
-        //}else if("<?php //echo $type?>//" == "start"){
-        //    startTime = <?php //echo $start?>// - 5;
-        //    endTime = <?php //echo $start?>// + 5;
-        //}else if("<?php //echo $type?>//" == "stop"){
-        //    startTime = <?php //echo $start?>// - 5;
-        //    endTime = <?php //echo $start?>// + 5;
-        //}
-
-
         _endTime = endTime;
         myVid.currentTime = startTime;
         myVid.play();

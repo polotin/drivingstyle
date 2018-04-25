@@ -8,6 +8,7 @@
 
 include "carFollowing.php";
 include "configure.php";
+include "lane_change_detection.php";
 
 $config = new configure();
 
@@ -61,6 +62,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     global $new_rows_hs;
     global $new_rows_turn;
     global $new_rows_car_following;
+    global $new_rows_lane_change_detection;
     global $event_id;
     global $config;
 
@@ -97,7 +99,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     $index_x_vel = 0;
     $index_x_range = 0;
     $index_y_range = 0;
-    $emer_degree="";
+    $emer_degree = "";
 
     $col_index = 0;
     foreach ($info_list[0] as $col) {
@@ -195,8 +197,8 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             if ($row[$index_speed] != 0) {
                 echo "<script type=text/javascript>console.log('" . "speed:" . $row[$index_speed] . "')</script>";
                 $ini_speed = -99;
-                $is_ini_start =false;
-                $ini_start_flag =true;
+                $is_ini_start = false;
+                $ini_start_flag = true;
             }
 
         }
@@ -322,13 +324,11 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 }
             }
         }
+
         //判断是否为转弯事件
-        if (in_array("turn", $types)) {
-
-        }
-        //判断是否为高速行驶
-        if (in_array("high_speed", $types)) {
-
+        if (in_array("lane_change", $types)) {
+            $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4).'_Front.mp4';
+            lane_change_detection($video_file_path, $file_dir);
         }
 
         if (in_array("car_following", $types)) {
@@ -450,8 +450,6 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         array_splice($new_row, 0, count($new_row));
     }
 
-
-    global $followingEvent;
     if (count($tmp_events) != 0 && $tmp_events[count($tmp_events) - 1]->type == "stop") {
         if (in_array("final_stop", $types)) {
             $tmp_events[count($tmp_events) - 1]->type = "final_stop";
@@ -461,6 +459,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         }
     }
 
+    global $followingEvent;
     foreach ($followingEvent as $follow) {
         $tmp_event_follow = new event();
         $tmp_event_follow->driver_id = $driver_id;
@@ -495,6 +494,10 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 
     array_splice($followingEvent, 0, count($followingEvent));
 
+    global $laneChangeEvent;
+    echo count($laneChangeEvent);
+
+    array_splice($laneChangeEvent, 0, count($laneChangeEvent));
     fclose($file);
 }
 
