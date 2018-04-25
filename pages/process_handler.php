@@ -195,6 +195,300 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $ini_speed = 0;
             }
             if ($row[$index_speed] != 0) {
+                $ini_speed = -99;
+                $is_ini_start = false;
+                $ini_start_flag = true;
+            }
+
+        }
+        if ($is_ini_start & in_array("ini_start", $types)) {
+            if (($ini_speed != -100) & ($ini_speed != -99) & ($row[$index_speed] != "") & ($row[$index_speed] != " ")) {
+                if (((float)$row[$index_speed] != 0) & ($last_speed == 0)) {
+                    $new_row[] = $row[$index_time]; //时间
+                    $new_row[] = $row[$index_speed]; //速度
+                    $new_row[] = $row[$index_accel]; //加速度
+                    $new_row[] = "ini_start"; //事件类型
+                    $event_type = 1;
+                    $new_row[] = $last_ss_id; // event_id
+                    $new_row[] = 1; //seq 每次事件内部数据点编号
+                    $new_row[] = $s_s_num; //每对停车事件编号
+                    $new_row[] = $trip_event_id;
+                    $new_row[] = $driver_id;
+                    $new_row[] = $trip_id;
+
+                    $tmp_event->time = $row[$index_time];
+                    $tmp_event->driver_id = $driver_id;
+                    $tmp_event->trip_id = $trip_id;
+                    $tmp_event->event_id = $last_ss_id;
+                    $tmp_event->type = "ini_start";
+                    $tmp_event->csv_file_name = $file_name;
+                    $tmp_events[] = $tmp_event;
+                    $is_ini_start = false;
+                    $ini_start_flag = true;
+                }
+            }
+        } else {
+            $is_ini_start = false;
+        }
+        if (in_array("start_stop", $types)) {
+            //判断是否为启停事件
+            if (($row[$index_speed] != "") & ($row[$index_speed] != " ")) {
+                //启动事件
+                if (!$is_ini_start & ((float)$row[$index_speed] != 0) & ($last_speed == 0)) {
+                    if ($ini_start_flag) {
+                        $ini_start_flag = false;
+                    } else {
+                        if (empty($new_row)) {
+                            $new_row[] = $row[$index_time]; //时间
+                            $new_row[] = $row[$index_speed]; //速度
+                            $new_row[] = $row[$index_accel]; //加速度
+                            $new_row[] = "go"; //事件类型
+                            $event_type = 2;
+//                            $new_row[] = $event_id; // event_id
+                            $new_row[] = $last_ss_id;
+                            $new_row[] = 1; //seq 每次事件内部数据点编号
+                            $new_row[] = $s_s_num; //每对停车事件编号
+                            $new_row[] = $trip_event_id;
+                            $new_row[] = $driver_id;
+                            $new_row[] = $trip_id;
+
+                            $tmp_event->time = $row[$index_time];
+                            $tmp_event->driver_id = $driver_id;
+                            $tmp_event->trip_id = $trip_id;
+                            $tmp_event->event_id = $event_id;
+                            $tmp_event->type = "go";
+                            $tmp_event->csv_file_name = $file_name;
+                            $tmp_events[] = $tmp_event;
+                            $s_s_num += 1;
+                        } else {
+                            $new_row[3] = $new_row[3] . ",go";
+                        }
+                    }
+                }
+                //停车事件
+                if (((float)$row[$index_speed] == 0) & ($last_speed != 0)) {
+                    if (empty($new_row)) {
+                        $new_row[] = $row[$index_time]; //时间
+                        $new_row[] = $row[$index_speed]; //速度
+                        $new_row[] = $row[$index_accel]; //加速度
+                        $new_row[] = "stop"; //事件类型
+                        $event_type = 3;
+                        $new_row[] = $event_id; // event_id
+                        $new_row[] = 50; //seq 每次事件内部数据点编号
+                        $new_row[] = $s_s_num; //每对停车事件编号
+                        $new_row[] = $trip_event_id;
+                        $new_row[] = $driver_id;
+                        $new_row[] = $trip_id;
+                        $last_ss_id = $event_id;
+
+                        $tmp_event->time = $row[$index_time];
+                        $tmp_event->driver_id = $driver_id;
+                        $tmp_event->trip_id = $trip_id;
+                        $tmp_event->type = "stop";
+                        $tmp_event->event_id = $event_id;
+                        $tmp_event->csv_file_name = $file_name;
+                        $tmp_events[] = $tmp_event;
+                    } else {
+                        $new_row[3] = $new_row[3] . ",stop";
+                    }
+                }
+                $last_speed = (float)$row[$index_speed];
+            }
+        }
+        if (in_array("hard_swerve", $types)) {
+            if ($row[$index_speed] != "" & $row[$index_speed] != " " & $row[$index_accel_y] != "" & $row[$index_accel_y] != " ") {
+                $emer_degree = is_hard_swerve($row[$index_accel_y], $row[$index_speed], $row[$index_time], $swerve_time);
+                if ($emer_degree != "") {
+                    $swerve_time = $row[$index_time];
+                    $new_row[] = $row[$index_time]; //时间
+                    $new_row[] = $row[$index_speed]; //速度
+                    $new_row[] = $row[$index_accel]; //加速度
+                    $new_row[] = $emer_degree; //事件类型
+                    $event_type = 4;
+                    $new_row[] = $event_id; // event_id
+                    $new_row[] = 1; //seq 每次事件内部数据点编号
+                    $new_row[] = ""; //每对停车事件编号
+                    $new_row[] = $trip_event_id;
+                    $new_row[] = $driver_id;
+                    $new_row[] = $trip_id;
+
+                    $tmp_event->time = $row[$index_time];
+                    $tmp_event->driver_id = $driver_id;
+                    $tmp_event->trip_id = $trip_id;
+                    $tmp_event->type = $emer_degree;
+                    $tmp_event->event_id = $event_id;
+                    $tmp_event->csv_file_name = $file_name;
+                    $tmp_events[] = $tmp_event;
+                }
+            }
+        }
+
+        if (in_array("car_following", $types)) {
+            carFollowing($row[$index_time], $row[$index_speed], $row[$index_object], $row[$index_x_vel], $row[$index_x_range], $row[$index_y_range]);
+        }
+
+        if ($event_type == 0) {
+            $i = 2;
+            $new_rows_hb[] = $new_row;
+            $tmp_begin = $row_num + 1;
+            for ($tmp_begin, $i; ($tmp_begin < $row_num + 10 * $config->forward_hard_brake) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
+                $new_row_brake = array();
+                $new_row_brake[] = $info_list[$tmp_begin][$index_time];//时间
+                $new_row_brake[] = $info_list[$tmp_begin][$index_speed];//速度
+                $new_row_brake[] = $info_list[$tmp_begin][$index_accel];//加速度
+                $new_row_brake[] = "hard_brake"; //事件类型
+                $new_row_brake[] = $event_id; //event_id
+                $new_row_brake[] = $i;//seq 每次事件内部数据点编号
+                $new_row_brake[] = $s_s_num; //每对停车事件编号
+                $new_row_brake[] = $trip_event_id;
+                $new_row_brake[] = $driver_id;
+                $new_row_brake[] = $trip_id;
+                $new_rows_hb[] = $new_row_brake;
+                unset($new_row_brake);
+            }
+            $event_id += 1;
+            $trip_event_id += 1;
+        } else if ($event_type == 1) {
+            $i = 2;
+            $new_rows_ss[] = $new_row;
+            $tmp_begin = $row_num + 1;
+            for ($tmp_begin, $i; ($tmp_begin < $row_num + 10 * $config->forward_go) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
+                $new_row_start = array();
+                $new_row_start[] = $info_list[$tmp_begin][$index_time];//时间
+                $new_row_start[] = $info_list[$tmp_begin][$index_speed];//速度
+                $new_row_start[] = $info_list[$tmp_begin][$index_accel];//加速度
+                $new_row_start[] = "ini_start"; //事件类型
+//                $new_row_start[] = $event_id; //event_id
+                $new_row_start[] = $event_id; //event_id
+                $new_row_start[] = $i;//seq 每次事件内部数据点编号
+                $new_row_start[] = $s_s_num; //每对停车事件编号
+                $new_row_start[] = $trip_event_id;
+                $new_row_start[] = $driver_id;
+                $new_row_start[] = $trip_id;
+                $new_rows_ss[] = $new_row_start;
+                unset($new_row_start);
+            }
+            $event_id += 1;
+            $trip_event_id += 1;
+        } else if ($event_type == 2) {
+            $i = 2;
+            $new_rows_ss[] = $new_row;
+            $tmp_begin = $row_num + 1;
+            for ($tmp_begin, $i; ($tmp_begin < $row_num + 10 * $config->forward_go) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
+                $new_row_start = array();
+                $new_row_start[] = $info_list[$tmp_begin][$index_time];//时间
+                $new_row_start[] = $info_list[$tmp_begin][$index_speed];//速度
+                $new_row_start[] = $info_list[$tmp_begin][$index_accel];//加速度
+                $new_row_start[] = "go"; //事件类型
+//                $new_row_start[] = $event_id; //event_id
+                $new_row_start[] = $last_ss_id; //event_id
+                $new_row_start[] = $i;//seq 每次事件内部数据点编号
+                $new_row_start[] = $s_s_num; //每对停车事件编号
+                $new_row_start[] = $trip_event_id;
+                $new_row_start[] = $driver_id;
+                $new_row_start[] = $trip_id;
+                $new_rows_ss[] = $new_row_start;
+                unset($new_row_start);
+            }
+            $event_id += 1;
+            $trip_event_id += 1;
+        } else if ($event_type == 3) {
+            $i = 1;
+            $tmp_begin = 1;
+            if ($row_num - 10 * $config->backward_stop >= 0) {
+                $tmp_begin = $row_num - 10 * $config->backward_stop;
+            }
+            for ($tmp_begin, $i; $tmp_begin < $row_num - 1; $tmp_begin++, $i++) {
+                $new_row_stop = array();
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_time];//时间
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_speed];//速度
+                $new_row_stop[] = $info_list[$tmp_begin + 1][$index_accel];//加速度
+                $new_row_stop[] = "stop"; //事件类型
+                $new_row_stop[] = $event_id; //event_id
+                $new_row_stop[] = $i; //seq 每次事件内部数据点编号
+                $new_row_stop[] = $s_s_num; //每对停车事件编号
+                $new_row_stop[] = $trip_event_id;
+                $new_row_stop[] = $driver_id;
+                $new_row_stop[] = $trip_id;
+                $new_rows_ss[] = $new_row_stop;
+                unset($new_row_stop);
+            }
+            $new_rows_ss[] = $new_row;
+            $trip_event_id += 1;
+        } else if ($event_type == 4) {
+            $i = 2;
+            $new_rows_hs[] = $new_row;
+            $tmp_begin = $row_num + 1;
+            for ($tmp_begin, $i; ($tmp_begin < $row_num + 10 * $config->forward_hard_swerve) && ($tmp_begin < count($info_list, 0)); $tmp_begin++, $i++) {
+                $new_row_swerve = array();
+                $new_row_swerve[] = $info_list[$tmp_begin][$index_time];//时间
+                $new_row_swerve[] = $info_list[$tmp_begin][$index_speed];//速度
+                $new_row_swerve[] = $info_list[$tmp_begin][$index_accel];//加速度
+                $new_row_swerve[] = $emer_degree; //事件类型
+                $new_row_swerve[] = $event_id; //event_id
+                $new_row_swerve[] = $i;//seq 每次事件内部数据点编号
+                $new_row_swerve[] = ""; //每对停车事件编号
+                $new_row_swerve[] = $trip_event_id;
+                $new_row_swerve[] = $driver_id;
+                $new_row_swerve[] = $trip_id;
+                $new_rows_hs[] = $new_row_swerve;
+                unset($new_row_swerve);
+            }
+            $event_id += 1;
+            $trip_event_id += 1;
+        }
+
+        $row_num += 1;
+        array_splice($new_row, 0, count($new_row));
+    }
+    foreach ($info_list as $row) {
+        $new_row = array();
+        if ($row_num == 0) {
+            $row_num++;
+            continue;
+        }
+        if ($row_num > count($info_list, 0)) {
+            break;
+        }
+        $event_type = -1;//事件类型: 0.急刹车 1.启动 2.停车...
+
+        $tmp_event = new event();
+
+        //判断是否为急刹车事件
+        if (in_array("hard_brake", $types)) {
+            if ($row[$index_speed] != "" & $row[$index_speed] != " ") {
+                if (is_hard_brake((float)$row[$index_speed], (float)$row[$index_time], $brake_time)) {
+                    $brake_time = $row[$index_time];
+                    $new_row[] = $row[$index_time]; //时间
+                    $new_row[] = $row[$index_speed]; //速度
+                    $new_row[] = $row[$index_accel]; //加速度
+                    $new_row[] = "hard_brake"; //事件类型
+                    $event_type = 0;
+                    $new_row[] = $event_id; // event_id
+                    $new_row[] = ""; //seq 每次事件内部数据点编号
+                    $new_row[] = ""; //每对停车事件编号
+                    $new_row[] = $trip_event_id;
+                    $new_row[] = $driver_id;
+                    $new_row[] = $trip_id;
+                    $sud_brake_count += 1;
+
+                    $tmp_event->time = $row[$index_time];
+                    $tmp_event->driver_id = $driver_id;
+                    $tmp_event->trip_id = $trip_id;
+                    $tmp_event->type = "hard_brake";
+                    $tmp_event->event_id = $event_id;
+                    $tmp_event->csv_file_name = $file_name;
+                    $tmp_events[] = $tmp_event;
+
+                    $trip_event_id += 1;
+                }
+            }
+        }
+        if ($ini_speed == -100) {
+            if ($row[$index_speed] != "" & $row[$index_speed] != " " & $row[$index_speed] == 0) {
+                $ini_speed = 0;
+            }
+            if ($row[$index_speed] != 0) {
                 echo "<script type=text/javascript>console.log('" . "speed:" . $row[$index_speed] . "')</script>";
                 $ini_speed = -99;
                 $is_ini_start = false;
@@ -493,7 +787,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         lane_change_detection($video_file_path, $file_dir);
     }
     global $laneChangeEvent;
-    echo count($laneChangeEvent);
+    echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . $laneChangeEvent . "')</script>";
     array_splice($laneChangeEvent, 0, count($laneChangeEvent));
     fclose($file);
 }
