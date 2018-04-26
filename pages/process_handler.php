@@ -49,7 +49,7 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
             if (substr($file_dir, strlen($file_dir) - 1, 1) == "/") {
                 $file_dir = $csv_file_dir . $file_name;
             } else {
-                $file_dir = $csv_file_dir . "/" . $file_name;
+                $file_dir = $csv_file_dir . $file_name;
             }
 
             process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
