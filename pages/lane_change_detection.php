@@ -8,8 +8,7 @@
 
 function lane_change_detection($video_path,$csv_path, $with_video_flag){
 //    $result = exec('python lane_changing_detection.py {$video_path} {$csv_path}', $out, $res);
-    $cmd = "python lane_changing_detection.py ".$video_path." ".$csv_path." ".$with_video_flag;
-    $result = shell_exec($cmd);
+    $result = shell_exec('python lane_changing_detection.py {$video_path} {$csv_path} {$with_video_flag}');
 //    global $laneChangeEvent;
 //    if($result!= null && $result!='None'){
 //        $laneChangeEvent += $result.',';
