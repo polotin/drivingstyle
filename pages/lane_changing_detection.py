@@ -22,7 +22,7 @@ def read_data(file_path):
     return right_side_data, left_side_data
 
 
-def find_lane_changing(csv_path, video_path):
+def find_lane_changing(csv_path, video_path, with_video=False):
     rd, ld = read_data(csv_path)
     if rd is None or ld is None:
         with open('log.txt', 'a') as log:
@@ -49,20 +49,23 @@ def find_lane_changing(csv_path, video_path):
             sorted_lc.append(num)
 
     valid_lc = []
-    for t in sorted_lc:
-        is_valid = detect_lane_changing(video_path, t)
-        if is_valid:
-            valid_lc.append(str(int(t / 60)) + ':' + str((t % 60)))
+    if with_video:
+        for t in sorted_lc:
+            is_valid = detect_lane_changing(video_path, t)
+            if is_valid:
+                valid_lc.append(str(int(t / 60)) + ':' + str((t % 60)))
+    else:
+        valid_lc = sorted_lc
 
     return valid_lc
 
-
 if __name__ == '__main__':
-    video_path = sys.argv[1]
-    csv_path = sys.argv[2]
-    with_video_flag = sys.argv[3]
-    #video_path = 'video/video/example.mp4'
-    #csv_path = 'video/video/CCHN_0018_229730_46_130720_0824_00228.csv'
+    #video_path = sys.argv[1]
+    #csv_path = sys.argv[2]
+    #with_video_flag = sys.argv[3]
+    video_path = '../video/video/CCHN_0018_229730_46_130720_0824_00228_Front.mp4'
+    csv_path = 'data/input_folder/CCHN_0018_229730_46_130720_0824_00228.csv'
+    with_video_flag = 1
     with_video = True if with_video_flag == 1 else False
     lane_changing_list = find_lane_changing(csv_path, video_path, with_video)
     print(lane_changing_list)
