@@ -9,7 +9,7 @@ def read_data(file_path):
     left_side_data = []
     if not os.path.exists(file_path):
         return None, None
-    with open(file_path, 'r', encoding='UTF-8') as f:
+    with open(file_path, 'r') as f:
         reader = csv.reader(f)
         head_row = next(reader)
 
