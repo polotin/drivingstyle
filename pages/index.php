@@ -331,6 +331,8 @@ if (isset($_POST["fenxi"])) {
 
 global $laneChangeEvent;
 echo $laneChangeEvent;
+$lane_change_list_file = fopen("lane_change_list", "r") or die("Unable to open file!");
+$lane_change_list_str = fread($config_file, filesize("lane_change_list"));
 
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));

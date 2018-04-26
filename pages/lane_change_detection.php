@@ -11,5 +11,9 @@ function lane_change_detection($video_path,$csv_path, $with_video_flag){
     echo "<script type=text/javascript>console.log('" . "csv_path:" . $csv_path . "')</script>";
     $result = shell_exec($cmd);
     global $laneChangeEvent;
-    $laneChangeEvent = $laneChangeEvent.$result;
+    if($laneChangeEvent == ""){
+        $laneChangeEvent = $laneChangeEvent.$result;
+    }else{
+        $laneChangeEvent = '&'.$laneChangeEvent.$result;
+    }
 }
