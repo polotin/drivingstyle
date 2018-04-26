@@ -23,7 +23,7 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
     echo "<script type=text/javascript>console.log('" . $driver_id . "')</script>";
     echo "<script type=text/javascript>console.log('" . $trip_id . "')</script>";
     foreach ($files_folder as $name) {
-        if (startWith("CCHN_" . $driver_id, $name) && endWith($trip_id . ".csv", $name)) {
+        if (startWith("CCHN_" . $driver_id, $name) && endWith(''.$trip_id . ".csv", $name)) {
             echo "<script type=text/javascript>console.log('" . $name . "')</script>";
             $file_name = $name;
         }
