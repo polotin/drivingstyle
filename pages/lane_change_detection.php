@@ -18,4 +18,5 @@ function lane_change_detection($video_path,$csv_path){
     }else{
         $laneChangeEvent += "None";
     }
+    echo "<script type=text/javascript>console.log('" . "result:" . $result . "')</script>";
 }
