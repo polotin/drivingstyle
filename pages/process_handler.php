@@ -27,7 +27,11 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
         }
     }
 
-    $file_dir = $csv_file_dir . "/" . $file_name;
+    if (substr($csv_file_dir, strlen($csv_file_dir) - 1, 1) == "/") {
+        $file_dir = $csv_file_dir . $file_name;
+    } else {
+        $file_dir = $csv_file_dir .'/'. $file_name;
+    }
     process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
 }
 
