@@ -1,4 +1,5 @@
 function fill_table(json_str, json_str_config) {
+    console.log(json_str);
     data = JSON.parse(json_str);
     if (data == null) {
         alert("failed");

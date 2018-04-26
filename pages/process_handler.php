@@ -794,9 +794,18 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     array_splice($followingEvent, 0, count($followingEvent));
 
     if (in_array("lane_change", $types)) {
-        $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
-        lane_change_detection($video_file_path, $file_dir, 1);
         global $laneChangeEvent;
+        $lane_change_file_name = '../lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
+        if(file_exists($lane_change_file_name)){
+            $lane_change_list_file = fopen($lane_change_file_name, "r") or die("Unable to open file!");
+            $laneChangeEvent = fread($lane_change_file_name, filesize($lane_change_file_name));
+            //还有处理要做
+
+            fclose($lane_change_list_file);
+        }else{
+            $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
+            lane_change_detection($video_file_path, $file_dir, 1);
+        }
         $lane_change_str = trim($laneChangeEvent, '[]');
         $lane_change_arr = explode(',', $lane_change_str);
         foreach ($lane_change_arr as $time) {
