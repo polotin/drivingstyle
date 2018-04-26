@@ -23,7 +23,7 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
     echo "<script type=text/javascript>console.log('" . $driver_id . "')</script>";
     echo "<script type=text/javascript>console.log('" . $trip_id . "')</script>";
     foreach ($files_folder as $name) {
-        if (startWith("CCHN_" . $driver_id, $name) && endWith(''.$trip_id . ".csv", $name)) {
+        if (startWith("CCHN_" . $driver_id, $name) && endWith('' . $trip_id . ".csv", $name)) {
             echo "<script type=text/javascript>console.log('" . $name . "')</script>";
             $file_name = $name;
         }
@@ -32,7 +32,7 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
     if (substr($csv_file_dir, strlen($csv_file_dir) - 1, 1) == "/") {
         $file_dir = $csv_file_dir . $file_name;
     } else {
-        $file_dir = $csv_file_dir .'/'. $file_name;
+        $file_dir = $csv_file_dir . '/' . $file_name;
     }
     process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
 }
@@ -55,7 +55,7 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
             if (substr($csv_file_dir, strlen($csv_file_dir) - 1, 1) == "/") {
                 $file_dir = $csv_file_dir . $file_name;
             } else {
-                $file_dir = $csv_file_dir .'/'. $file_name;
+                $file_dir = $csv_file_dir . '/' . $file_name;
             }
 
             process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
@@ -73,7 +73,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     global $new_rows_hs;
     global $new_rows_turn;
     global $new_rows_car_following;
-    global $new_rows_lane_change_detection;
+    global $new_rows_lane_change;
     global $event_id;
     global $config;
 
@@ -796,8 +796,25 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     if (in_array("lane_change", $types)) {
         $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
         lane_change_detection($video_file_path, $file_dir, 1);
-    }
+        global $laneChangeEvent;
+        $lane_change_str = trim($laneChangeEvent, '[]');
+        $lane_change_arr = explode(',', $lane_change_str);
+        foreach ($lane_change_arr as $time) {
+            $tmp_event_lane_change = new event();
+            $tmp_event_lane_change->driver_id = $driver_id;
+            $tmp_event_lane_change->trip_id = $trip_id;
+            $tmp_event_lane_change->event_id = $event_id;
+            $tmp_event_lane_change->type = "lane-change";
+            $tmp_event_lane_change->time = $time;
+            $tmp_event_lane_change->duration = 0;
+            $tmp_event_lane_change->csv_file_name = $file_name;
+            $tmp_events[] = $tmp_event_lane_change;
+        }
 
+        $trip_event_id += 1;
+        $event_id += 1;
+        $laneChangeEvent = "";
+    }
     fclose($file);
 }
 
@@ -810,8 +827,7 @@ function startWith($needle, $name)
 function endWith($needle, $name)
 {
     $length = strlen($needle);
-    if($length == 0)
-    {
+    if ($length == 0) {
         return true;
     }
     return (substr($name, -$length) === $needle);

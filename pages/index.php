@@ -333,6 +333,15 @@ global $laneChangeEvent;
 echo $laneChangeEvent;
 $lane_change_list_file = fopen("lane_change_list", "r") or die("Unable to open file!");
 $lane_change_list_str = fread($config_file, filesize("lane_change_list"));
+fclose($lane_change_list_file);
+$lane_change_array = explode("&", $lane_change_list_str);
+foreach ($lane_change_array as $lane_change_trip){
+    $tmp = trim($lane_change_trip,'[]');
+    $lane_change_trip_array = explode(',',$tmp);
+    foreach ($lane_change_trip_array as $time){
+        echo $time;
+    }
+}
 
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
