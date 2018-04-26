@@ -784,7 +784,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 
     if (in_array("lane_change", $types)) {
         $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4).'_Front.mp4';
-        lane_change_detection($file_dir,$video_file_path);
+        lane_change_detection($video_file_path, $file_dir, 1);
     }
     global $laneChangeEvent;
     echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . $laneChangeEvent . "')</script>";
