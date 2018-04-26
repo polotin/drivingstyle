@@ -6,12 +6,12 @@
  * Time: 14:32
  */
 
-function lane_change_detection($video_path,$csv_path){
+function lane_change_detection($video_path,$csv_path, $with_video_flag){
     $result = "result";
     urlencode($result);
     unset($out);
 //    $result = exec('python lane_changing_detection.py {$video_path} {$csv_path}', $out, $res);
-    $result = exec('python lane_changing_detection.py {'.$video_path.'} {'.$csv_path."}'");
+    $result = exec('python lane_changing_detection.py {'.$video_path.'} {'.$csv_path.'}{'.$with_video_flag."}'");
     global $laneChangeEvent;
     if($result!= null && $result!='None'){
         $laneChangeEvent += $result.',';
