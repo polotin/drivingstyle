@@ -788,7 +788,6 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     }
     global $laneChangeEvent;
     echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . $laneChangeEvent . "')</script>";
-//    array_splice($laneChangeEvent, 0, count($laneChangeEvent));
     fclose($file);
 }
 
