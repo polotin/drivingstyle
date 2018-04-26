@@ -53,7 +53,7 @@ def find_lane_changing(csv_path, video_path, with_video=False):
         for t in sorted_lc:
             is_valid = detect_lane_changing(video_path, t)
             if is_valid:
-                valid_lc.append(str(int(t / 60)) + ':' + str((t % 60)))
+                valid_lc.append(t)
     else:
         valid_lc = sorted_lc
 
