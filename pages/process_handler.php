@@ -807,6 +807,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             lane_change_detection($video_file_path, $file_dir, 1);
         }
         $lane_change_str = str_replace("]","",trim($laneChangeEvent, '[ ]'));
+        $lane_change_str = str_replace("[", "", $lane_change_str);
         $lane_change_arr = explode(',', $lane_change_str);
         foreach ($lane_change_arr as $time) {
             $tmp_event_lane_change = new event();
@@ -814,7 +815,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             $tmp_event_lane_change->trip_id = $trip_id;
             $tmp_event_lane_change->event_id = $event_id;
             $tmp_event_lane_change->type = "lane-change";
-            $tmp_event_lane_change->time = $time;
+            $tmp_event_lane_change->time =(int)trim($time);
             $tmp_event_lane_change->duration = 0;
             $tmp_event_lane_change->csv_file_name = $file_name;
             $tmp_events[] = $tmp_event_lane_change;
