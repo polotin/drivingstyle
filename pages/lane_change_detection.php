@@ -6,7 +6,7 @@
  * Time: 14:32
  */
 
-function lane_change_detection($video_path, $csv_path){
+function lane_change_detection($csv_path, $video_path){
     $result = "result";
     urlencode($result);
     unset($out);
