@@ -46,7 +46,12 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
     }
     if (!empty($file_names)) {
         foreach ($file_names as $file_name) {
-            $file_dir = $csv_file_dir . "/" . $file_name;
+            if (substr($file_dir, strlen($file_dir) - 1, 1) == "/") {
+                $file_dir = $csv_file_dir . $file_name;
+            } else {
+                $file_dir = $csv_file_dir . "/" . $file_name;
+            }
+
             process_file($file_dir, $types, $driver_id, $trip_id, $file_name);
         }
     } else return null;
@@ -783,7 +788,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     array_splice($followingEvent, 0, count($followingEvent));
 
     if (in_array("lane_change", $types)) {
-        $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4).'_Front.mp4';
+        $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
         lane_change_detection($video_file_path, $file_dir, 0);
     }
     global $laneChangeEvent;
