@@ -41,8 +41,6 @@ def find_lane_changing(csv_path, video_path, with_video=False):
                 with open('log.txt', 'a') as log:
                     log.write(str(e))
     lc_events.sort()
-    if len(lc_events) <= 0:
-        return []
     num = lc_events[0]
     sorted_lc = [num]
     for i in range(1, len(lc_events)):
