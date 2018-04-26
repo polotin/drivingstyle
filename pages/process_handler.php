@@ -810,8 +810,6 @@ function startWith($needle, $name)
 
 function endWith($needle, $name)
 {
-//    echo "<script type=text/javascript>console.log('" . "laneChangeEvent:" . strrchr($name, $needle) . "')</script>";
-//    return (strrchr($name, $needle) == $needle);
     $length = strlen($needle);
     if($length == 0)
     {
