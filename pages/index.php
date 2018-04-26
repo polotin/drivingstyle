@@ -329,10 +329,6 @@ if (isset($_POST["fenxi"])) {
     echo "<script type=text/javascript>hide_bar();</script>";
 }
 
-global $laneChangeEvent;
-echo $laneChangeEvent;
-
-
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);

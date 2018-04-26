@@ -806,7 +806,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
             lane_change_detection($video_file_path, $file_dir, 1);
         }
-        $lane_change_str = trim($laneChangeEvent, '[]');
+        $lane_change_str = trim($laneChangeEvent, '[ ]');
         $lane_change_arr = explode(',', $lane_change_str);
         foreach ($lane_change_arr as $time) {
             $tmp_event_lane_change = new event();
