@@ -63,6 +63,7 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
     } else return null;
 }
 
+$trip_seq = 0; //该driver下的第几个trip  用于lane_change
 function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 {
     if ($trip_id == "") {
@@ -76,6 +77,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     global $new_rows_lane_change;
     global $event_id;
     global $config;
+    global $trip_seq;
 
     $brake_time = 0;  //急刹车事件发生时间，之后的10秒发生的急刹车算同一次。用于判断。
     $swerve_time = 0; //急转弯事件发生时间，之后的10秒发生的急刹车算同一次。用于判断。
@@ -795,16 +797,23 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
 
     if (in_array("lane_change", $types)) {
         global $laneChangeEvent;
+        global $laneChangeEvents;
         $lane_change_file_name = '../lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
         if(file_exists($lane_change_file_name)){
             $lane_change_list_file = fopen($lane_change_file_name, "r") or die("Unable to open file!");
-            $laneChangeEvent = fread($lane_change_file_name, filesize($lane_change_file_name));
-            //还有处理要做
-
+            $laneChangeEvents = fread($lane_change_file_name, filesize($lane_change_file_name));
             fclose($lane_change_list_file);
+            $tmp_arr = explode('&', $laneChangeEvents);
+            $laneChangeEvent = $tmp_arr[$trip_seq];
+            $trip_seq +=1;
         }else{
             $video_file_path = '../video/' . substr($file_name, 0, strlen($file_name) - 4) . '_Front.mp4';
             lane_change_detection($video_file_path, $file_dir, 1);
+            if($laneChangeEvents == ""){
+                $laneChangeEvents = $laneChangeEvent;
+            }else{
+                $laneChangeEvents = $laneChangeEvents."&".$laneChangeEvent;
+            }
         }
         $lane_change_str = str_replace("]","",trim($laneChangeEvent, '[ ]'));
         $lane_change_str = str_replace("[", "", $lane_change_str);
@@ -819,10 +828,9 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             $tmp_event_lane_change->duration = 0;
             $tmp_event_lane_change->csv_file_name = $file_name;
             $tmp_events[] = $tmp_event_lane_change;
+            $event_id += 1;
+            $trip_event_id += 1;
         }
-
-        $trip_event_id += 1;
-        $event_id += 1;
         $laneChangeEvent = "";
     }
     fclose($file);

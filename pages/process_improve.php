@@ -55,6 +55,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     global $new_rows_hs;
     global $new_rows_turn;
     global $new_rows_car_following;
+    global $laneChangeEvents;
 
     if (in_array("start_stop", $types)) {
         $content = '';
@@ -117,6 +118,15 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         fwrite($output, $csv);
         fclose($output) or die("can not close");
     }
+    if(in_array("lane_change", $types)){
+        $lane_change_file_name = '../lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
+        if(!file_exists($lane_change_file_name)){
+            $output = fopen($lane_change_file_name, 'w') or die("can not open");
+            fwrite($output, $laneChangeEvents);
+            fclose($output) or die("can not close");
+        }
+    }
+
     return $json_str;
 }
 
