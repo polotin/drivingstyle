@@ -29,12 +29,24 @@ function fill_table(json_str, json_str_config) {
                 start_time -= parseFloat(config_data['backward_hard_brake']);
                 stop_time += parseFloat(config_data['forward_hard_brake']);
                 break;
-            case 'swerve':
+            case 'hard_swerve_1':
                 start_time -= parseFloat(config_data['backward_hard_swerve']);
                 stop_time += parseFloat(config_data['forward_hard_swerve']);
                 break;
-            case 'car-following':
+            case 'hard_swerve_2':
+                start_time -= parseFloat(config_data['backward_hard_swerve']);
+                stop_time += parseFloat(config_data['forward_hard_swerve']);
+                break;
+            case 'hard_swerve_3':
+                start_time -= parseFloat(config_data['backward_hard_swerve']);
+                stop_time += parseFloat(config_data['forward_hard_swerve']);
+                break;
+            case 'car_following':
                 stop_time = start_time + data[i]['duration'] * 0.1;
+                break;
+            case 'lane_change':
+                start_time = start_time * 10 - 5;
+                stop_time = stop_time*10 + 10;
                 break;
             default:
                 start_time -= 5;

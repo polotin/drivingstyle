@@ -764,7 +764,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         $tmp_event_follow->driver_id = $driver_id;
         $tmp_event_follow->trip_id = $trip_id;
         $tmp_event_follow->event_id = $event_id;
-        $tmp_event_follow->type = "car-following";
+        $tmp_event_follow->type = "car_following";
         $tmp_event_follow->time = $follow[1];
         $tmp_event_follow->duration = $follow[2];
         $tmp_event_follow->csv_file_name = $file_name;
@@ -814,7 +814,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             $tmp_event_lane_change->driver_id = $driver_id;
             $tmp_event_lane_change->trip_id = $trip_id;
             $tmp_event_lane_change->event_id = $event_id;
-            $tmp_event_lane_change->type = "lane-change";
+            $tmp_event_lane_change->type = "lane_change";
             $tmp_event_lane_change->time =(int)trim($time);
             $tmp_event_lane_change->duration = 0;
             $tmp_event_lane_change->csv_file_name = $file_name;
