@@ -119,7 +119,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         fclose($output) or die("can not close");
     }
     if(in_array("lane_change", $types)){
-        $lane_change_file_name = '../lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
+        $lane_change_file_name = '../public/lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
         if(!file_exists($lane_change_file_name)){
             $output = fopen($lane_change_file_name, 'w') or die("can not open");
             fwrite($output, $laneChangeEvents);

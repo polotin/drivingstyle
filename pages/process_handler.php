@@ -798,7 +798,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     if (in_array("lane_change", $types)) {
         global $laneChangeEvent;
         global $laneChangeEvents;
-        $lane_change_file_name = '../lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
+        $lane_change_file_name = '../public/lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
         if(file_exists($lane_change_file_name)){
             $lane_change_list_file = fopen($lane_change_file_name, "r") or die("Unable to open file!");
             $laneChangeEvents = fread($lane_change_file_name, filesize($lane_change_file_name));
