@@ -59,8 +59,7 @@ function fill_table(json_str, json_str_config) {
             "<td>" + data[i]['trip_id'] + "</td>" +
             "<td>" + data[i]['event_id'] + "</td>" +
             "<td class=\"center\">" + data[i]['type'] + "</td>" +
-            "<td>" + data[i]['time'] + "</td>" +
-            // "<td class=\"center\"><button onclick=playMyVideo('" + file_names + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
+            "<td>" + parseFloat(data[i]['time']) + "</td>" +
             "<td class=\"center\"><button class='fa fa-video-camera' onclick=playMyVideo('" + data[i]['csv_file_name'] + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>&nbsp;Video</button></td>" +
             "</tr>";
     }
