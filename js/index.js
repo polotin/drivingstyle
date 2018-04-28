@@ -61,7 +61,7 @@ function fill_table(json_str, json_str_config) {
             "<td class=\"center\">" + data[i]['type'] + "</td>" +
             "<td>" + data[i]['time'] + "</td>" +
             // "<td class=\"center\"><button onclick=playMyVideo('" + file_names + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
-            "<td class=\"center\"><button class='fa fa-video-camera' onclick=playMyVideo('" + data[i]['csv_file_name'] + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>Video</button></td>" +
+            "<td class=\"center\"><button class='fa fa-video-camera' onclick=playMyVideo('" + data[i]['csv_file_name'] + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "')>&nbsp;Video</button></td>" +
             "</tr>";
     }
     var table_area = document.getElementById("page-wrapper1");
@@ -74,8 +74,6 @@ function fill_table(json_str, json_str_config) {
 
 function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     var video_file_name = csv_file_name.substring(0, csv_file_name.length-4)+"_Front.mp4";
-
     var video_link = "video_play.php?file_name=" + video_file_name + "&start_time=" + start_time + "&stop_time=" + stop_time;
-    // window.location.href = video_link;
-    window.open(video_link);
+    window.open(video_link,"newwindow","height=100, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
