@@ -812,7 +812,9 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
             if($laneChangeEvents == ""){
                 $laneChangeEvents = $laneChangeEvent;
             }else{
-                $laneChangeEvents = $laneChangeEvents."&".$laneChangeEvent;
+                if($laneChangeEvent!=""){
+                    $laneChangeEvents = $laneChangeEvents."&".$laneChangeEvent;
+                }
             }
         }
         $lane_change_str = str_replace("]","",trim($laneChangeEvent, '[ ]'));
