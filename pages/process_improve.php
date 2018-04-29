@@ -7,6 +7,7 @@
  */
 
 include 'event.php';
+include 'trip.php';
 include 'event_handler.php';
 include 'process_handler.php';
 $json_file_names = array();
@@ -19,6 +20,7 @@ $new_rows_lane_change = array();
 $event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $tmp_events = array();  //所有事件 存为JSON
 $followingEvent = array();//承装完成判定的跟车事件的编号，起始时间，持续时间
+$trips = array();
 $laneChangeEvent = "";//承装完成判定的跟车，单次trip
 $laneChangeEvents = "" ;////承装完成判定的跟车，driver所有`trip
 

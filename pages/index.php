@@ -248,7 +248,8 @@ include 'process_improve.php';
         <!-- /.row -->
     </div>
 
-    <div id="page-wrapper1" style="visibility: hidden">
+<!--    <div id="page-wrapper1" style="visibility: hidden">-->
+    <div id="page-wrapper1" style="visibility: visible">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Tables</h1>
@@ -260,10 +261,12 @@ include 'process_improve.php';
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        DataTables Advanced Tables
+                        <a id="show_events_btn" style="cursor: pointer; color: #B0B0B0;" onclick="show_events_table();">Events Detection</a>
+                        &nbsp;<span>|</span> &nbsp;
+                        <a id="show_stat_btn" style="cursor: pointer; color: #2352A1;" onclick=" show_stat_table();">Statistics</a>
                     </div>
                     <!-- /.panel-heading -->
-                    <div class="panel-body">
+                    <div class="panel-body" id="events_table_panel">
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                             <thead>
                             <tr>
@@ -279,15 +282,36 @@ include 'process_improve.php';
 
                             </tbody>
                         </table>
-                        <!-- /.table-responsive -->
-                        <div class="well">
-                            <!--                            <h4>DataTables Usage Information</h4>-->
-                            <!--                            <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>-->
-                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View
-                                Data Charts</a>
-                        </div>
+<!--                        <div class="well">-->
+<!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
+<!--                        </div>-->
                     </div>
-                    <!-- /.panel-body -->
+
+                    <div class="panel-body" id="stat_table_panel" style="display: none;">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables1">
+                            <thead>
+                            <tr>
+                                <th>Driver Id</th>
+                                <th>Trip Id</th>
+                                <th>Stop</th>
+                                <th>Go</th>
+                                <th>Hard Brake</th>
+                                <th>Turn</th>
+                                <th>Hard Swerve</th>
+                                <th>Lane Change</th>
+                                <th>Car Following</th>
+                                <th>Charts</th>
+                            </tr>
+                            </thead>
+                            <tbody id="table_body_stat">
+
+                            </tbody>
+                        </table>
+                        <!-- /.table-responsive -->
+<!--                        <div class="well">-->
+<!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
+<!--                        </div>-->
+                    </div>
                 </div>
                 <!-- /.panel -->
             </div>
@@ -308,6 +332,8 @@ $threshold = 0;
 $csv_file_dir = "";
 $video_play_pre = 5;
 $video_play_fol = 5;
+
+$trips_json_str="";
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
@@ -334,7 +360,7 @@ if (isset($_POST["fenxi"])) {
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
-echo "<script type=text/javascript>fill_table('" . $json_str . "','" . $json_str_config . "')</script>";
+echo "<script type=text/javascript>fill_table('" . $json_str . "','". $trips_json_str."','" . $json_str_config . "')</script>";
 ?>
 
 <script>
