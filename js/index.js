@@ -78,6 +78,7 @@ function fill_table(json_str, json_str_config) {
 }
 
 function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
+    this.style = "background-color:#AAAAAA;";
     var video_file_name = csv_file_name.substring(0, csv_file_name.length-4)+"_Front.mp4";
     var video_link = "video_play.php?file_name=" + video_file_name + "&start_time=" + start_time + "&stop_time=" + stop_time;
     window.open(video_link,"newwindow","height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");

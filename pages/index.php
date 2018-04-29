@@ -324,6 +324,7 @@ if (isset($_POST["csv_file_dir"])) {
 $json_str = '';
 if (isset($_POST["fenxi"])) {
     if ($_POST["fenxi"] == "Submit") {
+        echo "<script type=text/javascript>hide_table();</script>";
         $json_str = process($driver_id, $trip_id, $types, $csv_file_dir);
     }
 }else{
