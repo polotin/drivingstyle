@@ -119,7 +119,8 @@ function fill_table(json_str, trips_json_str, json_str_config) {
             "</tr>";
     }
 
-    var progress_bar = document.getElementById("page");
+    var table_body_stat = document.getElementById("table_body_stat");
+    table_body_stat.innerHTML = trips_html;
 }
 
 function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
