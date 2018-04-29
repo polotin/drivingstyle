@@ -1,3 +1,10 @@
+function hide_table() {
+    var table_area = document.getElementById("page-wrapper1");
+    var table_body = document.getElementById("table_body");
+    table_body.innerHTML = "";
+    table_area.style.visibility = "invisible";
+}
+
 function fill_table(json_str, json_str_config) {
     data = JSON.parse(json_str);
     if (data == null) {
