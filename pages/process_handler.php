@@ -475,6 +475,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         } else {
             array_splice($tmp_events, count($tmp_events) - 1, 1);
             $event_id -= 1;
+            $stop_count -= 1;
         }
     }
 
@@ -569,7 +570,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     $trip->hb_count = $hard_brake_count;
     $trip->hs_count = $hard_swerve_count;
     global $trips;
-    $trips[] =$trip;
+    $trips[] = $trip;
     global $trips_json_str;
     $trips_json_str = json_encode($trips);
 }

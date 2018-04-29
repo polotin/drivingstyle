@@ -108,14 +108,14 @@ function fill_table(json_str, trips_json_str, json_str_config) {
         trips_html += "<tr>" +
             "<td>" + trips_data[i]['driver_id'] + "</td>" +
             "<td>" + trips_data[i]['trip_id'] + "</td>" +
-            "<td>" + trips_data[i]['stop_count'] + "</td>" +
-            "<td>" + trips_data[i]['go_count'] + "</td>" +
-            "<td>" + trips_data[i]['hb_count'] + "</td>" +
-            "<td>" + trips_data[i]['turn_count'] + "</td>" +
-            "<td>" + trips_data[i]['hs_count'] + "</td>" +
-            "<td>" + trips_data[i]['lc_count'] + "</td>" +
-            "<td>" + trips_data[i]['cf_count'] + "</td>" +
-            "<td class=\"center\"><button class='fa fa-bar-chart-o chart_btn' onclick=\"playMyVideo(); this.style ='background-color:#DBDBDB;color:#B0B0B0;'\">&nbsp;Video</button></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['stop_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['go_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['hb_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['turn_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['hs_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['lc_count'] + "</a></td>" +
+            "<td><a style='cursor: pointer;'>" + trips_data[i]['cf_count'] + "</a></td>" +
+            "<td class=\"center\"><button class='fa fa-bar-chart-o chart_btn' onclick=\"playMyVideo(); this.style ='background-color:#DBDBDB;color:#B0B0B0;'\">&nbsp;Charts</button></td>" +
             "</tr>";
     }
 

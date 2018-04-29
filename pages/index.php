@@ -248,7 +248,7 @@ include 'process_improve.php';
         <!-- /.row -->
     </div>
 
-<!--    <div id="page-wrapper1" style="visibility: hidden">-->
+    <!--    <div id="page-wrapper1" style="visibility: hidden">-->
     <div id="page-wrapper1" style="visibility: visible">
         <div class="row">
             <div class="col-lg-12">
@@ -256,17 +256,22 @@ include 'process_improve.php';
             </div>
             <!-- /.col-lg-12 -->
         </div>
+
+        <div class="row">
+            <div class="panel-heading">
+                <a id="show_events_btn" style="cursor: pointer; color: #B0B0B0;" onclick="show_events_table();">Events
+                    Detection</a>
+                &nbsp;<span>|</span> &nbsp;
+                <a id="show_stat_btn" style="cursor: pointer; color: #2352A1;" onclick=" show_stat_table();">Statistics</a>
+            </div>
+        </div>
+
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <a id="show_events_btn" style="cursor: pointer; color: #B0B0B0;" onclick="show_events_table();">Events Detection</a>
-                        &nbsp;<span>|</span> &nbsp;
-                        <a id="show_stat_btn" style="cursor: pointer; color: #2352A1;" onclick=" show_stat_table();">Statistics</a>
-                    </div>
                     <!-- /.panel-heading -->
-                    <div class="panel-body" id="events_table_panel">
+                    <div class="panel-body" id="events_table_panel" style="display: block;">
                         <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
                             <thead>
                             <tr>
@@ -282,41 +287,51 @@ include 'process_improve.php';
 
                             </tbody>
                         </table>
-<!--                        <div class="well">-->
-<!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
-<!--                        </div>-->
-                    </div>
-
-                    <div class="panel-body" id="stat_table_panel" style="display: none;">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables1">
-                            <thead>
-                            <tr>
-                                <th>Driver Id</th>
-                                <th>Trip Id</th>
-                                <th>Stop</th>
-                                <th>Go</th>
-                                <th>Hard Brake</th>
-                                <th>Turn</th>
-                                <th>Hard Swerve</th>
-                                <th>Lane Change</th>
-                                <th>Car Following</th>
-                                <th>Charts</th>
-                            </tr>
-                            </thead>
-                            <tbody id="table_body_stat">
-
-                            </tbody>
-                        </table>
-                        <!-- /.table-responsive -->
-<!--                        <div class="well">-->
-<!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
-<!--                        </div>-->
+                        <!--                        <div class="well">-->
+                        <!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <!-- /.panel -->
             </div>
             <!-- /.col-lg-12 -->
         </div>
+
+        <!-- /.row -->
+        <div class="row" id="stat_table_panel" style="display: none;">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                        <div class="panel-body" >
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+                                <thead>
+                                <tr>
+                                    <th>Driver Id</th>
+                                    <th>Trip Id</th>
+                                    <th>Stop</th>
+                                    <th>Go</th>
+                                    <th>Hard Brake</th>
+                                    <th>Turn</th>
+                                    <th>Hard Swerve</th>
+                                    <th>Lane Change</th>
+                                    <th>Car Following</th>
+                                    <th>Charts</th>
+                                </tr>
+                                </thead>
+                                <tbody id="table_body_stat">
+
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                            <!--                        <div class="well">-->
+                            <!--                            <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View Data Charts</a>-->
+                            <!--                        </div>-->
+                        </div>
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
     </div>
     <!-- /#page-wrapper -->
 
@@ -333,7 +348,7 @@ $csv_file_dir = "";
 $video_play_pre = 5;
 $video_play_fol = 5;
 
-$trips_json_str="";
+$trips_json_str = "";
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
@@ -353,14 +368,14 @@ if (isset($_POST["fenxi"])) {
         echo "<script type=text/javascript>hide_table();</script>";
         $json_str = process($driver_id, $trip_id, $types, $csv_file_dir);
     }
-}else{
+} else {
     echo "<script type=text/javascript>hide_bar();</script>";
 }
 
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
-echo "<script type=text/javascript>fill_table('" . $json_str . "','". $trips_json_str."','" . $json_str_config . "')</script>";
+echo "<script type=text/javascript>fill_table('" . $json_str . "','" . $trips_json_str . "','" . $json_str_config . "')</script>";
 ?>
 
 <script>
