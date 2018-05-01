@@ -23,7 +23,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
     <script src="../js/index.js"></script>
-
+    <script src="../js/bootstrap-select.min.js"></script>
     <title>Events Filter</title>
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -31,6 +31,7 @@
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="../css/index.css" rel="stylesheet" type="text/css">
     <link href="../css/progress-bar.css" rel="stylesheet" type="text/css">
+    <link href="../css/bootstrap-select.min.css" rel="stylesheet">
 </head>
 <script type=text/javascript>
     function hide_bar() {
@@ -200,13 +201,14 @@ include 'process_improve.php';
                                     <div>
                                         <div class="form-group">
                                             <label>Trip Folder</label>
-                                            <input class="form-control" type="text" placeholder="csv_folder"
+                                            <input class="form-control" type="text" placeholder="csv_folder" id="csv_dir_input"
                                                    name="csv_file_dir">
                                         </div>
                                         <div class="form-group" style="display: inline-block; width: 50%">
                                             <label>Driver Id</label>
-                                            <input class="form-control" type="text" name="driver_id"
-                                                   placeholder="driver_id">
+<!--                                            <input class="form-control" type="text" name="driver_id"-->
+<!--                                                   placeholder="driver_id">-->
+                                            <select id="slpk" form="my-form" name="driver_id" class="selectpicker form-control" data-live-search="true"></select>
                                         </div>
                                         <div class="form-group" style="display: inline-block; width: 49%">
                                             <label>Trip Id</label>
@@ -281,6 +283,7 @@ include 'process_improve.php';
                                 <th>Type</th>
                                 <th>Time</th>
                                 <th>Video</th>
+                                <th>Chart</th>
                             </tr>
                             </thead>
                             <tbody id="table_body">

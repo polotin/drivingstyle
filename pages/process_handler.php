@@ -472,6 +472,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     if (count($tmp_events) != 0 && $tmp_events[count($tmp_events) - 1]->type == "stop") {
         if (in_array("final_stop", $types)) {
             $tmp_events[count($tmp_events) - 1]->type = "final_stop";
+            $event_id += 1;
         } else {
             array_splice($tmp_events, count($tmp_events) - 1, 1);
             $event_id -= 1;
