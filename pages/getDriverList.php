@@ -8,7 +8,7 @@
 $csv_dir = "";
 if (isset($_GET["csv_dir"])) {
     $csv_dir = $_GET["csv_dir"];
-} else return "";
+} else echo "";
 $files_folder = scandir($csv_file_dir);
 $file_names = array();
 foreach ($files_folder as $name) {
@@ -17,7 +17,7 @@ foreach ($files_folder as $name) {
         $file_names[] = $name;
     }
     if (!empty($file_names)) {
-        return implode(',',$file_names);
+        echo implode(',',$file_names);
     }
 }
 function startWith($needle, $name)

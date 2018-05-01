@@ -129,6 +129,7 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     var video_link = "video_play.php?file_name=" + video_file_name + "&start_time=" + start_time + "&stop_time=" + stop_time;
     window.open(video_link, "newwindow", "height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
+
 var xmlHttp;
 $("#csv_dir_input").keyup(function () {
     if($("#csv_dir_input").value != ""){
@@ -139,10 +140,13 @@ $("#csv_dir_input").keyup(function () {
             return;
         }
         var url="getDriverList.php";
+        alert($("#csv_dir_input").value);
         url=url+"?csv_dir="+$("#csv_dir_input").value;
-        xmlHttp.onreadystatechange=stateChanged;
+        xmlHttp.onreadystatechange=stateChanged();
         xmlHttp.open("GET",url,true);
         xmlHttp.send(null);
+    }else{
+        console.log("no input");
     }
 });
 
