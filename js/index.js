@@ -131,52 +131,47 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
 }
 
 var xmlHttp;
-$("#csv_dir_input").keyup(function () {
-    if($("#csv_dir_input").value != ""){
-        xmlHttp=GetXmlHttpObject();
-        if (xmlHttp==null)
-        {
-            alert ("Browser does not support HTTP Request");
-            return;
-        }
-        var url="getDriverList.php";
-        alert($("#csv_dir_input").value);
-        url=url+"?csv_dir="+$("#csv_dir_input").value;
-        xmlHttp.onreadystatechange=stateChanged();
-        xmlHttp.open("GET",url,true);
-        xmlHttp.send(null);
-    }else{
-        console.log("no input");
+$(document).ready(function () {
+        $("#csv_dir_input").keyup(function () {
+            if ($("#csv_dir_input").val() != "") {
+                xmlHttp = GetXmlHttpObject();
+                if (xmlHttp == null) {
+                    alert("Browser does not support HTTP Request");
+                    return;
+                }
+                var url = "getDriverList.php";
+                alert($("#csv_dir_input").val());
+                url = url + "?csv_dir=" + $("#csv_dir_input").val();
+                xmlHttp.onreadystatechange = stateChanged();
+                xmlHttp.open("GET", url, true);
+                xmlHttp.send(null);
+            } else {
+                console.log("no input");
+            }
+        });
     }
-});
+);
 
-function stateChanged()
-{
-    if (xmlHttp.readyState==4 || xmlHttp.readyState=="complete")
-    {
+function stateChanged() {
+    if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete") {
         // document.getElementById("txtHint").innerHTML=xmlHttp.responseText
         alert(xmlHttp.responseText);
     }
 }
 
-function GetXmlHttpObject()
-{
-    var xmlHttp=null;
-    try
-    {
+function GetXmlHttpObject() {
+    var xmlHttp = null;
+    try {
         // Firefox, Opera 8.0+, Safari
-        xmlHttp=new XMLHttpRequest();
+        xmlHttp = new XMLHttpRequest();
     }
-    catch (e)
-    {
+    catch (e) {
         // Internet Explorer
-        try
-        {
-            xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+        try {
+            xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
         }
-        catch (e)
-        {
-            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+        catch (e) {
+            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
     }
     return xmlHttp;

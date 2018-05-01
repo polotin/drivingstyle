@@ -9,10 +9,10 @@ $csv_dir = "";
 if (isset($_GET["csv_dir"])) {
     $csv_dir = $_GET["csv_dir"];
 } else echo "";
-$files_folder = scandir($csv_file_dir);
+$files_folder = scandir($csv_dir);
 $file_names = array();
 foreach ($files_folder as $name) {
-    if (startWith("CCHN_" . $driver_id, $name) && endWith(".csv", $name)) {
+    if (startWith("CCHN_", $name) && endWith(".csv", $name)) {
         echo "<script type=text/javascript>console.log('" . $name . "')</script>";
         $file_names[] = $name;
     }
