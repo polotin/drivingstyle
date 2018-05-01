@@ -9,16 +9,22 @@ $csv_dir = "";
 if (isset($_GET["csv_dir"])) {
     $csv_dir = $_GET["csv_dir"];
 } else echo "";
-$files_folder = scandir($csv_dir);
+if(is_dir($csv_dir)){
+    $files_folder = scandir($csv_dir);
+}else{
+    echo "";
+    return;
+}
+
+
 $file_names = array();
 foreach ($files_folder as $name) {
-    if (startWith("CCHN_", $name) && endWith(".csv", $name)) {
-        echo "<script type=text/javascript>console.log('" . $name . "')</script>";
+    if (startWith("CCHN", $name) && endWith(".csv", $name)) {
         $file_names[] = $name;
     }
-    if (!empty($file_names)) {
-        echo implode(',',$file_names);
-    }
+}
+if (!empty($file_names)) {
+    echo implode(',',$file_names);
 }
 function startWith($needle, $name)
 {

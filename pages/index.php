@@ -208,7 +208,7 @@ include 'process_improve.php';
                                             <label>Driver Id</label>
 <!--                                            <input class="form-control" type="text" name="driver_id"-->
 <!--                                                   placeholder="driver_id">-->
-                                            <select id="slpk" form="my-form" name="driver_id" class="selectpicker form-control" data-live-search="true"></select>
+                                            <select id="slpk"  type="text" name="driver_id" class="selectpicker form-control" data-live-search="true"></select>
                                         </div>
                                         <div class="form-group" style="display: inline-block; width: 49%">
                                             <label>Trip Id</label>
@@ -355,6 +355,7 @@ $trips_json_str = "";
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
+    echo "<script type=text/javascript>console.log('" . $driver_id . "')</script>";
 }
 if (isset($_POST["trip_id"])) {
     $trip_id = $_POST["trip_id"];

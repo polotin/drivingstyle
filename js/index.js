@@ -130,49 +130,40 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     window.open(video_link, "newwindow", "height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
 
-var xmlHttp;
 $(document).ready(function () {
         $("#csv_dir_input").keyup(function () {
-            if ($("#csv_dir_input").val() != "") {
-                xmlHttp = GetXmlHttpObject();
-                if (xmlHttp == null) {
-                    alert("Browser does not support HTTP Request");
-                    return;
+            $.ajax({
+                type: "GET",
+                url:"getDriverList.php",
+                data:"csv_dir="+$("#csv_dir_input").val(),
+                success:function(data){
+                    var select = $("#slpk");
+                    if(data == ""){
+                        select.html("");
+                        $('.selectpicker').selectpicker('val', '');
+                        return;
+                    }
+                    var tmp = new Array();
+                    var drivers = new Array();
+                    tmp = data.split(",");
+                    var html = "";
+                    for(var i = 0; i<tmp.length;i++){
+                        var tmp1 = new Array();
+                        tmp1 = tmp[i].split("_");
+                        if(!($.inArray(tmp1[1], drivers) >= 0)){
+                            html += "<option value="+tmp1[1]+">"+tmp1[1]+"</option>";
+                            drivers.push(tmp1[1]);
+                        }
+                    }
+                    if(html!=""){
+                        select.html("");
+                        select.append(html);
+                        $('.selectpicker').selectpicker('val', '');
+                        $('.selectpicker').selectpicker('refresh');
+                    }
                 }
-                var url = "getDriverList.php";
-                alert($("#csv_dir_input").val());
-                url = url + "?csv_dir=" + $("#csv_dir_input").val();
-                xmlHttp.onreadystatechange = stateChanged();
-                xmlHttp.open("GET", url, true);
-                xmlHttp.send(null);
-            } else {
-                console.log("no input");
-            }
+                }
+            );
         });
     }
 );
-
-function stateChanged() {
-    if (xmlHttp.readyState == 4 || xmlHttp.readyState == "complete") {
-        // document.getElementById("txtHint").innerHTML=xmlHttp.responseText
-        alert(xmlHttp.responseText);
-    }
-}
-
-function GetXmlHttpObject() {
-    var xmlHttp = null;
-    try {
-        // Firefox, Opera 8.0+, Safari
-        xmlHttp = new XMLHttpRequest();
-    }
-    catch (e) {
-        // Internet Explorer
-        try {
-            xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
-        }
-        catch (e) {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    }
-    return xmlHttp;
-}
