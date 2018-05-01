@@ -43,6 +43,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     }
     //输出JSON
     global $tmp_events;
+    global $cur_time;
 //    array_pop($tmp_events);
     $json_str = json_encode($tmp_events);
     //输出为CSV文件

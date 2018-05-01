@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>视频播放</title>
+    <title>Video</title>
 </head>
 <body>
 <?php

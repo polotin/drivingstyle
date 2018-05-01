@@ -27,7 +27,7 @@ function show_stat_table() {
     show_stat_btn.style.color = "#B0B0B0";
 }
 
-function fill_table(json_str, trips_json_str, json_str_config) {
+function fill_table(json_str, trips_json_str, json_str_config, cur_time) {
     console.log(trips_json_str);
     data = JSON.parse(json_str);
     if (data == null) {
@@ -95,7 +95,8 @@ function fill_table(json_str, trips_json_str, json_str_config) {
             "<td class=\"center\">" + data[i]['type'] + "</td>" +
             "<td>" + parseFloat(data[i]['time']) + "</td>" +
             "<td class=\"center\"><button class='fa fa-video-camera video_btn' onclick=\"playMyVideo('" + data[i]['csv_file_name'] + "','" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + start_time + "','" + stop_time + "'); this.style ='background-color:#DBDBDB;color:#B0B0B0;'\">&nbsp;Video</button></td>" +
-            "<td class=\"center\"><button class='fa fa-bar-chart-o chart_btn' onclick=\"showEventChart(); this.style ='background-color:#DBDBDB;color:#B0B0B0;'\">&nbsp;Charts</button></td>" +
+            "<td class=\"center\"><button class='fa fa-bar-chart-o chart_btn' onclick=\"showEventChart('" + data[i]['driver_id'] + "','" + data[i]['trip_id'] + "','" + data[i]['event_id'] + "','" + data[i]['type'] + "','" + cur_time + "'); this.style ='background-color:#DBDBDB;color:#B0B0B0;'\">&nbsp;Charts</button></td>" +
+
             "</tr>";
     }
     var table_area = document.getElementById("page-wrapper1");
@@ -124,6 +125,17 @@ function fill_table(json_str, trips_json_str, json_str_config) {
     table_body_stat.innerHTML = trips_html;
 }
 
+function showEventChart(driver_id, trip_id, event_id, type, cur_time) {
+    var csv_file_name = "";
+    var csv_file_dir = "";
+    if (type == "stop" || type == "go") {
+        csv_file_name = driver_id + "_"+"_" + "start_stop" + cur_time + ".csv";
+        csv_file_dir = "../public/csv/" + csv_file_name;
+        var chart_link = "eventChart.php?file_dir="+csv_file_dir+"&driver_id="+driver_id+"&trip_id="+trip_id+"&event_id="+event_id+"&event_type="+type;
+        window.open(chart_link, "newwindow", "height=700, width=900, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+    }
+}
+
 function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     var video_file_name = csv_file_name.substring(0, csv_file_name.length - 4) + "_Front.mp4";
     var video_link = "video_play.php?file_name=" + video_file_name + "&start_time=" + start_time + "&stop_time=" + stop_time;
@@ -133,35 +145,35 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
 $(document).ready(function () {
         $("#csv_dir_input").keyup(function () {
             $.ajax({
-                type: "GET",
-                url:"getDriverList.php",
-                data:"csv_dir="+$("#csv_dir_input").val(),
-                success:function(data){
-                    var select = $("#slpk");
-                    if(data == ""){
-                        select.html("");
-                        $('.selectpicker').selectpicker('val', '');
-                        return;
-                    }
-                    var tmp = new Array();
-                    var drivers = new Array();
-                    tmp = data.split(",");
-                    var html = "";
-                    for(var i = 0; i<tmp.length;i++){
-                        var tmp1 = new Array();
-                        tmp1 = tmp[i].split("_");
-                        if(!($.inArray(tmp1[1], drivers) >= 0)){
-                            html += "<option value="+tmp1[1]+">"+tmp1[1]+"</option>";
-                            drivers.push(tmp1[1]);
+                    type: "GET",
+                    url: "getDriverList.php",
+                    data: "csv_dir=" + $("#csv_dir_input").val(),
+                    success: function (data) {
+                        var select = $("#slpk");
+                        if (data == "") {
+                            select.html("");
+                            $('.selectpicker').selectpicker('val', '');
+                            return;
+                        }
+                        var tmp = new Array();
+                        var drivers = new Array();
+                        tmp = data.split(",");
+                        var html = "";
+                        for (var i = 0; i < tmp.length; i++) {
+                            var tmp1 = new Array();
+                            tmp1 = tmp[i].split("_");
+                            if (!($.inArray(tmp1[1], drivers) >= 0)) {
+                                html += "<option value=" + tmp1[1] + ">" + tmp1[1] + "</option>";
+                                drivers.push(tmp1[1]);
+                            }
+                        }
+                        if (html != "") {
+                            select.html("");
+                            select.append(html);
+                            $('.selectpicker').selectpicker('val', '');
+                            $('.selectpicker').selectpicker('refresh');
                         }
                     }
-                    if(html!=""){
-                        select.html("");
-                        select.append(html);
-                        $('.selectpicker').selectpicker('val', '');
-                        $('.selectpicker').selectpicker('refresh');
-                    }
-                }
                 }
             );
         });

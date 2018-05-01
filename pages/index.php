@@ -352,6 +352,7 @@ $video_play_pre = 5;
 $video_play_fol = 5;
 
 $trips_json_str = "";
+$cur_time="";
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
@@ -379,7 +380,7 @@ if (isset($_POST["fenxi"])) {
 $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
 $json_str_config = fread($config_file, filesize("../Config.json"));
 fclose($config_file);
-echo "<script type=text/javascript>fill_table('" . $json_str . "','" . $trips_json_str . "','" . $json_str_config . "')</script>";
+echo "<script type=text/javascript>fill_table('" . $json_str . "','" . $trips_json_str . "','" . $json_str_config ."','".$cur_time. "')</script>";
 ?>
 
 <script>
