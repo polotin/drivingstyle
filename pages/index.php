@@ -220,15 +220,16 @@ include 'process_improve.php';
                                         <label>Event Types</label> &nbsp
                                         <a class="fa fa-gears" style="font-size:10px; cursor: pointer;"
                                            href="config.php" target="_blank"> Config</a><br>
-                                        <input type="checkbox" name="types[]" value="start_stop">stop-and-go &nbsp
-                                        <input type="checkbox" name="types[]" value="ini_start">ini-start &nbsp
-                                        <input type="checkbox" name="types[]" value="final_stop">final-stop &nbsp
-                                        <input type="checkbox" name="types[]" value="hard_brake">hard-brake &nbsp
-                                        <input type="checkbox" name="types[]" value="turn">turn &nbsp
-                                        <input type="checkbox" name="types[]" value="hard_swerve">hard-swerve &nbsp
-                                        <input type="checkbox" name="types[]" value="lane_change">lane-change &nbsp
-                                        <input type="checkbox" name="types[]" value="car_following">car-following &nbsp
-
+                                        <input type="checkbox" name="types[]" value="start_stop" class="cb">stop-and-go &nbsp
+                                        <input type="checkbox" name="types[]" value="ini_start" class="cb">ini-start &nbsp
+                                        <input type="checkbox" name="types[]" value="final_stop" class="cb">final-stop &nbsp
+                                        <input type="checkbox" name="types[]" value="hard_brake" class="cb">hard-brake &nbsp
+                                        <input type="checkbox" name="types[]" value="turn"class="cb" >turn &nbsp
+                                        <input type="checkbox" name="types[]" value="hard_swerve" class="cb">hard-swerve &nbsp
+                                        <input type="checkbox" name="types[]" value="lane_change" class="cb">lane-change &nbsp
+                                        <input type="checkbox" name="types[]" value="car_following" class="cb">car-following &nbsp
+                                        <a style="cursor: pointer" onclick="select_all()">select-all</a>
+                                        <a style="cursor: pointer" onclick="deselect_all()">deselect-all</a>
                                     </div>
 
                                     <input type="submit" class="btn btn-default" name="fenxi" value="Submit">

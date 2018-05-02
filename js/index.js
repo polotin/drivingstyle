@@ -132,7 +132,7 @@ function showEventChart(driver_id, trip_id, event_id, type, cur_time) {
         csv_file_name = driver_id + "_"+"_" + "start_stop" + cur_time + ".csv";
         csv_file_dir = "../public/csv/" + csv_file_name;
         var chart_link = "eventChart.php?file_dir="+csv_file_dir+"&driver_id="+driver_id+"&trip_id="+trip_id+"&event_id="+event_id+"&event_type="+type;
-        window.open(chart_link, "newwindow", "height=700, width=900, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+        window.open(chart_link, "newwindow", "height=800, width=1050, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
     }
 }
 
@@ -142,6 +142,12 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     window.open(video_link, "newwindow", "height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
 
+function select_all(){
+    $(".cb").attr("checked",true);
+}
+function deselect_all(){
+    $(".cb").attr("checked",false);
+}
 $(document).ready(function () {
         $("#csv_dir_input").keyup(function () {
             $.ajax({
