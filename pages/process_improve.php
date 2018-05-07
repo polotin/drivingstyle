@@ -23,15 +23,13 @@ $followingEvent = array();//承装完成判定的跟车事件的编号，起始�
 $trips = array();
 $laneChangeEvent = "";//承装完成判定的跟车，单次trip
 $laneChangeEvents = "" ;////承装完成判定的跟车，driver所有`trip
-
+$new_row_brake[] = "hard_brake"; //事件类型
 function process($driver_id, $trip_id, $types, $csv_file_dir)
 {
-
     $file_name = "";
     $file_names = array();
     $files_folder = array();
     $info_list = array();  //存放所有行车信息
-
     //driver的单次trip
     if (trim($trip_id) != "") {
         find_trip($driver_id, $trip_id, $types, $csv_file_dir);
@@ -49,7 +47,13 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     //输出为CSV文件
     date_default_timezone_set("Asia/Shanghai");
     $cur_time = date("Y-m-d-H-i-s");
-    $csv_header = ['time', 'speed', 'accel', 'event_type', 'event_id', 'seq', 's_s_num', 'trip_event_id', 'driver_id', 'trip_id'];
+    $csv_header = ['System.Time_Stamp', 'EventType', 'Event_Id', 'Trip_Event_Id', 'Driver_Id', 'Trip_Id', 'Head_Unit.Speed ', 'IMU.Accel_X ', 'IMU.Accel_Y ', 'IMU.Accel_Z ',
+        'Head_Unit.Latitude','Head_Unit.Longitude','VehicleCAN_1.BrakePedalPosition','VehicleCAN_1.Speed','VehicleNetworkBox.EngineSpeed',
+        'SMS.Object_ID_T0','SMS.Object_ID_T1', 'SMS.Object_ID_T2','SMS.Object_ID_T3','SMS.Object_ID_T4','SMS.Object_ID_T5','SMS.Object_ID_T6','SMS.Object_ID_T7',
+        'SMS.X_Range_T0','SMS.X_Range_T1','SMS.X_Range_T2','SMS.X_Range_T3','SMS.X_Range_T4','SMS.X_Range_T5','SMS.X_Range_T6','SMS.X_Range_T7',
+        'SMS.X_Velocity_T0','SMS.X_Velocity_T1','SMS.X_Velocity_T2','SMS.X_Velocity_T3','SMS.X_Velocity_T4','SMS.X_Velocity_T5','SMS.X_Velocity_T6','SMS.X_Velocity_T7',
+        'SMS.Y_Range_T0','SMS.Y_Range_T1','SMS.Y_Range_T2','SMS.Y_Range_T3','SMS.Y_Range_T4','SMS.Y_Range_T5','SMS.Y_Range_T6','SMS.Y_Range_T7',
+        'SMS.Y_Velocity_T0','SMS.Y_Velocity_T1','SMS.Y_Velocity_T2','SMS.Y_Velocity_T3','SMS.Y_Velocity_T4','SMS.Y_Velocity_T5','SMS.Y_Velocity_T6','SMS.Y_Velocity_T7'];
     //$content = $head.$new_rows;
     $header = implode(',', $csv_header) . PHP_EOL;
 
@@ -58,7 +62,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     global $new_rows_hs;
     global $new_rows_turn;
     global $new_rows_car_following;
-    global $laneChangeEvents;
+    global $new_rows_lane_change;
 
     if (in_array("start_stop", $types)) {
         $content = '';
@@ -122,14 +126,23 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         fclose($output) or die("can not close");
     }
     if(in_array("lane_change", $types)){
-        $lane_change_file_name = '../public/lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
-        if(!file_exists($lane_change_file_name)){
-            $output = fopen($lane_change_file_name, 'w') or die("can not open");
-            fwrite($output, $laneChangeEvents);
-            fclose($output) or die("can not close");
+//        $lane_change_file_name = '../public/lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
+//        if(!file_exists($lane_change_file_name)){
+//            $output = fopen($lane_change_file_name, 'w') or die("can not open");
+//            fwrite($output, $laneChangeEvents);
+//            fclose($output) or die("can not close");
+//        }
+        $content = '';
+        foreach ($new_rows_lane_change as $line) {
+            $content .= implode(',', $line) . PHP_EOL;
         }
+        $csv_file_name = $driver_id . "_" . $trip_id . "_" . "lane_change" . $cur_time . ".csv";
+        $csv_file_dir = "../public/csv/" . $csv_file_name;
+        $output = fopen($csv_file_dir, 'w') or die("can not open");
+        $csv = $header . $content;
+        fwrite($output, $csv);
+        fclose($output) or die("can not close");
     }
-
     return $json_str;
 }
 

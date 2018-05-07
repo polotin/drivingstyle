@@ -129,9 +129,9 @@ function showEventChart(driver_id, trip_id, event_id, type, cur_time) {
     var csv_file_name = "";
     var csv_file_dir = "";
     if (type == "stop" || type == "go") {
-        csv_file_name = driver_id + "_"+"_" + "start_stop" + cur_time + ".csv";
+        csv_file_name = driver_id + "_" + "_" + "start_stop" + cur_time + ".csv";
         csv_file_dir = "../public/csv/" + csv_file_name;
-        var chart_link = "eventChart.php?file_dir="+csv_file_dir+"&driver_id="+driver_id+"&trip_id="+trip_id+"&event_id="+event_id+"&event_type="+type;
+        var chart_link = "eventChart.php?file_dir=" + csv_file_dir + "&driver_id=" + driver_id + "&trip_id=" + trip_id + "&event_id=" + event_id + "&event_type=" + type;
         window.open(chart_link, "newwindow", "height=800, width=1050, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
     }
 }
@@ -142,12 +142,28 @@ function playMyVideo(csv_file_name, driver_id, trip_id, start_time, stop_time) {
     window.open(video_link, "newwindow", "height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
 }
 
-function select_all(){
-    $(".cb").attr("checked",true);
+$("#select_al").click(function () {
+    select_all();
+});
+
+function select_all() {
+    var allcb = document.getElementsByClassName("cb");
+    var all = document.getElementById("select_al");
+    if (all.checked) {
+        for (var i = 0; i < allcb.length; i++) {
+            if (allcb[i].type == "checkbox" && allcb[i].disabled ==false) {
+                allcb[i].checked = true;
+            }
+        }
+    } else {
+        for (var i = 0; i < allcb.length; i++) {
+            if (allcb[i].type == "checkbox") {
+                allcb[i].checked = false;
+            }
+        }
+    }
 }
-function deselect_all(){
-    $(".cb").attr("checked",false);
-}
+
 $(document).ready(function () {
         $("#csv_dir_input").keyup(function () {
             $.ajax({

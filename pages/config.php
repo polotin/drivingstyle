@@ -42,38 +42,38 @@ class config
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>forward_go</label>
+                                <label>forward_go (s)</label>
                                 <input class="form-control" type="text" id="forward_go" name="forward_go">
                             </div>
                             <div class="form-group">
-                                <label>backward_go</label>
+                                <label>backward_go (s)</label>
                                 <input class="form-control" type="text" id="backward_go" name="backward_go">
                             </div>
                             <div class="form-group">
-                                <label>forward_stop</label>
+                                <label>forward_stop (s)</label>
                                 <input class="form-control" type="text" id="forward_stop" name="forward_stop">
                             </div>
                             <div class="form-group">
-                                <label>backward_stop</label>
+                                <label>backward_stop (s)</label>
                                 <input class="form-control" type="text" id="backward_stop" name="backward_stop">
                             </div>
                             <div class="form-group">
-                                <label>forward_hard_brake</label>
+                                <label>forward_hard_brake (s)</label>
                                 <input class="form-control" type="text" id="forward_hard_brake"
                                        name="forward_hard_brake">
                             </div>
                             <div class="form-group">
-                                <label>backward_hard_brake</label>
+                                <label>backward_hard_brake (s)</label>
                                 <input class="form-control" type="text" id="backward_hard_brake"
                                        name="backward_hard_brake">
                             </div>
                             <div class="form-group">
-                                <label>forward_hard_swerve</label>
+                                <label>forward_hard_swerve (s)</label>
                                 <input class="form-control" type="text" id="forward_hard_swerve"
                                        name="forward_hard_swerve">
                             </div>
                             <div class="form-group">
-                                <label>backward_hard_swerve</label>
+                                <label>backward_hard_swerve (s)</label>
                                 <input class="form-control" type="text" id="backward_hard_swerve"
                                        name="backward_hard_swerve">
                             </div>
