@@ -47,7 +47,7 @@ $row_num = 0;   //当前遍历行数
 $new_row = array();
 $new_rows = array();
 
-$event_id = 1;  //事件编号，所有TRIP内的事件都唯一
+//$event_id = 1;  //事件编号，所有TRIP内的事件都唯一
 $trip_event_id = 1; //每次行程事件编号
 
 foreach ($info_list as $row) {

@@ -309,7 +309,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
     $is_ini_start = true;
     $ini_start_flag = false;
     global $tmp_events;
-    $last_ss_id = 0;
+    $last_ss_id = $event_id;
     $ini_speed = -100;
     $stop_count = 0;
     $go_count = 0;
@@ -470,7 +470,8 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 if (((float)$row[$index_speed] != 0) & ($last_speed == 0)) {
                     $new_row[] = $row[$index_time]; //时间
                     $new_row[] = "ini_start"; //事件类型
-                    $new_row[] = $last_ss_id; // event_id
+//                    $new_row[] = $last_ss_id; // event_id
+                    $new_row[] = $event_id; // event_id
                     $new_row[] = $trip_event_id;
                     $new_row[] = $driver_id;
                     $new_row[] = $trip_id;
@@ -529,7 +530,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $tmp_event->time = $row[$index_time];
                     $tmp_event->driver_id = $driver_id;
                     $tmp_event->trip_id = $trip_id;
-                    $tmp_event->event_id = $last_ss_id;
+                    $tmp_event->event_id = $event_id;
                     $tmp_event->type = "ini_start";
                     $tmp_event->csv_file_name = $file_name;
                     $tmp_events[] = $tmp_event;
