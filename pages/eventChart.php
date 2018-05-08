@@ -6,8 +6,6 @@
     <script type="text/javascript" src="../js/echarts.min.js"></script>
     <script>
         function initSpeedChart(xAxis, yAxis) {
-            console.log(xAxis);
-            console.log(yAxis);
             var tmp = new Array();
             tmp = yAxis.split(",");
             var arr = new Array();
