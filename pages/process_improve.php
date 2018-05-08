@@ -47,7 +47,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     //输出为CSV文件
     date_default_timezone_set("Asia/Shanghai");
     $cur_time = date("Y-m-d-H-i-s");
-    $csv_header = ['System.Time_Stamp', 'EventType', 'Event_Id', 'Trip_Event_Id', 'Driver_Id', 'Trip_Id', 'Head_Unit.Speed ', 'IMU.Accel_X ', 'IMU.Accel_Y ', 'IMU.Accel_Z ',
+    $csv_header = ['System.Time_Stamp', 'Event_Type', 'Event_Id', 'Trip_Event_Id', 'Driver_Id', 'Trip_Id', 'FOT_Control.Speed', 'IMU.Accel_X', 'IMU.Accel_Y', 'IMU.Accel_Z',
         'Head_Unit.Latitude','Head_Unit.Longitude','VehicleCAN_1.BrakePedalPosition','VehicleCAN_1.Speed','VehicleNetworkBox.EngineSpeed',
         'SMS.Object_ID_T0','SMS.Object_ID_T1', 'SMS.Object_ID_T2','SMS.Object_ID_T3','SMS.Object_ID_T4','SMS.Object_ID_T5','SMS.Object_ID_T6','SMS.Object_ID_T7',
         'SMS.X_Range_T0','SMS.X_Range_T1','SMS.X_Range_T2','SMS.X_Range_T3','SMS.X_Range_T4','SMS.X_Range_T5','SMS.X_Range_T6','SMS.X_Range_T7',

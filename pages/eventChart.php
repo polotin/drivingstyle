@@ -6,6 +6,8 @@
     <script type="text/javascript" src="../js/echarts.min.js"></script>
     <script>
         function initSpeedChart(xAxis, yAxis) {
+            console.log(xAxis);
+            console.log(yAxis);
             var tmp = new Array();
             tmp = yAxis.split(",");
             var arr = new Array();
@@ -15,7 +17,6 @@
                 } else {
                     arr.push((parseFloat(tmp[i])));
                 }
-
             }
             var tmp1 = new Array();
             tmp1 = xAxis.split(",");
@@ -138,11 +139,11 @@ while ($data = fgetcsv($file)) { //每次读取CSV里面的一行内容
 }
 fclose($file) or die("can not close");
 //获取列名的位置
-$Time_Stamp = "time";
-$Accel = "accel";
-$Speed = "speed";
-$Event_Type = "event_type";
-$Event_Id = "event_id";
+$Time_Stamp = "System.Time_Stamp";
+$Accel = "IMU.Accel_X";
+$Speed = "FOT_Control.Speed";
+$Event_Type = "Event_Type";
+$Event_Id = "Event_Id";
 $index_time = 0;
 $index_accel = 0;
 $index_speed = 0;
@@ -183,14 +184,6 @@ $yAxis_accel = array();
 $index = 0;
 foreach ($info_list as $row) {
     if ($row[$index_eventid] == $event_id && $row[$index_type] == $event_type) {
-//        $chart = new event_chart();
-//        $chart->event_id = $row[$index_eventid];
-//        $chart->trip_id = $trip_id;
-//        $chart->speed = $row[$index_speed];
-//        $chart->driver_id = $driver_id;
-//        $chart->time = $row[$index_time];
-//        $rows[] = $chart;
-//        $xAxis[] = floatval($row[$index_time]);
         $xAxis[] = $index;
         $index += 1;
         $yAxis_speed[] = $row[$index_speed];
