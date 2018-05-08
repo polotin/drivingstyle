@@ -9,7 +9,6 @@
 include "carFollowing.php";
 include "configure.php";
 include "lane_change_detection.php";
-include "getColumnName.php";
 $config = new configure();
 
 function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
