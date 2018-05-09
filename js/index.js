@@ -80,8 +80,8 @@ function fill_table(json_str, trips_json_str, json_str_config, cur_time) {
                 stop_time = start_time + data[i]['duration'] * 0.1;
                 break;
             case 'lane_change':
-                start_time -= parseFloat(config_data['backward_lane_change']);
-                stop_time += parseFloat(config_data['forward_lane_change']);
+                start_time = start_time * 10 - data[i]['backward_lane_change'];
+                stop_time = stop_time * 10 + data[i]['forward_lane_change'];
                 break;
             default:
                 start_time -= 5;
