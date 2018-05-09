@@ -4,15 +4,20 @@
 //           纵向相对距离在7m-120m之间（7< SMS_X_Range_T0 <120）
 //           自车车速大于5m/s（FOT_Control_Speed > 5）
 //跟车事件： 在3s的容错内，跟车状态持续10s以上（countTime>100）
-
-
+include_once "configure.php";
+$config = new configure();
+$config_file = fopen("../Config.json", "r") or die("Unable to open file!");
+$json_str = fread($config_file, filesize("../Config.json"));
+fclose($config_file);
+$config = json_decode($json_str);
 define("Y_Standard",1.8);               //定义横向相对距离要求
 define("X_Standard_Low",7);             //定义纵向相对距离最低值
 define("X_Standard_High",120);          //定义纵向相对距离最高值
 define("Speed_Standard",5);             //定义自车车速标准
-define("Time_Stardard",100);            //定义计时标准
+//定义计时标准 default 100
+define("Time_Stardard",$config->time_standard_car_following);
 define("Tolerant_Standard",30);         //定义容忍度
-
+//define("Time_Stardard",100);            //定义计时标准
 
 //$followingEvent = array();//承装完成判定的跟车事件的编号，起始时间，持续时间
 $countTime=0; //计数该事件发生持续时间
@@ -25,8 +30,6 @@ function carFollowing($System_Time_Stamp, $FOT_Control_Speed, $SMS_Object_ID_T0,
 {
      global $countTime,$eventId,$carId,$startTime,$eventTolerant;//访问函数内全局变量
      global $followingEvent;                                     //访问函数内全局数组
-
-
      if($SMS_Object_ID_T0!=$carId)//当雷达车辆ID_T0变更时，事件结束
      {
           $carId=$SMS_Object_ID_T0;//变更当前车辆ID

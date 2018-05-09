@@ -27,6 +27,7 @@ class config
     public $backward_hard_swerve = 5;
     public $backward_lane_change = 5;
     public $forward_lane_change = 5;
+    public $time_standard_car_following = 100;
 }
 
 ?>
@@ -89,6 +90,11 @@ class config
                                 <input class="form-control" type="text" id="backward_lane_change"
                                        name="backward_lane_change">
                             </div>
+                            <div class="form-group">
+                                <label>time_standard_car_following (s)</label>
+                                <input class="form-control" type="text" id="time_std_following"
+                                       name="time_standard_car_following">
+                            </div>
                             <input type="submit" class="btn btn-default" name="xiugai" value="Confirm">
                         </div>
                     </div>
@@ -137,6 +143,9 @@ function modConfig()
     if (isset($_POST["forward_lane_change"])) {
         $mod_config->forward_lane_change = $_POST["forward_lane_change"];
     }
+    if (isset($_POST["time_standard_car_following"])) {
+        $mod_config->time_standard_car_following = $_POST["time_standard_car_following"] *10;
+    }
     $mod_json_str = json_encode($mod_config);
 
     $config_file = fopen("../Config.json", "w") or die("Unable to open file!");
@@ -165,6 +174,7 @@ $config = json_decode($json_str);
         document.getElementById("backward_hard_swerve").setAttribute("value", <?php echo $config->backward_hard_swerve;?>);
         document.getElementById("forward_lane_change").setAttribute("value", <?php echo $config->forward_lane_change;?>);
         document.getElementById("backward_lane_change").setAttribute("value", <?php echo $config->backward_lane_change;?>);
+        document.getElementById("time_std_following").setAttribute("value", <?php echo $config->time_standard_car_following/10;?>);
     }
 </script>
 

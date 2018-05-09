@@ -7,7 +7,7 @@
  */
 
 include "carFollowing.php";
-include "configure.php";
+include_once "configure.php";
 include "lane_change_detection.php";
 $config = new configure();
 
