@@ -48,7 +48,7 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
     date_default_timezone_set("Asia/Shanghai");
     $cur_time = date("Y-m-d-H-i-s");
     $csv_header = ['System.Time_Stamp', 'Event_Type', 'Event_Id', 'Trip_Event_Id', 'Driver_Id', 'Trip_Id', 'FOT_Control.Speed', 'IMU.Accel_X', 'IMU.Accel_Y', 'IMU.Accel_Z',
-        'Head_Unit.Latitude','Head_Unit.Longitude','VehicleCAN_1.BrakePedalPosition','VehicleCAN_1.Speed','VehicleNetworkBox.EngineSpeed',
+        'Head_Unit.Latitude','Head_Unit.Longitude','VehicleCAN_1.BrakePedalPosition','VehicleCAN_1.Speed','VehicleNetworkBox.EngineSpeed','Road Scout.Left_Lane_Distance_To_Right_Side','Road Scout.Right_Lane_Distance_To_Left_Side',
         'SMS.Object_ID_T0','SMS.Object_ID_T1', 'SMS.Object_ID_T2','SMS.Object_ID_T3','SMS.Object_ID_T4','SMS.Object_ID_T5','SMS.Object_ID_T6','SMS.Object_ID_T7',
         'SMS.X_Range_T0','SMS.X_Range_T1','SMS.X_Range_T2','SMS.X_Range_T3','SMS.X_Range_T4','SMS.X_Range_T5','SMS.X_Range_T6','SMS.X_Range_T7',
         'SMS.X_Velocity_T0','SMS.X_Velocity_T1','SMS.X_Velocity_T2','SMS.X_Velocity_T3','SMS.X_Velocity_T4','SMS.X_Velocity_T5','SMS.X_Velocity_T6','SMS.X_Velocity_T7',
@@ -126,12 +126,6 @@ function process($driver_id, $trip_id, $types, $csv_file_dir)
         fclose($output) or die("can not close");
     }
     if(in_array("lane_change", $types)){
-//        $lane_change_file_name = '../public/lane_change/'.'lane_change_list_'.$driver_id.'_'.$trip_id;
-//        if(!file_exists($lane_change_file_name)){
-//            $output = fopen($lane_change_file_name, 'w') or die("can not open");
-//            fwrite($output, $laneChangeEvents);
-//            fclose($output) or die("can not close");
-//        }
         $content = '';
         foreach ($new_rows_lane_change as $line) {
             $content .= implode(',', $line) . PHP_EOL;
