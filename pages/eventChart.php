@@ -107,9 +107,9 @@
             var arr = new Array();
             for (var i = 0; i < tmp.length; i++) {
                 if (i > 0 & i < tmp.length - 1 & parseFloat(tmp[i]) == 0 & parseFloat(tmp[i - 1]) != 0 & parseFloat(tmp[i + 1]) != 0) {
-                    arr.push((parseFloat(tmp[i - 1]) + parseFloat(tmp[i + 1])) / 2);
+                    arr.push(Math.abs((parseFloat(tmp[i - 1]) + parseFloat(tmp[i + 1])) / 2));
                 } else {
-                    arr.push((parseFloat(tmp[i])));
+                    arr.push(Math.abs((parseFloat(tmp[i]))));
                 }
             }
             var tmp1 = new Array();
