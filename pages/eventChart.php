@@ -33,11 +33,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"time"
+                        name: "time"
                     }
                 ],
                 yAxis: {
-                    name:'speed'
+                    name: 'speed'
                 },
                 series: [{
                     name: 'speed',
@@ -82,11 +82,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"Time"
+                        name: "Time"
                     }
                 ],
                 yAxis: {
-                    name:'Accel_X'
+                    name: 'Accel_X'
                 },
                 series: [{
                     name: 'accel',
@@ -129,11 +129,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"Time"
+                        name: "Time"
                     }
                 ],
                 yAxis: {
-                    name:'Accel_Y'
+                    name: 'Accel_Y'
                 },
                 series: [{
                     name: 'accely',
@@ -143,6 +143,65 @@
             };
             //初始化echarts实例
             var myChart = echarts.init(document.getElementById('chart_accel_y'));
+            document.getElementById('chart_accel_y').style.display = "block";
+            //使用制定的配置项和数据显示图表
+            myChart.setOption(option);
+        }
+
+        function initAccelYWithStdChart(xAxis, yAxis, yAxisStd) {
+            var tmp = new Array();
+            tmp = yAxis.split(",");
+            var arr = new Array();
+            for (var i = 0; i < tmp.length; i++) {
+                if (i > 0 & i < tmp.length - 1 & parseFloat(tmp[i]) == 0 & parseFloat(tmp[i - 1]) != 0 & parseFloat(tmp[i + 1]) != 0) {
+                    arr.push((parseFloat(tmp[i - 1]) + parseFloat(tmp[i + 1])) / 2);
+                } else {
+                    arr.push((parseFloat(tmp[i])));
+                }
+            }
+            var tmp1 = new Array();
+            tmp1 = xAxis.split(",");
+            var arr1 = new Array();
+            for (var i = 0; i < tmp1.length; i++) {
+                arr1.push((tmp1[i]));
+            }
+
+            var tmp_std = new Array();
+            tmp_std = yAxisStd.split(",");
+            var arr_std = new Array();
+            for (var i = 0; i < tmp_std.length; i++) {
+                if (i > 0 & i < tmp_std.length - 1 & parseFloat(tmp_std[i]) == 0 & parseFloat(tmp_std[i - 1]) != 0 & parseFloat(tmp_std[i + 1]) != 0) {
+                    arr_std.push((parseFloat(tmp_std[i - 1]) + parseFloat(tmp_std[i + 1])) / 2);
+                } else {
+                    arr_std.push((parseFloat(tmp_std[i])));
+                }
+            }
+            var option = {
+                title: {
+                    text: 'Accel_Y-Time'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['time']
+                },
+                xAxis: [
+                    {
+                        data: arr1,
+                        name: "Time"
+                    }
+                ],
+                yAxis: {
+                    name: 'Accel_Y'
+                },
+                series: [{
+                    name: 'accely',
+                    type: 'line',
+                    data: arr,arr_std
+                }]
+            };
+            //初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chart_accel_y_with_std'));
+            document.getElementById('chart_accel_y_with_std').style.display = "block";
             //使用制定的配置项和数据显示图表
             myChart.setOption(option);
         }
@@ -175,11 +234,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"Time"
+                        name: "Time"
                     }
                 ],
                 yAxis: {
-                    name:'Dis-Product'
+                    name: 'Dis-Product'
                 },
                 series: [{
                     name: 'Dis-Product',
@@ -189,6 +248,7 @@
             };
             //初始化echarts实例
             var myChart = echarts.init(document.getElementById('chart_lane_dis'));
+            document.getElementById('chart_lane_dis').style.display="block";
             //使用制定的配置项和数据显示图表
             myChart.setOption(option);
         }
@@ -199,8 +259,9 @@
 
 <div id="chart_speed" style="width:1000px; height: 700px;"></div>
 <div id="chart_accel" style="width:1000px; height: 700px;"></div>
-<div id="chart_accel_y" style="width:1000px; height: 700px;"></div>
-<div id="chart_lane_dis" style="width:1000px; height: 700px;"></div>
+<div id="chart_accel_y" style="width:1000px; height: 700px; display: none;"></div>
+<div id="chart_accel_y_with_std" style="width:1000px; height: 700px; display: none;"></div>
+<div id="chart_lane_dis" style="width:1000px; height: 700px; display: none;"></div>
 <?php
 include "event_chart.php";
 $file_dir;
@@ -238,10 +299,10 @@ $Accel_Y = "IMU.Accel_Y";
 $Speed = "FOT_Control.Speed";
 $Event_Type = "Event_Type";
 $Event_Id = "Event_Id";
-$Left_Lane_Distance_To_Right_Side="Road Scout.Left_Lane_Distance_To_Right_Side";
-$Right_Lane_Distance_To_Left_Side="Road Scout.Right_Lane_Distance_To_Left_Side";
-$index_left_to_right=0;
-$index_right_to_left=0;
+$Left_Lane_Distance_To_Right_Side = "Road Scout.Left_Lane_Distance_To_Right_Side";
+$Right_Lane_Distance_To_Left_Side = "Road Scout.Right_Lane_Distance_To_Left_Side";
+$index_left_to_right = 0;
+$index_right_to_left = 0;
 $index_time = 0;
 $index_accel = 0;
 $index_accel_y = 0;
@@ -253,15 +314,15 @@ foreach ($info_list[0] as $col) {
     switch (trim($col)) {
         case $Accel_Y:
             $index_accel_y = $col_index;
-            $col_index+=1;
+            $col_index += 1;
             break;
         case $Left_Lane_Distance_To_Right_Side:
             $index_left_to_right = $col_index;
-            $col_index+=1;
+            $col_index += 1;
             break;
         case $Right_Lane_Distance_To_Left_Side:
             $index_right_to_left = $col_index;
-            $col_index+=1;
+            $col_index += 1;
             break;
         case $Time_Stamp:
             $index_time = $col_index;
@@ -303,7 +364,7 @@ foreach ($info_list as $row) {
         $yAxis_speed[] = $row[$index_speed];
         $yAxis_accel[] = $row[$index_accel];
 
-        if($event_type == "lane_change"){
+        if ($event_type == "lane_change") {
             $yAxis_accel_y[] = $row[$index_accel_y];
             $yAxis_lane_distance[] = (float)$row[$index_left_to_right] * (float)$row[$index_right_to_left];
         }
@@ -313,29 +374,74 @@ $y_values_speed = array();
 $y_values_accel = array();
 $y_values_accel_y = array();
 $y_values_lane_distance = array();
+$y_values_swerve_std = array();
 foreach ($yAxis_speed as $y) {
     $y_values_speed[] = (float)$y;
 }
 foreach ($yAxis_accel as $y) {
     $y_values_accel[] = (float)$y;
 }
-if(!empty($yAxis_accel_y)){
-    foreach($yAxis_accel_y as $y){
+if (!empty($yAxis_accel_y)) {
+    foreach ($yAxis_accel_y as $y) {
         $y_values_accel_y[] = (float)$y;
     }
 }
-if(!empty($yAxis_lane_distance)){
-    foreach($yAxis_lane_distance as $y){
+if (!empty($yAxis_lane_distance)) {
+    foreach ($yAxis_lane_distance as $y) {
         $y_values_lane_distance[] = (float)$y;
     }
+}
+switch ($event_type) {
+    case "hard_swerve1":
+        foreach ($y_values_speed as $speed) {
+            if (0 < $speed & $speed <= 40) {
+                $y_values_swerve_std[] = 0.075 * $speed + 1;
+            } else if ($speed > 40 & $speed < 80) {
+                $y_values_swerve_std[] = 4;
+            } else if ($speed > 80 & $speed < 100) {
+                $y_values_swerve_std[] = -0.1 * $speed + 12;
+            }
+        }
+        break;
+    case "hard_swerve2":
+        foreach ($y_values_speed as $speed) {
+            if (0 < $speed & $speed <= 40) {
+                $y_values_swerve_std[] = 0.075 * $speed + 2;
+            } else if ($speed > 40 & $speed < 80) {
+                $y_values_swerve_std[] = 5;
+            } else if ($speed > 80 & $speed < 100) {
+                $y_values_swerve_std[] = 0.1 * $speed + 13;
+            }
+        }
+        break;
+    case "hard_swerve3":
+        foreach ($y_values_speed as $speed) {
+            if (0 < $speed & $speed <= 40) {
+                $y_values_swerve_std[] = 6;
+            } else if ($speed > 40 & $speed < 80) {
+                $y_values_swerve_std[] = 6;
+            } else if ($speed > 80 & $speed < 100) {
+                $y_values_swerve_std[] = 6;
+            }
+        }
+        break;
 }
 
 echo "<script type=text/javascript>initSpeedChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_speed) . "')</script>";
 echo "<script type=text/javascript>initAccelChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_accel) . "')</script>";
-if($event_type == "lane_change"){
+if ($event_type == "lane_change") {
     echo "<script type=text/javascript>initAccelYChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_accel_y) . "')</script>";
     echo "<script type=text/javascript>initLaneDisChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_lane_distance) . "')</script>";
 }
+if (startWith("hard_swerve", $event_type)) {
+    echo "<script type=text/javascript>initAccelYWithStdChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_accel_y) ."','".implode(",",$y_values_swerve_std). "')</script>";
+}
+
+function startWith($needle, $name)
+{
+    return strpos($name, $needle) === 0;
+}
+
 ?>
 
 </body>
