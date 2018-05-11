@@ -19,11 +19,8 @@ function find_trip($driver_id, $trip_id, $types, $csv_file_dir)
     $config = json_decode($json_str);
     $files_folder = scandir($csv_file_dir);
     $file_name = "";
-    echo "<script type=text/javascript>console.log('" . $driver_id . "')</script>";
-    echo "<script type=text/javascript>console.log('" . $trip_id . "')</script>";
     foreach ($files_folder as $name) {
         if (startWith("CCHN_" . $driver_id, $name) && endWith('' . $trip_id . ".csv", $name)) {
-            echo "<script type=text/javascript>console.log('" . $name . "')</script>";
             $file_name = $name;
         }
     }
@@ -45,7 +42,6 @@ function find_trips($driver_id, $trip_id, $types, $csv_file_dir)
     $files_folder = scandir($csv_file_dir);
     foreach ($files_folder as $name) {
         if (startWith("CCHN_" . $driver_id, $name)) {
-            echo "<script type=text/javascript>console.log('" . $name . "')</script>";
             $file_names[] = $name;
         }
     }

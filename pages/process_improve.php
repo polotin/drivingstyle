@@ -26,6 +26,11 @@ $laneChangeEvents = "" ;////承装完成判定的跟车，driver所有`trip
 $new_row_brake[] = "hard_brake"; //事件类型
 function process($driver_id, $trip_id, $types, $csv_file_dir)
 {
+    if($trip_id == ""){
+        echo "<script type=text/javascript>document.cookie='isAllTrips=true'</script>";
+    }else{
+        echo "<script type=text/javascript>document.cookie='isAllTrips=false'</script>";
+    }
     $file_name = "";
     $file_names = array();
     $files_folder = array();

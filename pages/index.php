@@ -329,7 +329,6 @@ $cur_time = "";
 
 if (isset($_POST["driver_id"])) {
     $driver_id = $_POST["driver_id"];
-    echo "<script type=text/javascript>console.log('" . $driver_id . "')</script>";
 }
 if (isset($_POST["trip_id"])) {
     $trip_id = $_POST["trip_id"];

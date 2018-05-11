@@ -142,6 +142,10 @@ $Accel = "IMU.Accel_X";
 $Speed = "FOT_Control.Speed";
 $Event_Type = "Event_Type";
 $Event_Id = "Event_Id";
+$Left_Lane_Distance_To_Right_Side="Road Scout.Left_Lane_Distance_To_Right_Side";
+$Right_Lane_Distance_To_Left_Side="Road Scout.Right_Lane_Distance_To_Left_Side";
+$index_left_to_right=0;
+$index_right_to_left=0;
 $index_time = 0;
 $index_accel = 0;
 $index_speed = 0;
@@ -150,6 +154,14 @@ $index_eventid = 0;
 $col_index = 0;
 foreach ($info_list[0] as $col) {
     switch (trim($col)) {
+        case $Left_Lane_Distance_To_Right_Side:
+            $index_left_to_right = $col_index;
+            $col_index+=1;
+            break;
+        case $Right_Lane_Distance_To_Left_Side:
+            $index_right_to_left = $col_index;
+            $col_index+=1;
+            break;
         case $Time_Stamp:
             $index_time = $col_index;
             $col_index += 1;
@@ -179,6 +191,7 @@ foreach ($info_list[0] as $col) {
 $xAxis = array();
 $yAxis_speed = array();
 $yAxis_accel = array();
+
 $index = 0;
 foreach ($info_list as $row) {
     if ($row[$index_eventid] == $event_id && $row[$index_type] == $event_type) {
