@@ -73,7 +73,7 @@
 
             var option = {
                 title: {
-                    text: 'Accel-X-Time'
+                    text: 'Accel_X-Time'
                 },
                 tooltip: {},
                 legend: {
@@ -120,7 +120,7 @@
             }
             var option = {
                 title: {
-                    text: 'Accel-Y-Time'
+                    text: 'Accel_Y-Time'
                 },
                 tooltip: {},
                 legend: {
@@ -188,7 +188,7 @@
                 }]
             };
             //初始化echarts实例
-            var myChart = echarts.init(document.getElementById('chart_accel_y'));
+            var myChart = echarts.init(document.getElementById('chart_lane_dis'));
             //使用制定的配置项和数据显示图表
             myChart.setOption(option);
         }
