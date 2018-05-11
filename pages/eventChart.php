@@ -199,7 +199,7 @@
                     data: arr
                 },
                     {
-                        name: 'accely',
+                        name: 'accelstd',
                         type: 'line',
                         data: arr_std
                     }
