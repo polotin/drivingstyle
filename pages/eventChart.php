@@ -463,7 +463,7 @@ if(!empty($yAxis_front_dis)){
 switch ($event_type) {
     case "hard_swerve_1":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
+            if (0 <= $speed * 3.6 & $speed * 3.6 <= 40) {
                 $y_values_swerve_std[] = 0.075 * $speed * 3.6 + 1;
             } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 4;
@@ -474,7 +474,7 @@ switch ($event_type) {
         break;
     case "hard_swerve_2":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
+            if (0 <= $speed * 3.6 & $speed * 3.6 <= 40) {
                 $y_values_swerve_std[] = 0.075 * $speed * 3.6 + 2;
             } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 5;
@@ -485,7 +485,7 @@ switch ($event_type) {
         break;
     case "hard_swerve_3":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
+            if (0 <= $speed * 3.6 & $speed * 3.6 <= 40) {
                 $y_values_swerve_std[] = 6;
             } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 6;
