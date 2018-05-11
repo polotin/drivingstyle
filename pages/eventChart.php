@@ -37,7 +37,7 @@
                     }
                 ],
                 yAxis: {
-                    name: 'speed'
+                    name: 'Speed(m/s)'
                 },
                 series: [{
                     name: 'speed',
@@ -86,7 +86,7 @@
                     }
                 ],
                 yAxis: {
-                    name: 'Accel_X'
+                    name: 'Accel_X(g)'
                 },
                 series: [{
                     name: 'accel',
@@ -133,7 +133,7 @@
                     }
                 ],
                 yAxis: {
-                    name: 'Accel_Y'
+                    name: 'Accel_Y(g)'
                 },
                 series: [{
                     name: 'accely',
@@ -154,9 +154,9 @@
             var arr = new Array();
             for (var i = 0; i < tmp.length; i++) {
                 if (i > 0 & i < tmp.length - 1 & parseFloat(tmp[i]) == 0 & parseFloat(tmp[i - 1]) != 0 & parseFloat(tmp[i + 1]) != 0) {
-                    arr.push((parseFloat(tmp[i - 1]) + parseFloat(tmp[i + 1])) / 2);
+                    arr.push((parseFloat(tmp[i - 1]) * 9.81 + parseFloat(tmp[i + 1]) * 9.81) / 2);
                 } else {
-                    arr.push((parseFloat(tmp[i])));
+                    arr.push(parseFloat(tmp[i]) * 9.81);
                 }
             }
             var tmp1 = new Array();
@@ -254,7 +254,7 @@
             };
             //初始化echarts实例
             var myChart = echarts.init(document.getElementById('chart_lane_dis'));
-            document.getElementById('chart_lane_dis').style.display="block";
+            document.getElementById('chart_lane_dis').style.display = "block";
             //使用制定的配置项和数据显示图表
             myChart.setOption(option);
         }
@@ -400,38 +400,39 @@ if (!empty($yAxis_lane_distance)) {
 switch ($event_type) {
     case "hard_swerve_1":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed & $speed <= 40) {
-                $y_values_swerve_std[] = 0.075 * $speed + 1;
-            } else if ($speed > 40 & $speed < 80) {
+            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
+                $y_values_swerve_std[] = 0.075 * $speed * 3.6 + 1;
+            } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 4;
-            } else if ($speed > 80 & $speed < 100) {
-                $y_values_swerve_std[] = -0.1 * $speed + 12;
+            } else if ($speed * 3.6 > 80 & $speed * 3.6 < 100) {
+                $y_values_swerve_std[] = -0.1 * $speed * 3.6 + 12;
             }
         }
         break;
     case "hard_swerve_2":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed & $speed <= 40) {
-                $y_values_swerve_std[] = 0.075 * $speed + 2;
-            } else if ($speed > 40 & $speed < 80) {
+            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
+                $y_values_swerve_std[] = 0.075 * $speed * 3.6 + 2;
+            } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 5;
-            } else if ($speed > 80 & $speed < 100) {
-                $y_values_swerve_std[] = 0.1 * $speed + 13;
+            } else if ($speed * 3.6 > 80 & $speed * 3.6 < 100) {
+                $y_values_swerve_std[] = 0.1 * $speed * 3.6 + 13;
             }
         }
         break;
     case "hard_swerve_3":
         foreach ($y_values_speed as $speed) {
-            if (0 < $speed & $speed <= 40) {
+            if (0 < $speed * 3.6 & $speed * 3.6 <= 40) {
                 $y_values_swerve_std[] = 6;
-            } else if ($speed > 40 & $speed < 80) {
+            } else if ($speed * 3.6 > 40 & $speed * 3.6 < 80) {
                 $y_values_swerve_std[] = 6;
-            } else if ($speed > 80 & $speed < 100) {
+            } else if ($speed * 3.6 > 80 & $speed * 3.6 < 100) {
                 $y_values_swerve_std[] = 6;
             }
         }
         break;
-    default:break;
+    default:
+        break;
 }
 
 echo "<script type=text/javascript>initSpeedChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_speed) . "')</script>";
@@ -441,7 +442,7 @@ if ($event_type == "lane_change") {
     echo "<script type=text/javascript>initLaneDisChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_lane_distance) . "')</script>";
 }
 if (startWith("hard_swerve", $event_type)) {
-    echo "<script type=text/javascript>initAccelYWithStdChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_accel_y) ."','".implode(",",$y_values_swerve_std). "')</script>";
+    echo "<script type=text/javascript>initAccelYWithStdChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_accel_y) . "','" . implode(",", $y_values_swerve_std) . "')</script>";
 }
 
 function startWith($needle, $name)
