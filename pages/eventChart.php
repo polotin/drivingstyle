@@ -259,7 +259,7 @@
             myChart.setOption(option);
         }
 
-        function initAccelYChart(xAxis, yAxis) {
+        function initFrontDisChart(xAxis, yAxis) {
             var tmp = new Array();
             tmp = yAxis.split(",");
             var arr = new Array();
