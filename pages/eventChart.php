@@ -443,21 +443,20 @@ $y_values_front_dis = array();
 foreach ($yAxis_speed as $y) {
     $y_values_speed_tmp[] = (float)$y;
 }
-$i = 0;
 for($i = 0 ; $i<count($y_values_speed_tmp);$i++ ){
     if($i=0){
-        if($y_values_speed_tmp[i] == 0 & $y_values_speed_tmp[i+1]!=0)
-            $y_values_speed[] = $y_values_speed_tmp[i+1];
+        if($y_values_speed_tmp[$i] == 0 & $y_values_speed_tmp[$i+1]!=0)
+            $y_values_speed[] = $y_values_speed_tmp[$i+1];
         else
-            $y_values_speed[] = $y_values_speed_tmp[i];
+            $y_values_speed[] = $y_values_speed_tmp[$i];
     }else if($i = count($y_values_speed_tmp) -1){
-        if($y_values_speed_tmp[i] == 0 & $y_values_speed_tmp[i-1]!=0)
-            $y_values_speed[] = $y_values_speed_tmp[i-1];
-        else $y_values_speed[] = $y_values_speed_tmp[i];
-    }else if($y_values_speed_tmp[i]==0&$y_values_speed_tmp[i-1]!=0& $y_values_speed_tmp[i+1]!=0){
-        $y_values_speed[] = ($y_values_speed_tmp[i-1] + $y_values_speed_tmp[i+1])/2;
+        if($y_values_speed_tmp[$i] == 0 & $y_values_speed_tmp[$i-1]!=0)
+            $y_values_speed[] = $y_values_speed_tmp[$i-1];
+        else $y_values_speed[] = $y_values_speed_tmp[$i];
+    }else if($y_values_speed_tmp[$i]==0&$y_values_speed_tmp[$i-1]!=0& $y_values_speed_tmp[$i+1]!=0){
+        $y_values_speed[] = ($y_values_speed_tmp[$i-1] + $y_values_speed_tmp[$i+1])/2;
     }else {
-        $y_values_speed[] = $y_values_speed_tmp[i];
+        $y_values_speed[] = $y_values_speed_tmp[$i];
     }
 }
 foreach ($yAxis_accel as $y) {
