@@ -196,8 +196,14 @@
                 series: [{
                     name: 'accely',
                     type: 'line',
-                    data: arr,arr_std
-                }]
+                    data: arr
+                },
+                    {
+                        name: 'accely',
+                        type: 'line',
+                        data: arr_std
+                    }
+                ]
             };
             //初始化echarts实例
             var myChart = echarts.init(document.getElementById('chart_accel_y_with_std'));
@@ -425,6 +431,7 @@ switch ($event_type) {
             }
         }
         break;
+    default:break;
 }
 
 echo "<script type=text/javascript>initSpeedChart('" . implode(",", $xAxis) . "','" . implode(",", $y_values_speed) . "')</script>";
