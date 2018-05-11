@@ -443,6 +443,7 @@ $y_values_front_dis = array();
 foreach ($yAxis_speed as $y) {
     $y_values_speed_tmp[] = (float)$y;
 }
+$i = 0;
 for($i = 0 ; $i<count($y_values_speed_tmp);$i++ ){
     if($i=0){
         if($y_values_speed_tmp[i] == 0 & $y_values_speed_tmp[i+1]!=0)
