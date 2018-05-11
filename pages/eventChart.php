@@ -82,11 +82,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"time"
+                        name:"Time"
                     }
                 ],
                 yAxis: {
-                    name:'accel'
+                    name:'Accel_X'
                 },
                 series: [{
                     name: 'accel',
@@ -129,11 +129,11 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"time"
+                        name:"Time"
                     }
                 ],
                 yAxis: {
-                    name:'accel_y'
+                    name:'Accel_Y'
                 },
                 series: [{
                     name: 'accely',
@@ -166,7 +166,7 @@
             }
             var option = {
                 title: {
-                    text: 'Lane-Distance-Product-Time'
+                    text: 'Lane_Distance_Product-Time'
                 },
                 tooltip: {},
                 legend: {
@@ -175,14 +175,14 @@
                 xAxis: [
                     {
                         data: arr1,
-                        name:"time"
+                        name:"Time"
                     }
                 ],
                 yAxis: {
-                    name:'dis-product'
+                    name:'Dis-Product'
                 },
                 series: [{
-                    name: 'dis-product',
+                    name: 'Dis-Product',
                     type: 'line',
                     data: arr
                 }]
