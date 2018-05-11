@@ -444,12 +444,12 @@ foreach ($yAxis_speed as $y) {
     $y_values_speed_tmp[] = (float)$y;
 }
 for($i = 0 ; $i<count($y_values_speed_tmp);$i++ ){
-    if($i=0){
+    if($i==0){
         if($y_values_speed_tmp[$i] == 0 & $y_values_speed_tmp[$i+1]!=0)
             $y_values_speed[] = $y_values_speed_tmp[$i+1];
         else
             $y_values_speed[] = $y_values_speed_tmp[$i];
-    }else if($i = count($y_values_speed_tmp) -1){
+    }else if($i == count($y_values_speed_tmp) -1){
         if($y_values_speed_tmp[$i] == 0 & $y_values_speed_tmp[$i-1]!=0)
             $y_values_speed[] = $y_values_speed_tmp[$i-1];
         else $y_values_speed[] = $y_values_speed_tmp[$i];
