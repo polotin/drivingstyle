@@ -155,6 +155,15 @@ function showEventChart(driver_id, trip_id, event_id, type, cur_time) {
         csv_file_dir = "../public/csv/" + csv_file_name;
         var chart_link = "eventChart.php?file_dir=" + csv_file_dir + "&driver_id=" + driver_id + "&trip_id=" + trip_id + "&event_id=" + event_id + "&event_type=" + type;
         window.open(chart_link, "newwindow", "height=800, width=1050, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+    }else if(type == "car_following"){
+        if(document.cookie.split(";")[0].split("=")[1]=="true"){
+            csv_file_name = driver_id + "_" + "_" + "car_following" + cur_time + ".csv";
+        }else {
+            csv_file_name = driver_id + "_" + trip_id +"_" + "car_following" + cur_time + ".csv";
+        }
+        csv_file_dir = "../public/csv/" + csv_file_name;
+        var chart_link = "eventChart.php?file_dir=" + csv_file_dir + "&driver_id=" + driver_id + "&trip_id=" + trip_id + "&event_id=" + event_id + "&event_type=" + type;
+        window.open(chart_link, "newwindow", "height=800, width=1050, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
     }
 }
 
