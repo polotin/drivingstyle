@@ -64,7 +64,7 @@ if __name__ == '__main__':
     # video_path = sys.argv[1]
     # csv_path = sys.argv[2]
     # with_video_flag = sys.argv[3] // 1: with video
-    video_path = 'CCHN_15500_229727_46_120101_0912_00166_Front.mp4'
+    video_path = 'video/CCHN_15500_229727_46_120101_0912_00166_Front.mp4'
     csv_path = '/tmp/vtti/CCHN_15500_229727_46_120101_0912_00166.csv'
     with_video = True
     lane_changing_list = find_lane_changing(csv_path, video_path, with_video)
