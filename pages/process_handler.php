@@ -338,7 +338,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         //判断是否为急刹车事件
         if (in_array("hard_brake", $types)) {
             if ($row[$index_speed] != "" & $row[$index_speed] != " ") {
-                if (is_hard_brake((float)$row[$index_speed], (float)$row[$index_time], $brake_time)) {
+                if (is_hard_brake((float)$row[$index_accel], (float)$row[$index_time], $brake_time)) {
                     $brake_time = $row[$index_time];
                     $new_row[] = $row[$index_time]; //时间
                     $new_row[] = "hard_brake"; //事件类型
