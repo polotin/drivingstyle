@@ -1275,7 +1275,13 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         $lane_change_arr = explode(',', $lane_change_str);
         $lane_change_count = count($lane_change_arr);
         foreach ($lane_change_arr as $time) {
-            $tmp_begin = (int)trim($time);
+
+            if((int)trim($time) - 50 >= 0){
+                $tmp_begin =(int)trim($time) - 50;
+            }else{
+                $tmp_begin = 0;
+            }
+
             for($tmp_begin; ($tmp_begin < (int)trim($time) + 100)&($tmp_begin < count($info_list, 0)); $tmp_begin++){
                 $new_row_lane_change = array();
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_time];//时间
