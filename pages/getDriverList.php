@@ -9,6 +9,7 @@ $csv_dir = "";
 if (isset($_GET["csv_dir"])) {
     $csv_dir = $_GET["csv_dir"];
 } else echo "";
+
 if(is_dir($csv_dir)){
     $files_folder = scandir($csv_dir);
 }else{
@@ -16,8 +17,8 @@ if(is_dir($csv_dir)){
     return;
 }
 
-
 $file_names = array();
+
 foreach ($files_folder as $name) {
     if (startWith("CCHN", $name) && endWith(".csv", $name)) {
         $file_names[] = $name;
