@@ -105,6 +105,7 @@ class config
 </form>
 
 <?php
+
 if (isset($_POST["xiugai"])) {
     if ($_POST["xiugai"] == "Confirm") {
         modConfig();
@@ -152,12 +153,17 @@ function modConfig()
     fwrite($config_file, $mod_json_str);
     fclose($config_file);
 }
-
-$config_file = fopen("../Config.json", "r") or die("Unable to open file!");
-$json_str = fread($config_file, filesize("../Config.json"));
-fclose($config_file);
-$config = new config();
-$config = json_decode($json_str);
+$config;
+load_config();
+function load_config()
+{
+    global $config;
+    $config = new config();
+    $config_file = fopen("../Config.json", "r") or die("Unable to open file!");
+    $json_str = fread($config_file, filesize("../Config.json"));
+    fclose($config_file);
+    $config = json_decode($json_str);
+}
 
 ?>
 

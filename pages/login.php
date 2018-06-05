@@ -68,6 +68,10 @@
     if (isset($_POST["id"]) & isset($_POST["password"])) {
         $id = $_POST["id"];
         $pwd = $_POST["password"];
+        validate_login($id, $pwd);
+    }
+
+    function validate_login($id, $pwd){
         if ($id == "admin" & $pwd == "admin511") {
             session_start();
             $_SESSION['id'] = $id;
@@ -77,7 +81,6 @@
             echo "<script type=text/javascript>login_failed()</script>";
         }
     }
-
     ?>
 
     <!-- jQuery -->
