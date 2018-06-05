@@ -1,1 +1,1 @@
-{"forward_go":"1","backward_go":"5","forward_stop":"5","backward_stop":"1","forward_hard_brake":"5","backward_hard_brake":"5","forward_hard_swerve":"5","backward_hard_swerve":"5","backward_lane_change":"2","forward_lane_change":"5","time_standard_car_following":50}
+{"forward_go":"7","backward_go":"1","forward_stop":"1","backward_stop":"5","forward_hard_brake":"5","backward_hard_brake":"5","forward_hard_swerve":"5","backward_hard_swerve":"5","backward_lane_change":"5","forward_lane_change":"5","time_standard_car_following":100}
