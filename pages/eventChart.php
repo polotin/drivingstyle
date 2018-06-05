@@ -231,7 +231,7 @@
             }
             var option = {
                 title: {
-                    text: 'Lane_Distance_Product-Time'
+                    text: 'Lane_Offset-Time'
                 },
                 tooltip: {},
                 legend: {
@@ -244,10 +244,10 @@
                     }
                 ],
                 yAxis: {
-                    name: 'Dis-Product'
+                    name: 'Lane_Offset'
                 },
                 series: [{
-                    name: 'Dis-Product',
+                    name: 'Lane_Offset',
                     type: 'line',
                     data: arr
                 }]
