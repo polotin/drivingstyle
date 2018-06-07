@@ -89,12 +89,16 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
         $info_list[] = $data;
     }
     //获取列名的位置
-    $Time_Stamp = "System.Time_Stamp";$Accel = "IMU.Accel_X";$Accel_Y = "IMU.Accel_Y";$Accel_Z = "IMU.Accel_Z";$Speed = "FOT_Control.Speed";$Latitude = "Head_Unit.Latitude";$Longitude = "Head_Unit.Longitude";$BrakePedalPosition = "VehicleCAN_1.BrakePedalPosition";$VehicleCanSpeed = "VehicleCAN_1.Speed";$EngineSpeed = "VehicleNetworkBox.EngineSpeed";$Left_Lane_Distance_To_Right_Side="Road Scout.Left_Lane_Distance_To_Right_Side";$Right_Lane_Distance_To_Left_Side="Road Scout.Right_Lane_Distance_To_Left_Side";$SMS_Object_ID_T0 = "SMS.Object_ID_T0";$SMS_Object_ID_T1 = "SMS.Object_ID_T1";$SMS_Object_ID_T2 = "SMS.Object_ID_T2";$SMS_Object_ID_T3 = "SMS.Object_ID_T3";$SMS_Object_ID_T4 = "SMS.Object_ID_T4";$SMS_Object_ID_T5 = "SMS.Object_ID_T5";$SMS_Object_ID_T6 = "SMS.Object_ID_T6";$SMS_Object_ID_T7 = "SMS.Object_ID_T7";$SMS_X_Range_T0 = "SMS.X_Range_T0";$SMS_X_Range_T1 = "SMS.X_Range_T1";$SMS_X_Range_T2 = "SMS.X_Range_T2";$SMS_X_Range_T3 = "SMS.X_Range_T3";$SMS_X_Range_T4 = "SMS.X_Range_T4";$SMS_X_Range_T5 = "SMS.X_Range_T5";$SMS_X_Range_T6 = "SMS.X_Range_T6";$SMS_X_Range_T7 = "SMS.X_Range_T7";$SMS_X_Velocity_T0 = "SMS.X_Velocity_T0";$SMS_X_Velocity_T1 = "SMS.X_Velocity_T1";$SMS_X_Velocity_T2 = "SMS.X_Velocity_T2";$SMS_X_Velocity_T3 = "SMS.X_Velocity_T3";$SMS_X_Velocity_T4 = "SMS.X_Velocity_T4";$SMS_X_Velocity_T5 = "SMS.X_Velocity_T5";$SMS_X_Velocity_T6 = "SMS.X_Velocity_T6";$SMS_X_Velocity_T7 = "SMS.X_Velocity_T7";$SMS_Y_Range_T0 = "SMS.Y_Range_T0";$SMS_Y_Range_T1 = "SMS.Y_Range_T1";$SMS_Y_Range_T2 = "SMS.Y_Range_T2";$SMS_Y_Range_T3 = "SMS.Y_Range_T3";$SMS_Y_Range_T4 = "SMS.Y_Range_T4";$SMS_Y_Range_T5 = "SMS.Y_Range_T5";$SMS_Y_Range_T6 = "SMS.Y_Range_T6";$SMS_Y_Range_T7 = "SMS.Y_Range_T7";$SMS_Y_Velocity_T0 = "SMS.Y_Velocity_T0";$SMS_Y_Velocity_T1 = "SMS.Y_Velocity_T1";$SMS_Y_Velocity_T2 = "SMS.Y_Velocity_T2";$SMS_Y_Velocity_T3 = "SMS.Y_Velocity_T3";$SMS_Y_Velocity_T4 = "SMS.Y_Velocity_T4";$SMS_Y_Velocity_T5 = "SMS.Y_Velocity_T5";$SMS_Y_Velocity_T6 = "SMS.Y_Velocity_T6";$SMS_Y_Velocity_T7 = "SMS.Y_Velocity_T7";
-    $index_time = 0;$index_accel = 0;$index_accel_y = 0;$index_accel_z = 0;$index_speed = 0;$index_lati = 0;$index_lonti = 0;$index_pedal = 0;$index_can_speed = 0;$index_engine_speed = 0;$index_left_to_right=0;$index_right_to_left=0;$index_object0 = 0;$index_object1 = 0;$index_object2 = 0;$index_object3 = 0;$index_object4 = 0;$index_object5 = 0;$index_object6 = 0;$index_object7 = 0;$index_x_vel0 = 0;$index_x_vel1 = 0;$index_x_vel2 = 0;$index_x_vel3 = 0;$index_x_vel4 = 0;$index_x_vel5 = 0;$index_x_vel6 = 0;$index_x_vel7 = 0;$index_y_vel0 = 0;$index_y_vel1 = 0;$index_y_vel2 = 0;$index_y_vel3 = 0;$index_y_vel4 = 0;$index_y_vel5 = 0;$index_y_vel6 = 0;$index_y_vel7 = 0;$index_x_range0 = 0;$index_x_range1 = 0;$index_x_range2 = 0;$index_x_range3 = 0;$index_x_range4 = 0;$index_x_range5 = 0;$index_x_range6 = 0;$index_x_range7 = 0;$index_y_range0 = 0;$index_y_range1 = 0;$index_y_range2 = 0;$index_y_range3 = 0;$index_y_range4 = 0;$index_y_range5 = 0; $index_y_range6 = 0;$index_y_range7 = 0;
+    $Time_Stamp = "System.Time_Stamp";$Accel = "IMU.Accel_X";$Accel_Y = "IMU.Accel_Y";$Accel_Z = "IMU.Accel_Z";$Speed = "FOT_Control.Speed";$Latitude = "Head_Unit.Latitude";$Longitude = "Head_Unit.Longitude";$BrakePedalPosition = "VehicleCAN_1.BrakePedalPosition";$VehicleCanSpeed = "VehicleCAN_1.Speed";$EngineSpeed = "VehicleNetworkBox.EngineSpeed";$Left_Lane_Distance_To_Right_Side="Road Scout.Left_Lane_Distance_To_Right_Side";$Right_Lane_Distance_To_Left_Side="Road Scout.Right_Lane_Distance_To_Left_Side";$Road_Scout_Lane_Offset = "Road Scout.Lane_Offset";$SMS_Object_ID_T0 = "SMS.Object_ID_T0";$SMS_Object_ID_T1 = "SMS.Object_ID_T1";$SMS_Object_ID_T2 = "SMS.Object_ID_T2";$SMS_Object_ID_T3 = "SMS.Object_ID_T3";$SMS_Object_ID_T4 = "SMS.Object_ID_T4";$SMS_Object_ID_T5 = "SMS.Object_ID_T5";$SMS_Object_ID_T6 = "SMS.Object_ID_T6";$SMS_Object_ID_T7 = "SMS.Object_ID_T7";$SMS_X_Range_T0 = "SMS.X_Range_T0";$SMS_X_Range_T1 = "SMS.X_Range_T1";$SMS_X_Range_T2 = "SMS.X_Range_T2";$SMS_X_Range_T3 = "SMS.X_Range_T3";$SMS_X_Range_T4 = "SMS.X_Range_T4";$SMS_X_Range_T5 = "SMS.X_Range_T5";$SMS_X_Range_T6 = "SMS.X_Range_T6";$SMS_X_Range_T7 = "SMS.X_Range_T7";$SMS_X_Velocity_T0 = "SMS.X_Velocity_T0";$SMS_X_Velocity_T1 = "SMS.X_Velocity_T1";$SMS_X_Velocity_T2 = "SMS.X_Velocity_T2";$SMS_X_Velocity_T3 = "SMS.X_Velocity_T3";$SMS_X_Velocity_T4 = "SMS.X_Velocity_T4";$SMS_X_Velocity_T5 = "SMS.X_Velocity_T5";$SMS_X_Velocity_T6 = "SMS.X_Velocity_T6";$SMS_X_Velocity_T7 = "SMS.X_Velocity_T7";$SMS_Y_Range_T0 = "SMS.Y_Range_T0";$SMS_Y_Range_T1 = "SMS.Y_Range_T1";$SMS_Y_Range_T2 = "SMS.Y_Range_T2";$SMS_Y_Range_T3 = "SMS.Y_Range_T3";$SMS_Y_Range_T4 = "SMS.Y_Range_T4";$SMS_Y_Range_T5 = "SMS.Y_Range_T5";$SMS_Y_Range_T6 = "SMS.Y_Range_T6";$SMS_Y_Range_T7 = "SMS.Y_Range_T7";$SMS_Y_Velocity_T0 = "SMS.Y_Velocity_T0";$SMS_Y_Velocity_T1 = "SMS.Y_Velocity_T1";$SMS_Y_Velocity_T2 = "SMS.Y_Velocity_T2";$SMS_Y_Velocity_T3 = "SMS.Y_Velocity_T3";$SMS_Y_Velocity_T4 = "SMS.Y_Velocity_T4";$SMS_Y_Velocity_T5 = "SMS.Y_Velocity_T5";$SMS_Y_Velocity_T6 = "SMS.Y_Velocity_T6";$SMS_Y_Velocity_T7 = "SMS.Y_Velocity_T7";
+    $index_time = 0;$index_accel = 0;$index_accel_y = 0;$index_accel_z = 0;$index_speed = 0;$index_lati = 0;$index_lonti = 0;$index_pedal = 0;$index_can_speed = 0;$index_engine_speed = 0;$index_left_to_right=0;$index_right_to_left=0;$index_lane_offset=0;$index_object0 = 0;$index_object1 = 0;$index_object2 = 0;$index_object3 = 0;$index_object4 = 0;$index_object5 = 0;$index_object6 = 0;$index_object7 = 0;$index_x_vel0 = 0;$index_x_vel1 = 0;$index_x_vel2 = 0;$index_x_vel3 = 0;$index_x_vel4 = 0;$index_x_vel5 = 0;$index_x_vel6 = 0;$index_x_vel7 = 0;$index_y_vel0 = 0;$index_y_vel1 = 0;$index_y_vel2 = 0;$index_y_vel3 = 0;$index_y_vel4 = 0;$index_y_vel5 = 0;$index_y_vel6 = 0;$index_y_vel7 = 0;$index_x_range0 = 0;$index_x_range1 = 0;$index_x_range2 = 0;$index_x_range3 = 0;$index_x_range4 = 0;$index_x_range5 = 0;$index_x_range6 = 0;$index_x_range7 = 0;$index_y_range0 = 0;$index_y_range1 = 0;$index_y_range2 = 0;$index_y_range3 = 0;$index_y_range4 = 0;$index_y_range5 = 0; $index_y_range6 = 0;$index_y_range7 = 0;
 
     $col_index = 0;
     foreach ($info_list[0] as $col) {
         switch (trim($col)) {
+            case $Road_Scout_Lane_Offset:
+                $index_lane_offset = $col_index;
+                $col_index += 1;
+                break;
             case $Left_Lane_Distance_To_Right_Side:
                 $index_left_to_right = $col_index;
                 $col_index+=1;
@@ -357,6 +361,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $new_row[] = $row[$index_engine_speed];
                     $new_row[] = $row[$index_left_to_right];
                     $new_row[] = $row[$index_right_to_left];
+                    $new_row[] = $row[$index_lane_offset];
                     $new_row[] = $row[$index_object0];
                     $new_row[] = $row[$index_object1];
                     $new_row[] = $row[$index_object2];
@@ -491,6 +496,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $new_row[] = $row[$index_engine_speed];
                     $new_row[] = $row[$index_left_to_right];
                     $new_row[] = $row[$index_right_to_left];
+                    $new_row[] = $row[$index_lane_offset];
                     $new_row[] = $row[$index_object0];
                     $new_row[] = $row[$index_object1];
                     $new_row[] = $row[$index_object2];
@@ -574,6 +580,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                             $new_row[] = $row[$index_engine_speed];
                             $new_row[] = $row[$index_left_to_right];
                             $new_row[] = $row[$index_right_to_left];
+                            $new_row[] = $row[$index_lane_offset];
                             $new_row[] = $row[$index_object0];
                             $new_row[] = $row[$index_object1];
                             $new_row[] = $row[$index_object2];
@@ -651,6 +658,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                         $new_row[] = $row[$index_engine_speed];
                         $new_row[] = $row[$index_left_to_right];
                         $new_row[] = $row[$index_right_to_left];
+                        $new_row[] = $row[$index_lane_offset];
                         $new_row[] = $row[$index_object0];
                         $new_row[] = $row[$index_object1];
                         $new_row[] = $row[$index_object2];
@@ -732,6 +740,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                     $new_row[] = $row[$index_engine_speed];
                     $new_row[] = $row[$index_left_to_right];
                     $new_row[] = $row[$index_right_to_left];
+                    $new_row[] = $row[$index_lane_offset];
                     $new_row[] = $row[$index_object0];
                     $new_row[] = $row[$index_object1];
                     $new_row[] = $row[$index_object2];
@@ -813,6 +822,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_brake[] = $info_list[$tmp_begin][$index_engine_speed];
                 $new_row_brake[] = $info_list[$tmp_begin][$index_left_to_right];
                 $new_row_brake[] = $info_list[$tmp_begin][$index_right_to_left];
+                $new_row_brake[] = $info_list[$tmp_begin][$index_lane_offset];
                 $new_row_brake[] = $info_list[$tmp_begin][$index_object0];
                 $new_row_brake[] = $info_list[$tmp_begin][$index_object1];
                 $new_row_brake[] = $info_list[$tmp_begin][$index_object2];
@@ -884,6 +894,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_start[] = $info_list[$tmp_begin][$index_engine_speed];
                 $new_row_start[] = $info_list[$tmp_begin][$index_left_to_right];
                 $new_row_start[] = $info_list[$tmp_begin][$index_right_to_left];
+                $new_row_start[] = $info_list[$tmp_begin][$index_lane_offset];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object0];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object1];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object2];
@@ -954,6 +965,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_start[] = $info_list[$tmp_begin][$index_engine_speed];
                 $new_row_start[] = $info_list[$tmp_begin][$index_left_to_right];
                 $new_row_start[] = $info_list[$tmp_begin][$index_right_to_left];
+                $new_row_start[] = $info_list[$tmp_begin][$index_lane_offset];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object0];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object1];
                 $new_row_start[] = $info_list[$tmp_begin][$index_object2];
@@ -1026,6 +1038,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_stop[] = $info_list[$tmp_begin][$index_engine_speed];
                 $new_row_stop[] = $info_list[$tmp_begin][$index_left_to_right];
                 $new_row_stop[] = $info_list[$tmp_begin][$index_right_to_left];
+                $new_row_stop[] = $info_list[$tmp_begin][$index_lane_offset];
                 $new_row_stop[] = $info_list[$tmp_begin][$index_object0];
                 $new_row_stop[] = $info_list[$tmp_begin][$index_object1];
                 $new_row_stop[] = $info_list[$tmp_begin][$index_object2];
@@ -1096,6 +1109,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_engine_speed];
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_left_to_right];
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_right_to_left];
+                $new_row_swerve[] = $info_list[$tmp_begin][$index_lane_offset];
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_object0];
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_object1];
                 $new_row_swerve[] = $info_list[$tmp_begin][$index_object2];
@@ -1196,6 +1210,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_engine_speed];
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_left_to_right];
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_right_to_left];
+                $new_row_following[] = $info_list[$tmp_begin + $i][$index_lane_offset];
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_object0];
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_object1];
                 $new_row_following[] = $info_list[$tmp_begin + $i][$index_object2];
@@ -1282,7 +1297,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $tmp_begin = 0;
             }
 
-            for($tmp_begin; ($tmp_begin < (int)trim($time) + 100)&($tmp_begin < count($info_list, 0)); $tmp_begin++){
+            for($i=0,$tmp_begin; ($tmp_begin < (int)trim($time) + 100)&($tmp_begin < count($info_list, 0)); $tmp_begin++){
                 $new_row_lane_change = array();
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_time];//时间
                 $new_row_lane_change[] = "lane_change"; //事件类型
@@ -1301,6 +1316,7 @@ function process_file($file_dir, $types, $driver_id, $trip_id, $file_name)
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_engine_speed];
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_left_to_right];
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_right_to_left];
+                $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_lane_offset];
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_object0];
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_object1];
                 $new_row_lane_change[] = $info_list[$tmp_begin + $i][$index_object2];

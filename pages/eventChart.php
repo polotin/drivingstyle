@@ -487,7 +487,6 @@ foreach ($info_list as $row) {
         if ($event_type == "lane_change") {
             $yAxis_accel_y[] = $row[$index_accel_y];
 //            $yAxis_lane_distance[] = (float)$row[$index_left_to_right] * (float)$row[$index_right_to_left];
-            echo "<script type=text/javascript>console.log('".$index_lane_offset."')</script>";
             $yAxis_lane_distance[] = (float)$row[$index_lane_offset];
         } else if (startWith("hard_swerve", $event_type)) {
             $yAxis_accel_y[] = $row[$index_accel_y];
